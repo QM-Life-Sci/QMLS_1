@@ -23,9 +23,8 @@ csl: evolution.csl
 library(tidyverse)
 library(cowplot)
 theme_set(theme_cowplot())
-#source("https://raw.githubusercontent.com/kmiddleton/quant_methods/master/Lectures/Shade_Distributions.R")
 
-source("../../quant_methods/Lectures/Shade_Distributions.R")
+source("QMLS_functions.R")
 
 ```
 
