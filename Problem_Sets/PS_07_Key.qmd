@@ -142,7 +142,10 @@ mean(stalk$eye_span[stalk$food_source == 'Corn']) +
 ## approx_CI returns a tibble with the lower and upper
 ## bounds of the CI. Note the use of group_modify() to 
 ## apply approx_CI() to each group.
-SEM <- function(x) return(sd(x) / sqrt(length(x)))
+SEM <- function(x) {
+  SE_mean_x <- sd(x) / sqrt(length(x))
+  return(SE_mean_x)
+  }
 
 approx_CI <- function(x, ...) {
   upper <- mean(x) + 2 * SEM(x)
