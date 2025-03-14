@@ -28,33 +28,20 @@ theme_set(theme_cowplot())
 
 ```
 
+## Problem Set 6
 
-## Problem set 6
+> I found developing the loop for making the plots in problem set 6 to be challenging. I understand the basic structure of a loop and pseudo code in general, but am confused on how to determine if an object is a string and how to properly assign the output of the loop to the 'ii'. 
 
-- Lists
-- Final tuning plots
-
-
-## Quiz 7-3
-
-
-## Terminology
-
-> I sometimes get caught up in trying to remember the definitions of these new terms (tests, values, etc.), especially when they are very similar in practice. Is there a resource that has a quick summary/definition of terms that I can refer back to when I get stuck, or is it too complicated to summarize in that way? I have skimmed through a few links on the resources page already, but I definitely could have missed it.
-
->  I'm getting a little lost in my thoughts for the difference between mean, standard error, standard deviation, CI, t-statistic, f-statistic, and how this all applies to each other. Can you lay this out? 
-
-
-## Designing a statistical model
-
-> Most statistical tests give the same or similar information. How does one identify what fits best for their study? I'm still confused about that
-
-> When to use ANOVA vs t test?
+> Can we go over what pseudocode is? I understood that pseudocode is a kind of workflow for coding, but I didn't understand anything beyond that. I also had a hard time connecting pseudocode to the looping question in PS6.
 
 
 ## Confidence Intervals
 
-> What is the difference between confidence level and probability?
+> Could we go over quiz 7-1?
+
+> Slide 19 caused confusion in the Intervals video. If we only want to reject it about 10% of the time, why would we make the move to reject if it comes out above the 0.098 and not make the move if it comes out below the 0.098. Wouldn't we have more numbers fall above the 0.098 if they are equally distributed between 0 and 1, leading to more than 10% being rejected? I think I'm interpreting it poorly so was hoping for some more information.
+
+> I think I'm a little confused about what confidence intervals actually tell us. Does not not tell us anything about probability? I know it tells us the percent of time values of the mean fall within the interval, but I'm just a little confused about it overall.
 
 ## Questions confidence intervals can't answer
 
@@ -69,19 +56,25 @@ theme_set(theme_cowplot())
 - If we were to *repeat* the *experiment* over and over, then 95% of the time the confidence intervals *contain the true mean*.
 
 
+## Making Decisions
+
+> Is there a connection between the confidence interval and the p-value (as one can inform the other), or are these separate tests providing supporting information about our data and hypothesis?
+
+> If the t-statistic was closer to the critical value but still below it, would that change how we interpret our results?
+
+> How do you know when to reject a null hypothesis? what do you rely on in your data to make that decision?
+
+## Making Decisions
+
+> I'm a little confused on the concept of power in terms of its relationship to the prevalence of type II errors. I understand that power is inversely related to the prevalence of type II errors, with higher power leading to a lower prevalence of type II errors and lower power leading to a higher prevalence of type II errors, but, if we are unable to know exactly what the true mean is to compare it to the null hypothesis, how can we determine whether the particular level of power we have from a particular sample under analysis is high or low in that scenario?
+
+
+Priors question??
+
+-----
+
 ## Degrees of Freedom
 
 > I'm wondering what exactly are degrees of freedom? I've used the term in stats classes before, but does the term "degrees of freedom" always mean the same thing, conceptually?
 
-
-## P-values
-
-> What are common methods of p-value fusion (combining p-values from multiple statistical tests) and is there a benefit to doing such?
-
-
-## MCMC
-
-> I am having some difficulty figuring out how to integrate some of the previous lessons with the more recent ones, especially when it comes to using priors or Bayesian approaches (like one of the examples in 7-1 MCMC model this week). Is it possible to use priors in any model, or is it more useful for some models than others depending on the type of data you are using?
-
-> Had trouble reading the MCMC trace plot. How does it help with bayesian inference?
 
