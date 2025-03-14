@@ -29,6 +29,9 @@ theme_set(theme_cowplot(font_size = 20))
 ```
 
 
+## Course communication
+
+
 ## Problem Set 6: Pseudocode
 
 > I found developing the loop for making the plots in problem set 6 to be challenging. I understand the basic structure of a loop and pseudo code in general, but am confused on how to determine if an object is a string and how to properly assign the output of the loop to the 'ii'. 
@@ -38,11 +41,9 @@ theme_set(theme_cowplot(font_size = 20))
 
 ## Confidence Intervals
 
-> Could we go over quiz 7-1?
-
-> Slide 19 caused confusion in the Intervals video. If we only want to reject it about 10% of the time, why would we make the move to reject if it comes out above the 0.098 and not make the move if it comes out below the 0.098. Wouldn't we have more numbers fall above the 0.098 if they are equally distributed between 0 and 1, leading to more than 10% being rejected? I think I'm interpreting it poorly so was hoping for some more information.
-
 > I think I'm a little confused about what confidence intervals actually tell us. Does not not tell us anything about probability? I know it tells us the percent of time values of the mean fall within the interval, but I'm just a little confused about it overall.
+
+> Could we go over quiz 7-1?
 
 
 ## Questions confidence intervals can't answer
@@ -58,24 +59,20 @@ theme_set(theme_cowplot(font_size = 20))
 - If we were to *repeat* the *experiment* over and over, then in 95% of the trials, the confidence intervals *will contain the true mean*.
 
 
-## Making Decisions
+## Confidence intervals and hypothesis tests
+
+> Are confidence intervals and p-values interrelated? It seems like they are as I was learning this week, but if so why would a CI be superior to P value? Perhaps I am a bit fuzzy on it.
 
 > Is there a connection between the confidence interval and the p-value (as one can inform the other), or are these separate tests providing supporting information about our data and hypothesis?
+
+
+## Making Decisions
 
 > If the t-statistic was closer to the critical value but still below it, would that change how we interpret our results?
 
 > How do you know when to reject a null hypothesis? what do you rely on in your data to make that decision?
 
 
-## Making Decisions
+## Test statistics, P-values, and Hypothesis tests
 
-> I'm a little confused on the concept of power in terms of its relationship to the prevalence of type II errors. I understand that power is inversely related to the prevalence of type II errors, with higher power leading to a lower prevalence of type II errors and lower power leading to a higher prevalence of type II errors, but, if we are unable to know exactly what the true mean is to compare it to the null hypothesis, how can we determine whether the particular level of power we have from a particular sample under analysis is high or low in that scenario?
-
-
------
-
-## Degrees of Freedom
-
-> I'm wondering what exactly are degrees of freedom? I've used the term in stats classes before, but does the term "degrees of freedom" always mean the same thing, conceptually?
-
-
+> I am a little confused about the purpose of the t distribution and the t statistic. I understand that the t statistics allows us to compare our data's mean to a model population mean. And that we can find the p value as the area of part of the curve. But it feels abstract, and I'm not sure what we can conclude from knowing these things. How do we know that the t statistic is significant? Can we only find a p value if we can make a t distribution, and thus have a model/predicted mean to compare our mean to? How do we know we can make a t distribution, a linear model, or a normal distribution with our data?
