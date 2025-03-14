@@ -24,7 +24,7 @@ library(tidyverse)
 library(cowplot)
 theme_set(theme_cowplot())
 
-source("QMLS_functions.R")
+source("https://raw.githubusercontent.com/QM-Life-Sci/QMLS_1/refs/heads/main/Lectures/QMLS_functions.R")
 
 ```
 
