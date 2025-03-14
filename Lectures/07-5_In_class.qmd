@@ -24,11 +24,12 @@ csl: evolution.csl
 library(tidyverse)
 library(cowplot)
 
-theme_set(theme_cowplot())
+theme_set(theme_cowplot(font_size = 20))
 
 ```
 
-## Problem Set 6
+
+## Problem Set 6: Pseudocode
 
 > I found developing the loop for making the plots in problem set 6 to be challenging. I understand the basic structure of a loop and pseudo code in general, but am confused on how to determine if an object is a string and how to properly assign the output of the loop to the 'ii'. 
 
@@ -43,6 +44,7 @@ theme_set(theme_cowplot())
 
 > I think I'm a little confused about what confidence intervals actually tell us. Does not not tell us anything about probability? I know it tells us the percent of time values of the mean fall within the interval, but I'm just a little confused about it overall.
 
+
 ## Questions confidence intervals can't answer
 
 - The *probability* that the true mean is greater than 0 is at least 95%.
@@ -53,7 +55,7 @@ theme_set(theme_cowplot())
 
 ## Question confidence intervals can answer
 
-- If we were to *repeat* the *experiment* over and over, then 95% of the time the confidence intervals *contain the true mean*.
+- If we were to *repeat* the *experiment* over and over, then in 95% of the trials, the confidence intervals *will contain the true mean*.
 
 
 ## Making Decisions
@@ -64,12 +66,11 @@ theme_set(theme_cowplot())
 
 > How do you know when to reject a null hypothesis? what do you rely on in your data to make that decision?
 
+
 ## Making Decisions
 
 > I'm a little confused on the concept of power in terms of its relationship to the prevalence of type II errors. I understand that power is inversely related to the prevalence of type II errors, with higher power leading to a lower prevalence of type II errors and lower power leading to a higher prevalence of type II errors, but, if we are unable to know exactly what the true mean is to compare it to the null hypothesis, how can we determine whether the particular level of power we have from a particular sample under analysis is high or low in that scenario?
 
-
-Priors question??
 
 -----
 
