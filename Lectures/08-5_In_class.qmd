@@ -29,41 +29,54 @@ theme_set(theme_cowplot())
 ```
 
 
-## Next week
+## After Spring Break
 
 - Quiz due **Wednesday**
+- PC 2 available Monday
 - Review (start working on) Progress Check 2 before class
+
+![](../images/schedule.png){fig-align="center"}
 
 
 ## Problem set 7
 
-- Why is it not a good idea to combine the data from the two trout studies? Is it because the number of dead fish is smaller than the number of surviving fish? Why does that hinder the ability to combine the data from the two studies, if the studies were designed to be replicates of one another?
+- In PS-7, do we have to set seed before plotting the graph because when I don't set seed, the points shift but the error bars look the same.
 
 
-## Where do coefficients come from?
+## Visualizing multiple predictors
 
-> I did not understand why and how to calculate the coefficient from residuals for each predictors (such as fat coefficient or lactose coefficient from the lecture example) before calculating the multiple regression. What if there are more than 2 predictors for the outcome variable? 
-
-
-
-## Quiz 8.3
-
-- For the summary tables could we go over what exactly they are telling us?
-- What does `Intercept` represent
-- What specifically (other than correlation values) should we be looking for in `ggscatmat()` plots? When should we not proceed?
-- Practice today with PS 8
-    - Review next week
+- I'm pretty confused about the multiple continuous predictors scatterplots. What are we learning from a plot that shows strong relationships between the variables versus one that doesn't, if both could end up showing strong relationships when all three variables are fitted together?
 
 
-## Thinking about multicollinearity
+## Coefficients
 
-- How would you interpret coefficients of predictors when there's a high degree of shared variance among them?
+- When you use the lm function in R, what is the meaning of the top most p value given in the output table. In the case of for example our multiple regression, is this comparing the control to itself?
+- What does it mean if a predictor’s coefficient is negative? 
+- I am a bit confused about how to determine what the estimates mean, particularly for the mixed predictor example attached. Is there something that the estimates always correlate to, so we always know what they mean? Or does it vary based on the data?
 
 
-## Questions deferred to next Friday
+## Quiz 8-3
 
-- Masking
-- Mixed models (and Units 9 and 12)
-- Planned comparisons
 
+## Multiple predictors
+
+- Could we go over masking in more detail?
+- On how p-value changes when we get results from multiple regression vs when we get results by specifying a predictor, how can p-hacking be really avoided since one might be tempted to check both methods? Since an individual predictor has a p-value, of what real significance is the overall p-value?
+
+
+## Multiple predictors
+
+- Do I understand this correctly? Can we just keep adding an infinite amount of predictors in a linear model? I know we shouldn't, but the linear model can technically handle multiple predictors.
+- How can you decide if you have over-fit a statistical model?
+
+
+## Multicollinearity
+
+- I was wondering if we could go over more examples in recognizing multicollinearity besides using the check model graph. If we do conclude we are uncertain about the model because of multicollinearity, what are the next steps? I'm confused how to proceed with the data analysis.
+- I was interested in knowing a little bit more about the correlation numbers, and why there might be some discussion about what correlation values are too much. You mentioned 0.25, 0.5, and 0.8 as different guidelines, but this seems like such a huge jump between those. I'm not sure how one decides when it is good to use one over the other.
+
+
+## Multicollinearity
+
+- I have read that some authors use a threshold (vif 5 or 10) to discard variables that co-variate strongly, can we remove variables of the model by just using the correlation matrix (by eye ?) or do you suggest a more non-subjective method to do this process?
 
