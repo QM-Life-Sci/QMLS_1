@@ -17,7 +17,12 @@ csl: evolution.csl
 ---
 
 
-## Course Evaluations
+## From earlier
+
+When looking at a linear model, what can cause predictors to cause over-dispersion and under-dispersion of response variables? 
+
+
+# Course Evaluations
 
 - Instructor specific (so there are 2 - sorry!)
 - Already have an email
