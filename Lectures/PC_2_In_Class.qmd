@@ -31,7 +31,7 @@ theme_set(theme_cowplot())
 1. Transformations & Diagnostics
 1. Loops & Functions - final activity
 
-Coming soon: random effects
+Coming soon: Random effects
 
 
 ## Data Wrangling: Factors
@@ -64,11 +64,13 @@ See Example in PS8 & `forcats` package
 
 ![](https://i.imgur.com/oIqWNJg.jpg){fig-align="center" width=90%}
 
+
 ## CIs on effect estimates
 
 > How do we calculate the CI of the effect size to report it together with a P-value?
 
-- CIs for effect sizes are complicated
+- Effects sizes are coming soon
+    - CIs for effect sizes are complicated
 - CIs for parameter estimates are not
 
 
@@ -91,7 +93,44 @@ See Example in PS8 & `forcats` package
 > How can we tell what is the "best" transformation or at least some clues of what to try first. 
 
 
+## Transformations for normality
+
+```{r}
+set.seed(3623468)
+DD <- tibble(
+  x = runif(300, 0, 10),
+  y = rlnorm(300, meanlog = 1)
+)
+
+ggplot(DD, aes(y)) +
+  geom_histogram(fill = "navy") +
+  labs(y = "Count")
+```
+
+
 ## A "Ladder" of Transformations
+
+![](https://zief0002.github.io/bespectacled-antelope/notes/figs/ladder-of-transformations.png){fig-align="center"}
+
+[The rule of the bulge](https://zief0002.github.io/bespectacled-antelope/notes/09-rule-of-the-bulge.html)
+
+
+## Transformations for normality
+
+```{r}
+DD |> 
+  mutate(`sqrt(y)` = sqrt(y),
+         `ln(y)` = log(y),
+         `1 / y` = 1/(y^1),
+         `1 / y^2` = 1/(y^2)) |> 
+  select(-x) |> 
+  pivot_longer(cols = everything()) |> 
+  mutate(name = fct_inorder(name)) |> 
+  ggplot(aes(value)) +
+  geom_histogram(bins = 30, fill = "navy") +
+  facet_grid(name ~ .) +
+  labs(y = "Count")
+```
 
 
 ## Loops & Functions
