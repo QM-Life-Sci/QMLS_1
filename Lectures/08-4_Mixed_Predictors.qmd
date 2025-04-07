@@ -50,12 +50,27 @@ For now:
 ## Modeling energy expenditure
 
 ```{r}
+#| echo: false
+
 M <- read_csv("../data/Molerats.csv", col_types = c("cdd")) |> 
   rename(Caste = caste,
          Mass = ln.mass,
          Energy= ln.energy) |> 
   mutate(Caste = if_else(Caste == "worker", "Worker", "Non-worker"),
          Caste = factor(Caste))
+
+# Do the linear models here and add the predictions
+fm1 <- lm(Energy ~ 1, data = M)
+M <- M |> mutate(pred1 = predict(fm1))
+
+fm2 <- lm(Energy ~ Caste, data = M)
+M <- M |> mutate(pred2 = predict(fm2))
+
+fm3 <- lm(Energy ~ Mass, data = M)
+M <- M |> mutate(pred3 = predict(fm3))
+
+fm4 <- lm(Energy ~ Mass + Caste, data = M)
+M <- M |> mutate(pred4 = predict(fm4))
 
 ggplot(M, aes(x = Mass, y = Energy)) +
   geom_point(size = 4) +
@@ -66,11 +81,14 @@ ggplot(M, aes(x = Mass, y = Energy)) +
 ## Modeling energy expenditure
 
 ```{r}
-ggplot(M, aes(x = Mass, y = Energy, color = Caste)) +
+#| echo: false
+
+NMR <- ggplot(M, aes(x = Mass, y = Energy, color = Caste)) +
   geom_point(size = 4) +
   scale_color_manual(values = wes_palette("Cavalcanti1")) +
   theme(legend.justification = c(0, 1), legend.position = c(0.05, 1)) +
   labs(x = "ln Body Mass (g)", y = "ln Daily Energy Expenditure (kJ)")
+NMR
 ```
 
 
@@ -97,28 +115,21 @@ ggplot(M, aes(x = Mass, y = Energy, color = Caste)) +
 ## 1: Grand Mean
 
 ```{r}
-#| echo: true
-
 fm1 <- lm(Energy ~ 1, data = M)
 ```
 
 ```{r}
-M <- M |> mutate(pred1 = predict(fm1))
-ggplot(M, aes(x = Mass, y = Energy, color = Caste)) +
-  geom_point(size = 4) +
+#| echo: false
+
+NMR +
   geom_line(aes(x = Mass, y = pred1), lwd = 2,
-            color = wes_palette("Cavalcanti1")[5]) +
-  scale_color_manual(values = wes_palette("Cavalcanti1")) +
-  theme(legend.justification = c(0, 1), legend.position = c(0.05, 1)) +
-  labs(x = "ln Body Mass (g)", y = "ln Daily Energy Expenditure (kJ)")
+            color = wes_palette("Cavalcanti1")[5])
 ```
 
 
 ## 1: Grand Mean
 
 ```{r}
-#| echo: true
-
 summary(fm1)
 ```
 
@@ -126,27 +137,20 @@ summary(fm1)
 ## 2: Categorical Only
 
 ```{r}
-#| echo: true
-
 fm2 <- lm(Energy ~ Caste, data = M)
 ```
 
-```{r echo=FALSE}
-M <- M |> mutate(pred2 = predict(fm2))
-ggplot(M, aes(x = Mass, y = Energy, color = Caste)) +
-  geom_point(size = 4) +
-  geom_line(aes(x = Mass, y = pred2, color = Caste), lwd = 2) +
-  scale_color_manual(values = wes_palette("Cavalcanti1")) +
-  theme(legend.justification = c(0, 1), legend.position = c(0.05, 1)) +
-  labs(x = "ln Body Mass (g)", y = "ln Daily Energy Expenditure (kJ)")
+```{r}
+#| echo: false
+
+NMR +
+  geom_line(aes(x = Mass, y = pred2, color = Caste), lwd = 2)
 ```
 
 
 ## 2: Categorical Only
 
 ```{r}
-#| echo: true
-
 summary(fm2)
 ```
 
@@ -154,28 +158,21 @@ summary(fm2)
 ## 3: Continuous Only
 
 ```{r}
-#| echo: true
-
 fm3 <- lm(Energy ~ Mass, data = M)
 ```
 
 ```{r}
-M <- M |> mutate(pred3 = predict(fm3))
-ggplot(M, aes(x = Mass, y = Energy, color = Caste)) +
-  geom_point(size = 4) +
+#| echo: false
+
+NMR +
   geom_line(aes(x = Mass, y = pred3, group = 1), lwd = 2,
-            color = wes_palette("Cavalcanti1")[5]) +
-  scale_color_manual(values = wes_palette("Cavalcanti1")) +
-  theme(legend.justification = c(0, 1), legend.position = c(0.05, 1)) +
-  labs(x = "ln Body Mass (g)", y = "ln Daily Energy Expenditure (kJ)")
+            color = wes_palette("Cavalcanti1")[5])
 ```
 
 
 ## 3: Continuous Only
 
 ```{r}
-#| echo: true
-
 summary(fm3)
 ```
 
@@ -183,19 +180,14 @@ summary(fm3)
 ## 4: Mixed Predictors
 
 ```{r}
-#| echo: true
-
 fm4 <- lm(Energy ~ Mass + Caste, data = M)
 ```
 
 ```{r}
-M <- M |> mutate(pred4 = predict(fm4))
-ggplot(M, aes(x = Mass, y = Energy, color = Caste)) +
-  geom_point(size = 4) +
-  geom_line(aes(x = Mass, y = pred4, color = Caste), lwd = 2) +
-  scale_color_manual(values = wes_palette("Cavalcanti1")) +
-  theme(legend.justification = c(0, 1), legend.position = c(0.05, 1)) +
-  labs(x = "ln Body Mass (g)", y = "ln Daily Energy Expenditure (kJ)")
+#| echo: false
+
+NMR +
+  geom_line(aes(x = Mass, y = pred4, color = Caste), lwd = 2)
 ```
 
 
