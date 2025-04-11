@@ -663,9 +663,9 @@ dec.plot <- ggplot(gall, aes(x,y, group = group, color = -log10(P))) +
 dec.plot
 ```
 
-<span style="font-size:60%;">
+:::{.right}
 Figure inspired by Ian Dworkin
-</span>
+:::
 
 
 ## Problems with All or Nothing Thinking
@@ -673,7 +673,6 @@ Figure inspired by Ian Dworkin
 Null hypothesis significance testing is often used inappropriately as an all or nothing decision-making tool.
 
 ```{r}
-
 nhst.plot <- ggplot(gall, aes(x,y, group = group, color = Significant)) +
   geom_line(linewidth = 3) +
   geom_point(data=gall, aes(Effect,y,color = Significant), size = 5) +
@@ -686,7 +685,6 @@ nhst.plot <- ggplot(gall, aes(x,y, group = group, color = Significant)) +
         axis.ticks.y = element_blank())
 
 nhst.plot
-
 ```
 
 

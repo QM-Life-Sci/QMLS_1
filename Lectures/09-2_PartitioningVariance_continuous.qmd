@@ -48,7 +48,6 @@ Datasets
 
 ![](../images/TF_variance_fig.png){fig-align="center" width="65%"}
 
-<span style="font-size:50%;">Adapted from Tabachnick and Fidell [-@Tabachnick2018-tl]</span>
 
 :::
 
@@ -60,6 +59,9 @@ Datasets
 
 ::::
 
+:::{.right}
+Adapted from Tabachnick and Fidell [-@Tabachnick2018-tl]
+:::
 
 
 ## Multiple Regression Makes a Composite Variable
