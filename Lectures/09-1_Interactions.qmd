@@ -43,29 +43,27 @@ Datasets
 -->
 
 ```{r}
-
-MM <- read_csv("../data/Molerats.csv", col_types = c("cdd")) |> 
+NMR <- read_csv("../data/Molerats.csv", col_types = c("cdd")) |> 
   rename(Caste = caste,
          Mass = ln.mass,
          Energy= ln.energy) |> 
   mutate(Caste = if_else(Caste == "worker", "Worker", "Non-worker"),
          Caste = factor(Caste))
 
-fm4 <- lm(Energy ~ Mass + Caste, data = MM)
+fm4 <- lm(Energy ~ Mass + Caste, data = NMR)
 
-MM <- MM |> mutate(pred4 = predict(fm4))
-ggplot(MM, aes(x = Mass, y = Energy, color = Caste)) +
+NMR <- NMR |> mutate(pred4 = predict(fm4))
+ggplot(NMR, aes(x = Mass, y = Energy, color = Caste)) +
   geom_point(size = 4) +
   geom_line(aes(x = Mass, y = pred4, color = Caste), lwd = 2) +
   scale_color_manual(values = wes_palette("Cavalcanti1")) +
-  theme(legend.justification = c(0, 1), legend.position = c(0.05, 1)) +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.05, 1)) +
   labs(x = "ln Body Mass (g)", y = "ln Daily Energy Expenditure (kJ)")
-
 ```
 
 
 ## Interactions
-
 
 What if the the effect of body mass on energy expenditure depends on caste?
 
@@ -74,21 +72,20 @@ What if the the effect of body mass on energy expenditure depends on caste?
 How do we model that?  
 
 
-
 ## Interactions
 
 ```{r}
-fm5 <- lm(Energy ~ Mass * Caste, data = MM)
+fm5 <- lm(Energy ~ Mass * Caste, data = NMR)
 ```
 
 ```{r}
-MM <- MM |> mutate(pred5 = predict(fm5))
-ggplot(MM, aes(x = Mass, y = Energy, color = Caste)) +
+NMR <- NMR |> mutate(pred5 = predict(fm5))
+ggplot(NMR, aes(x = Mass, y = Energy, color = Caste)) +
   geom_point(size = 4) +
   geom_line(aes(x = Mass, y = pred5, color = Caste), lwd = 2) +
   scale_color_manual(values = wes_palette("Cavalcanti1")) +
-  theme(legend.justification = c(0, 1),
-        legend.position = c(0.05, 1)) +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.05, 1)) +
   labs(x = "ln Body Mass (g)",
        y = "ln Daily Energy Expenditure (kJ)")
 ```
@@ -147,7 +144,6 @@ Balanced data is the best to work with.
 
 
 ## Visualizing factorial data
-
 
 ```{r}
 ggplot(BM, aes(x = Nitrogen, y = Biomass, color = Phosphorous)) +
