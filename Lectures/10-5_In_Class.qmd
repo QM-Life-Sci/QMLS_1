@@ -23,6 +23,7 @@ csl: evolution.csl
 
 library(tidyverse)
 library(ggsci)
+library(wesanderson)
 
 theme_set(theme_classic())
 ```
@@ -156,3 +157,53 @@ fm5 7 119.48      19.27   0.00   1.00 -43.40
 - For cross validation, I understand we need training and test sets to some from the same population, but do they also need to come from the same group? Ex. if I have one group of injured and one group of sham, do I need to perform cross validation on models per group or for all the data?
 - How would you choose what subsets of your population to use for each model?
 - Quiz 4
+
+
+## Energy expenditure in naked mole rats
+
+```{r}
+M <- read_csv("../data/Molerats.csv", col_types = c("cdd")) |> 
+  rename(Caste = caste,
+         Mass = ln.mass,
+         Energy= ln.energy) |> 
+  mutate(Caste = if_else(Caste == "worker", "Worker", "Non-worker"),
+         Caste = factor(Caste))
+
+ggplot(M, aes(x = Mass, y = Energy, color = Caste)) +
+  geom_point(size = 4) +
+  scale_color_manual(values = wes_palette("Cavalcanti1")) +
+  theme(legend.justification = c(0, 1), legend.position = c(0.05, 1)) +
+  labs(x = "ln Body Mass (g)",
+       y = "ln Daily Energy Expenditure (kJ)")
+```
+
+
+## Fit different models to these data
+
+1. Categorical only (group mean, no body mass)
+1. Mixed predictors, intercepts varying
+1. Mixed predictors, slopes varying & intercepts varying
+
+```{r}
+#| echo: true
+
+mod1 <- lm(Energy ~ Caste, data = M)
+mod2 <- lm(Energy ~ Mass + Caste, data = M)
+mod3 <- lm(Energy ~ Mass * Caste, data = M)
+```
+
+
+## Cross-validation with `cvFit()`
+
+```{r}
+#| echo: true
+
+library(cvTools)
+
+set.seed(342876)
+cvFit(mod1, data = M, y = M$Energy, K = 5, R = 100)
+cvFit(mod2, data = M, y = M$Energy, K = 5, R = 100)
+cvFit(mod3, data = M, y = M$Energy, K = 5, R = 100)
+
+```
+
