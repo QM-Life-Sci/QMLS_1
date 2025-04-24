@@ -27,6 +27,8 @@ library(cowplot)
 theme_set(theme_cowplot())
 ```
 
+> From the last lecture in week 11, how do we know if our research has multiplicity of tests that we need to account for? 
+
 ## Pseudoreplication
 
 - I am struggling to wrap my head around the idea of replication and pseudoreplication.
