@@ -27,57 +27,74 @@ library(cowplot)
 theme_set(theme_cowplot())
 ```
 
-> From the last lecture in week 11, how do we know if our research has multiplicity of tests that we need to account for? 
+
+## Course Evaluations
+
+- Available now until May 10th
+- Course
+- Faculty
+    - King
+    - Middleton
+- [https://evaluation.missouri.edu/](https://evaluation.missouri.edu/)
+
 
 ## Pseudoreplication
 
-- I am struggling to wrap my head around the idea of replication and pseudoreplication.
+- I understand that experiments should be designed to attempt to avoid pseudoreplication as much as possible, but there are definitely going to be some experiments, such as those working with specimens from the fossil record, where pseudoreplication is unlikely if not impossible to be avoided due to the inability to assume complete independence of the analyses conducted. Therefore, if pseudoreplication seems to be almost inevitable for analyses based on these sorts of data, would we then be forced to account for the impacts of pseudoreplication in these studies, or are there other methods of experimental design we could use to try to reduce those impacts?
 
-- I'm curious, is pseudoreplication always something to be avoided, or is it more of a neutral phenomenon that becomes a problem when you overstate what you can conclude from your setup?
 
-- What sort of ways might it be useful to report data with limited replication or small sample size without overstating your conclusions?
+## Pseudoreplication
 
-- Quiz 11-1
+- I'm interested to know how we can distinguish between pseudoreplication and true replication in behavioral and ecological research. I know it might depend on the question that we are willing to answer, but in those kind of studies where there are no experimental settings I find it a bit difficult to distinguish.
+- How are pseudoreplication, random, and nested terms related and/or different? Does adding the random and nested terms to the model help avoid pseudoreplication?
+- There are experiments that are difficult to have a replicate usually by limited sample size or resources. How can we take advantage of the information gathered considering that there are no replicates? Would it make the study less robust?
 
-## ICC 
 
-- How does the ICC provide info on the degree of similarity among observations within the same group, and what considerations should we keep in mind when interpreting ICC values in studies?
+## Repeatability
 
-## Decision Errors: General
+- Is it correct to interpret ICC as power?
 
-- Given that we learned about errors and false positive rates, is there any way to ensure that any conclusions we made aren't due to an error? Let's say, we have small size due to measuring vertebrates. Like Kevin mentioned, it is harder to achieve some of these numbers needed for adequate power for some model organisms.
 
-- How do we balance the need to control the familywise error rate to maintain the overall Type I error rate while avoiding overly conservative adjustments that may compromise statistical power?
+## Power
+
+- Effect size in power test is what is the minimum difference that I would like to detect?
+- Could we go over what all factors will affect statistical power?
+- Can you run power analyses for mixed models? 
+
+
+## Power
+
+- I have a question about how to figure out what our sample sizes need to be for our experiments, but I'm not sure I'm thinking about it correctly. When determining what our sample size should be for a given experiment, how do we know what difference in the data we want to be able to detect? Can we think "I want to detect a significant difference", so I need to have a certain amount of power, so I need a certain sample size?
+
+
+## Power {.smaller} 
+
+- I'm really confused on how to estimate certain variables when determining power/sample size/ alpha. For example, if I want to find the sample size I need for 0.8 power and alpha of 0.05, how can I estimate effect size? Specifically if I'm looking at many different outcome variables and not just using one model and statistical test, AND if I have no idea what the actual outcome will be compared to what is expected (example, I know what is normal biologically, and I hypothesize that the change in outcome will be lower than normal, but how do I pick a d that accurately reflects the amount of effect GIVEN my idea is just a hypothesis and I have no distinct idea of the amount of variation?)
+
+
+## Power
+
+- I understand we need to calculate the power in order to estimate the chances of false positives and false negatives and estimate the best sample size, but when and why do we need to look at the distribution of p values, particularly the sequential Benferroni distribution?
+
+
+## Best practices
+
+- I have a broad question. Are there any "good practices" or "standards" for reporting power and repeatability? These seem like important steps during the formulation and analysis of an experiment. Still, outside of the Type I and Type II errors and power, I have not heard of these topics and have never seen them reported in academic journals/studies. 
+
 
 ## Multiple Comparisons {.smaller} 
 
-- I am not understanding when/how to choose whether or not to use a regular Tukey test or Planned set of comparisons. You mentioned in the lectures that doing Planned set of comparisons can sometimes lead to "p-hacking", so I am still not sure when it is or isn't okay to pick and choose a specific set of comparisons. 
+- Do we have to correct and adjust p values for any type of analyses? Or is it focused on datasets such as DNA, SNPs analyses where there are multiple tests run at once?
+- Can you perform MCP (like FDR) on p values from different types of tests? For example, I'm confused if I perform this on the p values I get from every ANOVA, t-test, etc. from my entire data set when using different outcome variables. Like is this done on everything at the end or within explorations into one answer?
+- What is the difference between doing Bonferroni as a correction before post hoc tests and doing it as a MCP?
+- I also am really confused on if you're supposed to run multiple models for one hypothesis (like additive, random predictors, etc) and then just use this on the results from those models? 
 
-- In genomics studies where researchers typically perform numerous statistical tests simultaneously, such as testing the association between genetic variants (e.g., single nucleotide polymorphisms, or SNPs) and a trait of interest. With thousands or millions of tests, the likelihood of observing false positives (Type I errors) increases, would you suggest the use of  pFDR, FDR or FWER in this situation?
-
-- I'm curious about some of the points that were hinted at on the last slide of 11-4. In a case where, for example, we're performing differential expression and have a dataset of 4 groups. We want to perform a differential expression for each pairwise combination of groups (1-2,1-3,1-4, ..,, etc). It is typical to correct for multiple hypotheses within each comparison (i.e. for each gene tested in 1-2 comparison). Should the p values be corrected for all hypotheses tested in the experiment as a whole?  What should be considered when making this decision?
 
 ## Multiple Comparisons
 
-- In the last lecture, you talked about having ranges of pvalues. Where do those values come from? Do you combine the p values from different kinds of tests?
+- I thought I understood false discovery and false positive rate, but my quiz answers say otherwise. Could we discuss the difference?
+- Quiz 11-4
 
-- In reference to lecture 4 about decision making and using multiple comparison procedures. At what point in your data do you decide it is necessary to run this? When in real life will we come across having to determine when to use these procedures?
-
-- I understand that we should keep from doing nothing when doing multiple tests, but then why is it that some sources recommend doing nothing as an approach?
-
-## Multiple Comparisons {.smaller}
-
-- I'm having trouble understanding the difference between False Discovery Rate and False Positive Rate. In lecture 11-4, slide 17, the two equations are exactly the same. 
-
-- How pFDR differs from FDR? Considering FWER, FDR, and pFDR, please clarify which is best for multiple comparisons. 
-
-- I'm still a bit confused on pFDR and q-values. Specifically when we should use pDFR instead of FDR and vice versa. 
-
-- I'm also confused about q values.  What situations would knowing the q value be more useful over p values?
-
-- How FWER, FDR and pFDR differ from each other?
-
-- Quiz 11-4 Q1
 
 ## A menu of MCPs {.smaller}
 
@@ -98,7 +115,7 @@ theme_set(theme_cowplot())
 
 Proposed by Benjamini and Hochberg [-@Benjamini1995-cw].
 
-- Also see Curran-Everett (2000).
+- Also see Curran-Everett [-@Curran-Everett2000-qv].
 
 Controls FDR (i.e., rate of Type I errors), rather than FWER
 
@@ -124,5 +141,10 @@ $$\mbox{FDR} = \frac{\mbox{n False Positives}}{\mbox{n All Positives}}$$
 $$FPR = \frac{5}{100} = 0.05$$
 
 $$FDR = \frac{5}{22} = 0.227$$
+
+## What next? {.smaller}
+
+When going over things in lecture, I feel like I understand and can apply it to the given problems. However, I'm having a lot of issues trying to extrapolate the information from this class to my own data analysis, specifically for more complex data with extra variables and possible nested predictors. I feel like I generally understand things conceptually, but I can't describe it in my own words or apply it to complex problems outside of the course which makes me think I don't actually understand what I'm doing. Do you have any recommendations for better conceptualization and understanding of the math / actions behind what we are doing if we need more examples and explanations than from lecture videos, rather than just resources explaining how to do it? (The lectures, which generally come from a place of teaching what we are doing, not just how to do it, are great; but I feel like I need to hear it again or in a different way for some topics. I'm having a hard time finding resources that explain the concepts and not just how to do them)
+
 
 ## References
