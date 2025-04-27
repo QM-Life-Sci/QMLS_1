@@ -17,7 +17,6 @@ csl: evolution.csl
 ---
 
 
-## Motivation: the curse of dimensionality
 
 ```{r}
 #| label: setup
@@ -37,6 +36,8 @@ library(knitr)
 
 theme_set(theme_cowplot())
 ```
+
+## Motivation: the curse of dimensionality
 
 Multivariate data is not just a challenge for visualization.
 
