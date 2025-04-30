@@ -233,7 +233,7 @@ pwr.r.test(r = 0.4, n = 15)
 
 Glanville Fritillary butterflies are a model organism for studying dispersal and metapopulation dynamics, because they live in isolated meadows.
 
-![](https://imgur.com/d8mwElE.jpg){fig-width=50%}
+![](https://i0.wp.com/www.dorsetbutterflies.com/wordpress/wp-content/uploads/2021/05/Glanville-Fritillary-Mark-Pike-2021-03.jpeg){fig-width=50%}
 
 
 ### Activities
