@@ -17,7 +17,7 @@ csl: evolution.csl
 ---
 
 
-# Course Evaluations Reminder
+## Course Evaluations Reminder
 
 - Instructor specific (so there are 2 - sorry!)
 - Already have an email
@@ -34,51 +34,38 @@ csl: evolution.csl
     - Optional
     - Recorded
 
+
 ## PS 11 Stretch Question
 
-## From earlier
-
-When looking at a linear model, what can cause predictors to cause over-dispersion and under-dispersion of response variables? 
+- Question about PS11: When finding FWER, what is the difference between finding the estimation of the number of times a false positive occurs (like mean of all false positives) versus finding the FWER using the equation $1-(1-\alpha)^m$? In the code, should we be finding an estimation of the number of times a false positive occurs or using the mpfr()? Wouldn't the mpfr() always be the same regardless of our p values if the number of tests and alpha is the same?
 
 
+## Randomization
+
+- I'm not very clear about the difference between random sampling and randomization. 
+- Why do non-parametric tests have such limited power in comparison to randomization?
+- In randomization (12-1, slide 24), the probability of the tails refers to the minimum probability threshold to detect differences is that "new empirical p value" obtained or does that value actually refers to a hypothesis test, checking whether there is an effect or not?
+- Quiz 12-1
 
 
+## GLM
 
------- last year
-
-
-## Phylogenetic non-independence
-
-I am curious about how to create a multilevel model in cases when the groups are staggered unevenly in how individuals within the group are related to each other. ... Phylogenetic relationships can get complicated quickly and different taxa will have a different shared evolutionary history with other taxa in the dataset, so I would expect that the kinds of grouped examples from lecture 9-4 would only work in a few specific circumstances regarding phylogenetic comparisons. Is there a standard way of weighting the contribution of each datapoint based on known non-independence (or a proxy for non-independence) to the other datapoints within the dataset?
+- Could we go over how to choose the appropriate link function for GLMs?
+- Could you reiterate the difference between glm vs glmm? Can glmm handle non-normal distributions? Can glm handle random terms and nesting? Broadly, what is a summary of some of the key things to look for in the experimental design, summary stats, and research questions to guide the decision of what model to select?
 
 
-## Repeatability and ICC
+## GLM
 
-- Let's say I am using ICC for data with a small sample size which may lead to a less stable estimate of reliability. Are there models that I can apply to get a more reliable estimate from data with small sample size?
-
-
-## PS 11
-
-- I am somewhat confused with the pFDR analysis. Could we go over setting up a pFDR analysis? 
-- I struggled with the last several chunks of PS_11, where we use the code for randomization.  
-- Also, could we maybe go over plotting FPR, FWER, FDR against the threshold?  
+- You mentioned that interpreting results from logistic regression can be difficult when we have multiple predictors. What if the there is no multicollinearity? 
+- I'd like to go over quiz two. How can you tell that your value is skewed a biologically significant amount (as opposed to being skewed an insignificant amount) when you only have the intercept for your predictor? 
+- In quiz 2. What does it mean to model in function to intercept 1, why was there no predictor variable?
 
 
 ## Dimensionality reduction
 
-- In regards to PCA, during lecture it appears the number of principal components is equal to the number of variables being measured on the small scale examples. Would that still be true when looking at datasets with very large numbers of measured variables? If not, why?
-
-
-## Dimensionality reduction
-
-- I'm still pretty confused about how to read PCA plots, specifically the circle graphs (quiz 12-3). Could you go over this quiz?
-    - Quiz 12-3
-
-
-## Non-linear dimensionality reduction
-
-- I sometimes see that other dimensionality reduction techniques should only be used for data visualization and not used as inputs for modeling or in downstream analyses. Is this the case for UMAP and t-SNE? If so, why?
-- I typically have very large data sets, and in papers that utilize similar data sets, I see variations of PCA, t-SNE, and UMAP utilized. I think I understand that PCA is typically linear vs the other two, but then you add in PCoA and it’s just confusing for my brain on which one is appropriate for which type of data set
+- Additional question about PCA - if you know your predictors are highly correlated, is it a good idea to run a PCA and determine the relationship? 
+- In Quiz 3, the PCA analysis tested 4 components, with the percentages of the total variance accounted for by each component ranging from around 69% to 3%. Is there a percentage cutoff to exclude certain components?
+- Quiz 12-3
 
 
 ## Dimensionality reduction
@@ -90,24 +77,6 @@ Tabachnick and Fidell (2019)
 </div>
 
 
-## Dimensionality reduction
+## Multivariate statistics
 
-- One thing I've wondered about presenting PCA plots is whether it would make sense to scale the plot axes to be proportional to the percentages they represent (for example, if PC1 represents 50% of variance and PC2 represents 25%, making the PC1 axis twice as long as the PC2 axis) instead of setting them to the same heights. I usually see PCAs plotted as squares, which makes sense for space reasons in a publication, but if PC1 and PC2 are very different from one another, it feels like setting the axes equal to each other would distort the smaller one to make it seem like it has a larger relative influence on the data.
-
-
-## Dimensionality reduction
-
-![](https://cdn.masto.host/ecoevosocial/cache/media_attachments/files/112/282/149/649/616/584/original/814b287441628caf.png)
-
-
-## Randomization
-
-- How do we interpret the results of the randomization histograms from 12-01.  Is the vertical red line being closer to the edge of the plot better or worse.
-    - Quiz and Lecture 12-1
-
-
-## Odds ratios
-
-- In reference to the 12-2 lecture, why would it be beneficial to visualize odd ratios in a graph? It seems very abstract and less clear than a single numeric value. 
-    - Lecture 12-2
-
+- We’ve talked a lot about how to deal with more than one predictor as well as multiple ways to work with them and their relationships, but what about when you have multiple related outcome variables? Like if you measure properties of a cell, the properties changing will be your outcome but it can be recorded with many different things. Would this just be running the same model on as many outcome variables as you have? Is it wrong to create different models that best fit for outcome variables that you know are all generally related? Is this considered a violation of independence since the outcome variables are related, or not since the samples themselves are independent?
