@@ -217,7 +217,7 @@ tibble(F_stats) |>
 mean(F_stats >= F_stats[1])
 ```
 
-Based on this analysis via randomization, is there a significant difference in survival time? HOw does this results compare to the analysis you did on the transformed data in PS 08?
+Based on this randomization analysis, is there a significant difference in survival time? How does these results compare to the analysis you did on the transformed data in PS 08?
 
 > The empirical P-value is ~0.166 (your answer will vary slightly due to sampling variation). The P-value for the overall ANOVA on the transformed data was 0.224. So the results are quite similar.
 

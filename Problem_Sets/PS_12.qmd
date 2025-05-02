@@ -183,7 +183,7 @@ Refer to the key for PS 08 to refresh yourself with the question and adapt the c
 
 ```
 
-Based on this analysis via randomization, is there a significant difference in survival time? HOw does this results compare to the analysis you did on the transformed data in PS 08?
+Based on this randomization analysis, is there a significant difference in survival time? How does these results compare to the analysis you did on the transformed data in PS 08?
 
 > 
 

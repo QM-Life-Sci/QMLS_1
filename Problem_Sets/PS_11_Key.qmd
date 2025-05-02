@@ -349,7 +349,7 @@ How many P-values are associated with q-values less than 0.05?
 
 > 29 (of 32 nominally less than 0.05)
 
-What is an adjusted $\alpha$-level that will control pDFR at 0.05?
+What is an adjusted $\alpha$-level that will control pFDR at 0.05?
 
 ```{r}
 # FIXME
