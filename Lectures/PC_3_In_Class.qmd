@@ -26,17 +26,19 @@ theme_set(theme_cowplot())
 ## Course Evaluations
 
 - Instructor specific (so there are 2 - sorry!)
+- Open until May 10th
 - Already have an email
-- Open until May 4 (today is the last day!)
 - Can't find email? 
-    - Go to [evaluations.missouri.edu](https://evaluation.missouri.edu/)
-    
+    - Go to [evaluation.missouri.edu](https://evaluation.missouri.edu/)
+
+
 ## Wrapping up the semester
 
-- Grades are due Tuesday, May 14th
+- Grades are due Tuesday, May 20th
 - Please look to see if you have incomplete assignments and submit them
-  - Including posting questions or replies
+    - Including posting questions or replies
 - If you are unable to complete your missing assignments, set up a time to talk to us about an incomplete
+
     
 ## Course Materials
 
@@ -65,14 +67,23 @@ theme_set(theme_cowplot())
     - Advanced R Programming
 
 
-## PS 11 FDR / pFDR
+## Problem set 12
 
-- I struggled with the question from problem set 11 related to calculating the FPR, FDR, and FWER over a range of thresholds given the Shuffle_Expression.rds data. I got lost in the weeds on this one when working with the multiple iterations.
+- Could we go over interpreting the results of the analysis for the Heart Transplant Survivorship section in PS 12?
+- I had a question about the parallelization randomization in PS12. What does the function 'future_map_dbl' do? My group for this problem all structured the looping differently and we got slightly different p-values. I would like to walk through this problem again to be sure I am understanding how to set up the structure and flow of randomization. 
+- In PS 12 I didn't understand the point of fitting a linear model with the PC1, and how to interpret those results.
+
+
+## Linear Models
+
+- If interactions (variable1*variable2) have a low power to be detected, should we aim in those cases to have a huge increase in sample size?
+- I think what would help me a lot, is if we went over in summary the different types of linear models and what the values (coefficients, intercept, statistics, etc.) mean practically. At this point, even though I understand much better than at the beginning, I still feel like I default to looking for something significant without thinking too deeply about what the data is saying.
 
 
 ## lm / lme / etc.
 
-- I am still having trouble fully understanding the difference between `lm()` and `lme()` and when to use them.
+- What are the differences between lm() and glm()? When can you use lm() and when can you use glm()?  how do you interpret when you get the same output from both functions? 
+- While selecting a model, how would you choose between lm() and lme() for a new dataset with grouped structure and what criteria (AIC, LRT) could help decide whether to include a random effect?
 
 
 ## What to use when
@@ -106,44 +117,49 @@ theme_set(theme_cowplot())
 ::::
 
 
-## Factorial models
+## Randomization and Non-parametric tests
 
-> "We wish to determine if the rate of interactions varies with sex of the focal animal, the sex of the animal it interacts with, and the interaction between the two (a factorial ANOVA type of linear model). Load the data and generate any plots that you think will help you visualize the patterns in the data." 
-
-- With this one we will make two linear models and then an interaction plot? 
+- Still some studies use traditional non-parametric tests, do you consider that we should never use them again and stick to modern methods like randomization? Are they still useful for some context?
 
 
-## Kinds of R^2^
+## Model Comparison
 
-> What difference does it typically make to use the adjusted R-squared value instead of just the R-squared value in a multiple regression case?
-
-- R^2^: Proportion of variance explained
-- Adjusted R^2^: Proportion of variance explained, adjusted for the number of predictors ($\leq$ R^2^)
-
-<center>
-*What is R^2^ used for?*
-</center>
+- I'd be interested in reviewing how to determine the predictive strength of a particular linear model through likelihood ratio, AICc, and cross-validation, particularly when comparing the results of each of these tests on a particular model to one another, and what information each of these tests can provide about the linear model itself in addition to an indication of predictive strength. 
 
 
-## Logistic regression output (PS 12)
+## Model comparison: When to use what method
 
-- I would like to go over how to interpret the summary outputs for linear models again, just to make sure I understand what they're doing. In particular, how to interpret intercepts, standard errors, F-statistics, and z-values (for GLMs), and what those values are saying about the dataset or the model.
-- I would also like to go over it. I struggled to interpret the summary table of logistic regression.
-- I also had a hard time getting conclusions from the PCA in PS12, I thought gravel was the preferred sediment, but the plot at the end only shows mud and sand.
+1. Likelihood ratio tests
+2. AIC(c) / Model weights
+3. Cross-validation
 
-
-## Loops & Simulation
-
-- What are the factors to be considered when choosing a test statistic that will be used to evaluate the hypothesis being tested?
-- I am having trouble with the guppies question from PC3. I am trying to set up a loop to run the linear model and extract the p-values, but I'm unsure where to start.
-- I would also really like to discuss this part of the Progress Check. I assume that we are building from what we did with PS11, but I am still having trouble modifying the code to adhere to a simulation that creates both lm and lme data.
+All will generally agree.
 
 
-## Timing
+## Model comparison: Possible goals
 
-- In PS_12, when I try the first randomization activity, it takes much longer on my PC than it indicates in the problem set.  Further, when I try randomization on the heart transplant data it also takes forever (428.61 seconds).  Is this a computer memory issue on my part or should I expect longer processing times the higher the reps are? 
+::: {.incremental}
+
+- Explicit P-value comparisons between models (LRT)
+- Out-of-sample predictive ability: qualitative (AICc)
+- Relative model support (AICc -> model weights)
+- Out-of-sample predictive ability: quantitative (cross-validation)
+
+:::
 
 
-## And finally...
+## PCA
 
-- Could you explain the code chunk that produced slide 27 of lecture 12-2?
+- In some studies, PCA is used to discriminate or differentiate groups. Is it a correct approach as they don't use anything else like fitting a model or any posterior analysis to validate.
+- My question stems from a conversation I saw somewhere where some people argued that PCA should only be used for modelling linear relationships and not in non-linear relationships cases. Essentially, does PCA suffice for most data as per linear vs non-linear? 
+
+
+## Progress Check 3
+
+- For the guppy problem, we are asked to "perform this simulation (lm and lme models) 5,000 times, storing the *P*-values from each iteration into either separate vectors or a `tibble`/`data.frame` with one column for each analysis (lm and lme)." Could we review how to return just the P values from the general lm?
+- Re: making `Diff_Elev` predicted by just a grand mean (Intercept term) Wouldn't the model with Diff_Elev predicted by treatment already have this intercept term? Does it need to be its own model?
+
+
+## Tips
+
+Could we please go over useful tips you would recommend we do to stay caught up with relevant functions within R?
