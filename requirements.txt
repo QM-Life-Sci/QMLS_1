@@ -1,0 +1,81 @@
+# R Package Requirements for QMLS_1 Project
+# Install these packages using: install.packages(c("package1", "package2", ...))
+
+# Core Data Management & Tidyverse
+tidyverse
+readxl
+broom
+
+# Data Visualization
+ggplot2
+cowplot
+viridis
+wesanderson
+ggsci
+latex2exp
+ggtext
+ggrepel
+ggforce
+ggridges
+ggflowchart
+ggpubr
+plotly
+GGally
+patchwork
+magick
+see
+
+# Statistical Modeling & Analysis
+lmtest
+car
+glmmTMB
+lme4
+nlme
+performance
+multcomp
+effectsize
+AICcmodavg
+
+# Bayesian Analysis
+cmdstanr
+bayesplot
+posterior
+rethinking
+
+# Power Analysis & Sample Size
+pwr
+ICC
+DescTools
+
+# Specialized Statistical Methods
+qvalue
+cvTools
+epiDisplay
+Rmpfr
+
+# Multivariate & Dimension Reduction
+MASS
+smatr
+factoextra
+mvtnorm
+
+# Phylogenetic & Spatial Analysis
+ape
+ggtree
+phytools
+sf
+rnaturalearth
+rnaturalearthdata
+
+# Data Presentation
+knitr
+gt
+sjPlot
+pander
+
+# Utilities & Performance
+tictoc
+furrr
+forcats
+paletteer
+palmerpenguins
