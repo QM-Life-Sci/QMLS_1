@@ -1,7 +1,16 @@
-# Lecture slides
+# Setup
+# Linux needs
+#  - cmake
+#  - libmagick++-dev
+#  - libgmp-dev
+#  - libudunits2-dev
+#  - libv8-dev
+#  - libmpfr-dev
+#  - https://rspatial.github.io/terra/
+
 options(warn = 2)
 
-install_all_packages <- TRUE
+install_all_packages <- FALSE
 
 if (install_all_packages) {
   if (!require("pak", quietly = TRUE)) {
@@ -57,7 +66,11 @@ if (install_all_packages) {
     "pander",
     "tictoc",
     "furrr",
-    "paletteer"
+    "paletteer",
+    "RCurl",
+    "png",
+    "MCMCglmm",
+    "kinship2"
   ))
 
   pak::pkg_install("stan-dev/cmdstanr")
@@ -71,7 +84,7 @@ if (install_all_packages) {
   BiocManager::install("ggtree")
 }
 
-
+# Lectures
 qmds <- list.files(
   pattern = "^[0-9]*-[1-6].*qmd$",
   path = "Lectures/",
@@ -83,6 +96,7 @@ for (qq in qmds) {
   syscall <- paste0("quarto render ", qq, " --to revealjs")
   system(syscall)
 }
+
 
 ## Problem sets
 
