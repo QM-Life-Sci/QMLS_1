@@ -61,10 +61,10 @@ theme_set(theme_cowplot())
 
 
 ## When is the independence assumption violated?
-  
+
 1. Repeat sampling over time of the same location, individual, or other experimental unit
 2. When there is a hierarchical structure to the data
-3. Spatial relationships    
+3. Spatial relationships
 4. Shared ancestry
     - Phylogenetic relatedness
     - Genetic relatedness
@@ -78,7 +78,7 @@ Hemoglobin levels in six species of rodents
 ```{r}
 ex.dat <- data.frame(Altitude = c(0, 1400, 2500, 3500, 4500, 6000),
                      Hemoglobin = c(9, 15, 11, 21, 16, 20),
-                     Clade = rep(c('Low', 'High'),each = 3)) 
+                     Clade = rep(c('Low', 'High'),each = 3))
 ggplot(ex.dat, aes(x = Altitude, y = Hemoglobin)) +
   geom_point(size = 6) +
   theme(axis.title = element_text(face = "bold"))
@@ -116,14 +116,14 @@ Is a given genotype associated with a phenotype of interest?
 - Consider two populations with ancestry differences
 - Not accounting for ancestry differences can lead to spurious associations
 - Population structure & relatedness are issues for all genetic association studies
-  
+
 
 ## Genotype-Phenotype Relationships
 
 ```{r}
 set.seed(23141)
 
-pop <- data.frame('population' = rep(c('A', 'B'), each = 20), 
+pop <- data.frame('population' = rep(c('A', 'B'), each = 20),
                   'genotype' = c(c(rep(0, 14), rep(1, 6)),
                                  c(rep(0, 3), rep(1, 17))),
                   'phenotype' = c(rnorm(20, 5), rnorm(20, 3)))
@@ -134,7 +134,7 @@ ggplot(pop, aes(x = as.factor(genotype), y = phenotype)) +
              size = 2) +
   labs(x = 'Genotype', y = "Phenotype") +
   stat_summary(fun = mean, geom = "point", size = 5,
-               color = "grey60") + 
+               color = "grey60") +
   stat_summary(fun.data = mean_se, geom = "errorbar",
                width = 0.05,
                color = "grey60", size = 1)
@@ -153,7 +153,7 @@ ggplot(pop, aes(x = as.factor(genotype), y = phenotype,
              size = 2) +
   labs(x = 'Genotype', y = "Phenotype") +
   stat_summary(fun = mean, geom = "point", size = 5,
-               color = "grey60") + 
+               color = "grey60") +
   stat_summary(fun.data = mean_se, geom = "errorbar",
                width = 0.05,
                color = "grey60", size = 1) +
@@ -213,8 +213,8 @@ pts <- tribble(
   1707.500, 791.500,
   1945.500, 843.500,
   2077.500, 893.500
-) |> 
-  rownames_to_column(var = "Site") |> 
+) |>
+  rownames_to_column(var = "Site") |>
   mutate(lat = dim(img)[1] - lat)
 
 ggplot(data = pts, aes(long, lat, label = Site)) +
@@ -240,7 +240,7 @@ ggplot(data = pts, aes(long, lat, label = Site)) +
 - Pairwise distances between all points
 
 ```{r}
-pts <- pts |> 
+pts <- pts |>
   mutate(across(.cols = where(is.numeric), ~ .x / 500 * 30))
 dist(pts) |> print(digits = 2)
 ```
@@ -325,7 +325,7 @@ ggtree(tree2, aes(color = group), ladderize = FALSE) +
 
 ```{r}
 tree <- read.nexus("../data/49LBR70.PDI.nex")
-lbr <- read_excel("../data/49LBR.xlsx") |> 
+lbr <- read_excel("../data/49LBR.xlsx") |>
   as.data.frame()
 lbr$Clade <- relevel(as.factor(lbr$Clade), ref = "Ungulates")
 row.names(lbr) <- lbr$Species
@@ -545,7 +545,7 @@ $$h^2 = \frac{V_a}{V_a + V_r}$$
 ```{r}
 #| echo: true
 
-h2 <- fm1$VCV[, "animal"] / 
+h2 <- fm1$VCV[, "animal"] /
   (fm1$VCV[, "animal"] + fm1$VCV[, "units"])
 ```
 
@@ -620,5 +620,3 @@ HPDinterval(Genet_Corr)
 
 ::: {#refs}
 :::
-
-

@@ -49,7 +49,7 @@ Datasets
 - Try not to store data redundantly (same data in multiple files)
 - Compartmentalize datasets and then join them together via one or more shared *keys*
 
-Relations are always built between pairs of tables. 
+Relations are always built between pairs of tables.
 
 - What uniquely defines these relationships?
 
@@ -59,32 +59,32 @@ Relations are always built between pairs of tables.
 ```{r}
 #| echo: false
 wren_surv <- read_csv("../data/wren_female_surv.csv", show_col_types = FALSE,
-                      col_types = "-cn-nc") |> 
-  rename(longevity = long_years) |> 
-  arrange(ID, longevity) |> 
-  group_by(ID) |> 
+                      col_types = "-cn-nc") |>
+  rename(longevity = long_years) |>
+  arrange(ID, longevity) |>
+  group_by(ID) |>
   summarise(final_obs_year = max(year),
             longevity = max(longevity),
             sex = sex[1])
 
 wren_repro <- read_csv("../data/wren_female_repro.csv", show_col_types = FALSE,
-                       col_types = "-cnnn-n-") |> 
+                       col_types = "-cnnn-n-") |>
   rename(n_offspring = offspring_inde,
-         senescent = final_breed) |> 
+         senescent = final_breed) |>
   mutate(mass = rnorm(n(), mean = 10.5, sd = 1) |> round(digits = 1))
 ```
 
 ```{r}
 #| echo: false
 
-wren_surv |> 
-  slice_head(n = 5) |> 
-  gt() |> 
+wren_surv |>
+  slice_head(n = 5) |>
+  gt() |>
   tab_header("Survival")
 
-wren_repro |> 
-  slice_head(n = 5) |> 
-  gt() |> 
+wren_repro |>
+  slice_head(n = 5) |>
+  gt() |>
   tab_header("Reproductive Success")
 
 ```
@@ -99,11 +99,11 @@ names(wren_surv)
 names(wren_repro)
 ```
 
-- `join_`s will use column names to merge data frames (tibbles). 
+- `join_`s will use column names to merge data frames (tibbles).
 - Can join on non-matching names -- easier to rename columns
 
 
-## Set Operations 
+## Set Operations
 
 ```{r}
 #| echo: true
@@ -143,14 +143,14 @@ union(names(wren_surv), names(wren_repro))
 ```{r}
 #| echo: false
 
-wren_surv |> 
-  slice_head(n = 5) |> 
-  gt() |> 
+wren_surv |>
+  slice_head(n = 5) |>
+  gt() |>
   tab_header("Survival")
 
-wren_repro |> 
-  slice_head(n = 5) |> 
-  gt() |> 
+wren_repro |>
+  slice_head(n = 5) |>
+  gt() |>
   tab_header("Reproductive Success")
 
 ```
@@ -254,7 +254,7 @@ frogs
 In our case here, you can make implicit missing values become **explicit** by using `pivot_wider()` to turn the years into columns
 
 ```{r, eval=TRUE, echo=TRUE}
-frogs |> 
+frogs |>
   pivot_wider(names_from = year, values_from = mass)
 ```
 
@@ -267,7 +267,7 @@ If missing values are not important, you can turn these explicit values into **i
 ```{r, eval=TRUE, echo=TRUE}
 frogs |>
   pivot_wider(names_from = year, values_from = mass) |>
-  pivot_longer(c('2018','2019'), names_to = "year", values_to = "mass", 
+  pivot_longer(c('2018','2019'), names_to = "year", values_to = "mass",
                values_drop_na = TRUE)
 
 ```
