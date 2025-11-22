@@ -4,5 +4,47 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"cSpell.words": [
+			"bayesplot",
+			"Bioc",
+			"Ccmodavg",
+			"cowplot",
+			"effectsize",
+			"factoextra",
+			"furrr",
+			"ggflowchart",
+			"ggforce",
+			"ggpubr",
+			"ggrepel",
+			"ggridges",
+			"ggsci",
+			"ggtext",
+			"ggtree",
+			"glmm",
+			"knitr",
+			"libgmp",
+			"libmagick",
+			"libudunits",
+			"lmtest",
+			"magick",
+			"multcomp",
+			"mvtnorm",
+			"paletteer",
+			"phytools",
+			"plotly",
+			"qmds",
+			"qvalue",
+			"readxl",
+			"revealjs",
+			"Rmpfr",
+			"rnaturalearth",
+			"rnaturalearthdata",
+			"smatr",
+			"syscall",
+			"tidyverse",
+			"viridis",
+			"wesanderson"
+		]
+	}
 }
