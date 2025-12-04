@@ -16,13 +16,6 @@ bibliography: QMLS_Bibliography.bib
 csl: evolution.csl
 ---
 
-```{r}
-#| label: setup
-#| echo: false
-
-
-```
-
 
 ## About us
 
@@ -135,12 +128,12 @@ Progress Checks:
 
 **Friday**: Lectures, "quizzes", readings (when applicable) posted online to Canvas
 
-**Tuesday** at midnight: 
+**Tuesday** at midnight:
 
 - Previous week's problem set submitted through Canvas
 - Peer evaluations
 
-**Thursday** at midnight: 
+**Thursday** at midnight:
 
 - Watch lectures
 - Weekly quizzes
@@ -259,4 +252,3 @@ Asking these questions helps us know how much time you want to spend on these to
 
 
 ## Why would one make slides in R vs. Powerpoint, etc.?
-

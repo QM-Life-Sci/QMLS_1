@@ -92,7 +92,7 @@ Programming
 
 ## What you can expect from us
 
-- Full commitment and engagement in your growth 
+- Full commitment and engagement in your growth
     - We will challenge you
     - We will always answer questions and provide help when asked
 - Clear expectations and directions
@@ -126,4 +126,3 @@ Canvas $\rightarrow$ Modules $\rightarrow$ Resources
 - Statistics resources
 - Programming resources
 - Etc.
-

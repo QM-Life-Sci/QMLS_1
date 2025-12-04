@@ -44,7 +44,7 @@ csl: evolution.csl
 1. *Reproducible* - Given only 1) the raw data and 2) the scripts (i.e., code), one can produce the same set of results and figures. Not almost the same set, the **SAME SET**.
 1. *Replicable* - Can one repeat the same experiment and reach the same conclusion?
 
-In this class, when we discuss reproducible research, this is what we will mean. Outside of this course, these terms are often used more generally or interchangeably. 
+In this class, when we discuss reproducible research, this is what we will mean. Outside of this course, these terms are often used more generally or interchangeably.
 
 
 ## Problems you are trying to avoid
@@ -153,7 +153,7 @@ Raw data should always be read-only. Treat raw data like an endangered species.
 - Resources
     - Markdown information
     - Guides and Tutorials
-    
+
 
 ## Reproducibility is an investment for your future self
 
@@ -162,4 +162,3 @@ Going "the hard way" now is the easy way in the long run.
 Be kind to your future self.
 
 > Your closest collaborator is you six months ago, but you don't reply to emails.
-
