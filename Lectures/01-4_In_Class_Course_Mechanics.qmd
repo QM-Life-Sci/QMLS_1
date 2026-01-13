@@ -167,6 +167,9 @@ Progress Checks:
 "I understand that ... I am trying to understand ..."
 
 
+# "Artificial Intelligence" {background-color="#40666e"}
+
+
 ## Artificial intelligence is not intelligence
 
 - We (unfortunately) use human terms to describe LLMs: "intelligence", "learn", "understand", "think", "know", "hallucinate"
@@ -174,16 +177,18 @@ Progress Checks:
 - [Large Language Models explained briefly (YouTube)](https://www.youtube.com/watch?v=LPZh9BOjkQs)
 
 
+:::{.callout-note}
 ## Predicting based on probability
-
 Predict $y$ if $x = 3$.
 
 $$y = 2x + 3$$
+:::
 
 
 ## What are the next two numbers in the sequence?
 
 $$1, 3, 5, 7$$
+
 or
 
 $$1, 3, 5, 7, 17, 19, 21$$
@@ -191,25 +196,33 @@ $$1, 3, 5, 7, 17, 19, 21$$
 LLMs can answer the first but not the second.
 
 
-## Ways in which large language models can fail you {.smaller}
+## Ways in which large language models can fail you
 
 - *Outdated and/or incorrect information*: LLMs are trained on historical data, which might have changed or be incorrect
 - *Inability to explain*: If you don't code it yourself, you will have greater challenges explaining it
 - *Debugging challenges*: If your code doesn't work, then figuring out why will be more challenging
 - *Short circuit* the development of problem-solving skills in our learn-by-doing approach
     - Be willing to fail and keep trying.
-- *Limiting you creativity and innovation*: There are many ways to solve a coding challenge
+- *Limiting you creativity and innovation*: There are many ways to solve a coding challenge (think about different recipes for the same dish)
+
+
+## Please don't use AI to write code for you
+
+- Problem sets are graded for completeness *not* correctness.
+- Progress checks will use ideas/code that you have seen before.
+
+"Give me an example of how to change the axis labels in ggplot."
 
 
 ## Course AI guidelines: "AI Integration Allowed: Human-in-the-Loop"
 
-- Generative AI may be used in this course. The content you submit is your responsibility. Be sure your work accurately reflects your understanding and avoids these pitfalls.
-- You are responsible for understanding what you submit. Simply copying an AI-generated solution does not contribute to gaining understanding.
+- Generative AI is discouraged, may be used in this course. The content you submit is your responsibility. Be sure your work accurately reflects your understanding and avoids these pitfalls.
+- You are responsible for *understanding* what you submit. Simply copying an AI-generated solution does not contribute to gaining understanding.
 
 
 ## Course AI guidelines: "AI Integration Allowed: Human-in-the-Loop"
 
-If you use AI, please put this statement at the top of your problem set/progress check:
+If you use AI, you must acknowledge it with some variation of this statement:
 
 > "I acknowledge the use of AI in completing this assignment and would like to provide a brief explanation of how I utilized AI, specifically [LLM], as a tool to support my work. For this assignment, I employed [LLM] to [describe the specific purpose or task]. To do so I crafted the following prompts: [List prompts used]"
 
