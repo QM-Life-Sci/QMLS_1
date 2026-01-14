@@ -119,21 +119,10 @@ Code should be understandable by others (and your future self)
 
 Hard to read:
 
-```{r}
-#| eval: false
-#| echo: true
-
-tvtest <- lmer(
-  sqrt(tv) ~ Region * log(DD5_TOT) + (1 | Population / Sample_ID) + (1 | Year),
-  data = tvdat,
-  REML = FALSE
-)
+```
+tvtest<-lmer(sqrt(tv) ~ Region*log(DD5_TOT)+(1|Population/Sample_ID)+(1|Year),data=tvdat,REML=FALSE)
 summary(tvtest)
-ggplot(tvdat, aes(x = log(DD5_TOT), y = sqrt(tv), col = Region)) +
-  geom_point(shape = 1, size = 3, alpha = 1 / 3) +
-  geom_smooth(aes(col = Region), method = 'lm') +
-  xlab(bquote('log(Degree Days above' ~ 5^o ~ C * ')')) +
-  ylab('sqrt(Terminal Velocity (m/s))')
+ggplot(tvdat, aes(x=log(DD5_TOT),y=sqrt(tv),col=Region))+geom_point(shape = 1, size=3,alpha=1/3)+geom_smooth(aes(col=Region),method='lm')+xlab(bquote('log(Degree Days above'~5^o~C*')'))+ylab('sqrt(Terminal Velocity (m/s))')
 ```
 
 
@@ -150,18 +139,21 @@ Easier to read:
 #| eval: false
 
 tvtest <- lmer(
-  sqrt(tv) ~ Region * log(DD5_TOT) + (1 | Population / Sample_ID) + (1 | Year),
-  data = tvdat,
-  REML = FALSE
+    sqrt(tv) ~ Region *
+        log(DD5_TOT) +
+        (1 | Population / Sample_ID) +
+        (1 | Year),
+    data = tvdat,
+    REML = FALSE
 )
 
 summary(tvtest)
 
 ggplot(tvdat, aes(x = log(DD5_TOT), y = sqrt(tv), col = Region)) +
-  geom_point(shape = 1, size = 3, alpha = 1 / 3) +
-  geom_smooth(aes(col = Region), method = 'lm') +
-  xlab(bquote('log(Degree Days above' ~ 5^o ~ C * ')')) +
-  ylab('sqrt(Terminal Velocity (m/s))')
+    geom_point(shape = 1, size = 3, alpha = 1 / 3) +
+    geom_smooth(aes(col = Region), method = 'lm') +
+    xlab(bquote('log(Degree Days above' ~ 5^o ~ C * ')')) +
+    ylab('sqrt(Terminal Velocity (m/s))')
 ```
 
 
@@ -177,9 +169,12 @@ ggplot(tvdat, aes(x = log(DD5_TOT), y = sqrt(tv), col = Region)) +
 # Linear mixed model
 # Random effects: Sample nested in Population and Year
 tvtest <- lmer(
-  sqrt(tv) ~ Region * log(DD5_TOT) + (1 | Population / Sample_ID) + (1 | Year),
-  data = tvdat,
-  REML = FALSE
+    sqrt(tv) ~ Region *
+        log(DD5_TOT) +
+        (1 | Population / Sample_ID) +
+        (1 | Year),
+    data = tvdat,
+    REML = FALSE
 )
 
 # Summary output of the model
@@ -188,10 +183,10 @@ summary(tvtest)
 # Plot tv vs. dd5_tot colored by Region
 # alpha = transparency, smaller is more transparent
 ggplot(tvdat, aes(x = log(DD5_TOT), y = sqrt(tv), col = Region)) +
-  geom_point(shape = 1, size = 3, alpha = 1 / 3) +
-  geom_smooth(aes(col = Region), method = 'lm') +
-  xlab(bquote('log(Degree Days above' ~ 5^o ~ C * ')')) +
-  ylab('sqrt(Terminal Velocity (m/s))')
+    geom_point(shape = 1, size = 3, alpha = 1 / 3) +
+    geom_smooth(aes(col = Region), method = 'lm') +
+    xlab(bquote('log(Degree Days above' ~ 5^o ~ C * ')')) +
+    ylab('sqrt(Terminal Velocity (m/s))')
 ```
 
 ## Assigning objects
@@ -353,9 +348,9 @@ Tibbles and `data.frame`s are essentially identical, but a `tibble` is more mode
 #| echo: true
 
 MM <- tibble(
-  x = 1:3,
-  y = x^2, # <1>
-  A = c("a", "b", "c")
+    x = 1:3,
+    y = x^2, # <1>
+    A = c("a", "b", "c")
 )
 MM
 ```
@@ -371,10 +366,10 @@ MM
 ```{r}
 #| echo: true
 tribble(
-  ~x , ~y , ~A  , # <1>
-   1 , 10 , "a" , # <2>
-   2 , 11 , "b" ,
-   3 , 12 , "c"
+    ~x , ~y , ~A  , # <1>
+     1 , 10 , "a" , # <2>
+     2 , 11 , "b" ,
+     3 , 12 , "c"
 )
 ```
 
