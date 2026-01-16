@@ -35,17 +35,20 @@ library(readxl)
 - Base R vs Tidyverse
 - Getting Help & Debugging
 
+
 ## Data Organization
 
 > On the last lab I had some issues with data organization. How can you prevent the different datasets from overlapping?
 
 > Could you reiterate the purpose of creating projects and saving an environment in R? How do you recommend doing this in your workflow and organization?
 
+
 ## Data Organization: NAs
 
-> I understand that I should use NA for missing data. But how would the graph be affected by missing date "NA" when plotting? And how to handle it? 
+> I understand that I should use NA for missing data. But how would the graph be affected by missing date "NA" when plotting? And how to handle it?
 
 > How can we remove NA data points without completely removing a row or column from our data set? Is it possible to only exclude one data point? What is the simplest way to remove outliers?
+
 
 ## Data Organization: NAs {.smaller}
 
@@ -85,9 +88,7 @@ library(readxl)
 #| echo: true
 
 set.seed(423747)
-DD <- tibble(ID = 1:10,
-             Column_1 = runif(10),
-             Column_2 = rnorm(10, mean = 10))
+DD <- tibble(ID = 1:10, Column_1 = runif(10), Column_2 = rnorm(10, mean = 10))
 DD
 ```
 
@@ -97,10 +98,8 @@ DD
 ```{r}
 #| echo: true
 
-DD_long <- DD |> 
-  pivot_longer(cols = -ID,
-               names_to = "old_column",
-               values_to = "random_number")
+DD_long <- DD |>
+  pivot_longer(cols = -ID, names_to = "old_column", values_to = "random_number")
 DD_long
 ```
 
@@ -110,10 +109,9 @@ DD_long
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of random numbers plotted against ID showing two clusters of points."
 
-ggplot(DD_long, aes(x = ID,
-                    y = random_number,
-                    color = old_column)) +
+ggplot(DD_long, aes(x = ID, y = random_number, color = old_column)) +
   geom_point(size = 3) +
   theme_bw()
 ```
@@ -123,9 +121,8 @@ ggplot(DD_long, aes(x = ID,
 
 ```{r}
 #| echo: true
-DD_long |> 
-  pivot_wider(names_from = old_column,
-              values_from = random_number)
+DD_long |>
+  pivot_wider(names_from = old_column, values_from = random_number)
 ```
 
 
@@ -140,7 +137,7 @@ DD_long |>
 > When needing to use a pipe, I have always written %>% in the past instead of |>. Is this a recent change or is there just a specific time to use one or the other? I interpreted the lecture video as one is used for base R and another for tidy, but I believe most of my experience has come from working with tidy.
 
 - `%>%` was developed first within tidyverse
-- `|>` can now be used in all of R 
+- `|>` can now be used in all of R
 
 ## Pipes
 
@@ -155,14 +152,13 @@ DD_long |>
 
 ```{r}
 #| echo: true
-MM <- read_excel("../data/Mouse_Weaning_Data.xlsx",
-                 na = "NA") |>
+MM <- read_excel("../data/Mouse_Weaning_Data.xlsx", na = "NA") |>
   filter(Sex == 0) |>
   group_by(DamID) |>
   summarise(MeanMass = mean(WnMass))
-  
+
 MM
-  
+
 ```
 
 ## Pipes
@@ -171,14 +167,14 @@ MM
 #| echo: true
 
 MM.vec <- MM |>
-  select(MeanMass)|>
+  select(MeanMass) |>
   as.vector()
 
 str(MM.vec)
 
 MM.vec <- MM.vec$MeanMass
 str(MM.vec)
-  
+
 ```
 
 
@@ -189,7 +185,7 @@ str(MM.vec)
 
 > Is there an advantage to using base R to visualize or is ggplot the best choice for all circumstances?
 
-> Can you use still use functions from BaseR once you have imported the tidyverse library? 
+> Can you use still use functions from BaseR once you have imported the tidyverse library?
 
 
 ## Why do we learn multiple tools?
@@ -198,12 +194,11 @@ Which tool is the best for what situation does not have a single answer
 
 ## Getting Help & Debugging
 
-> I have found it challenging on knowing how to search for help in R. I tried to use the “?” Function but sometimes I feel like it does not help me with my specific code or nothing shows up 
+> I have found it challenging on knowing how to search for help in R. I tried to use the “?” Function but sometimes I feel like it does not help me with my specific code or nothing shows up
 
-> During the last problem set, I faced a lot of unknown errors, even though my code was exactly the same as my friend's. How can I fix these kinds of issues in R? 
+> During the last problem set, I faced a lot of unknown errors, even though my code was exactly the same as my friend's. How can I fix these kinds of issues in R?
 
 ## Some common issues that cause frustration
 
 - Stray backticks `
 - R waiting for more input +
-

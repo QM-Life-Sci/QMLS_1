@@ -31,7 +31,7 @@ library(viridis)
 
 ## Why Visualize Data? {.nostretch}
 
-![](../images/Workflow.drawio.png){fig-align="center" width="80%"}
+![](../images/Workflow.drawio.png){fig-align="center" width="80%" fig-alt="Flow chart showing different packages in the tidyverse which are used for data analysis."}
 
 
 ## Immediately learn a lot about your data
@@ -40,15 +40,22 @@ library(viridis)
 
 ```{r}
 #| echo: false
+#| fig-alt: "Scatter plot of weight plotted for each of three groups, showing mean differences between the groups."
 
 PlantGrowth |>
   ggplot(aes(group, weight)) +
-  geom_point(position = position_jitter(width = 0.2), size = 3, alpha = 1/2) +
+  geom_point(position = position_jitter(width = 0.2), size = 3, alpha = 1 / 2) +
   stat_summary(fun = mean, geom = "point", size = 5, color = "steelblue") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.1,
-               color = "steelblue", linewidth = 1.5)
+  stat_summary(
+    fun.data = mean_se,
+    geom = "errorbar",
+    width = 0.1,
+    color = "steelblue",
+    linewidth = 1.5
+  )
 
 ```
+
 
 ## Visualization is an important part of analysis
 
@@ -60,9 +67,11 @@ PlantGrowth |>
 
 set.seed(38479238)
 
-DD <- tibble(weight = c(rnorm(50, 5, 1), rnorm(40, 5.5, 1), rnorm(10,15,2)),
-             group = rep(c("ctrl","treatment"), each = 50),
-             year = rep(paste0("year", c(1,2,3,5,4)),each = 10, times = 2))
+DD <- tibble(
+  weight = c(rnorm(50, 5, 1), rnorm(40, 5.5, 1), rnorm(10, 15, 2)),
+  group = rep(c("ctrl", "treatment"), each = 50),
+  year = rep(paste0("year", c(1, 2, 3, 5, 4)), each = 10, times = 2)
+)
 ```
 
 ```{r}
@@ -70,13 +79,12 @@ DD <- tibble(weight = c(rnorm(50, 5, 1), rnorm(40, 5.5, 1), rnorm(10,15,2)),
 
 glimpse(DD)
 
-DD |> group_by(group) |>
-  summarize(mean = mean(weight))
+DD |> group_by(group) |> summarize(mean = mean(weight))
 
 ```
 
-## Visualization is an important part of analysis
 
+## Visualization is an important part of analysis
 
 ```{r}
 #| echo: true
@@ -85,17 +93,24 @@ t.test(weight ~ group, data = DD)
 
 ```
 
+
 ## Visualization is an important part of analysis
 
 ```{r}
 #| echo: false
+#| fig-alt: "Scatter plot of weight plotted against two groups showing a large group of extreme values in one group."
 
 DD |>
   ggplot(aes(group, weight)) +
-  geom_point(position = position_jitter(width = 0.2), size = 3, alpha = 1/2) +
+  geom_point(position = position_jitter(width = 0.2), size = 3, alpha = 1 / 2) +
   stat_summary(fun = mean, geom = "point", size = 5, color = "steelblue") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.1,
-               color = "steelblue", linewidth = 1.5) 
+  stat_summary(
+    fun.data = mean_se,
+    geom = "errorbar",
+    width = 0.1,
+    color = "steelblue",
+    linewidth = 1.5
+  )
 
 ```
 
@@ -104,13 +119,19 @@ DD |>
 
 ```{r}
 #| echo: false
+#| fig-alt: "Scatter plot of weight plotted against two groups colored by year showing a large group of extreme values in one year's observations."
 
 DD |>
   ggplot(aes(group, weight, color = year)) +
-  geom_point(position = position_jitter(width = 0.2), size = 3, alpha = 1/2) +
+  geom_point(position = position_jitter(width = 0.2), size = 3, alpha = 1 / 2) +
   stat_summary(fun = mean, geom = "point", size = 5, color = "black") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.1,
-               color = "black", linewidth = 1.5) 
+  stat_summary(
+    fun.data = mean_se,
+    geom = "errorbar",
+    width = 0.1,
+    color = "black",
+    linewidth = 1.5
+  )
 
 ```
 
@@ -145,8 +166,8 @@ glimpse(iris)
 #| eval: false
 
 library(tidyverse)
-ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) + 
-  geom_point() 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
+  geom_point()
 ```
 
 - `ggplot()` sets up the plot using `iris` data.frame.
@@ -172,13 +193,14 @@ ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
 #| echo: true
 #| eval: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length showing a positive relationship."
 
 library(tidyverse)
-library(cowplot)  
+library(cowplot)
 theme_set(theme_cowplot()) # Our preferred ggplot theme
 
 ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
-  geom_point() 
+  geom_point()
 ```
 
 
@@ -189,10 +211,10 @@ ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
 #| warning: false
 #| message: false
 #| output-location: slide
+#| fig-alt: "Histogram of petal length showing two separate clusters of observations."
 
-
-ggplot(iris, aes(x = Petal.Length)) + 
-  geom_histogram() 
+ggplot(iris, aes(x = Petal.Length)) +
+  geom_histogram()
 
 ```
 
@@ -201,8 +223,9 @@ ggplot(iris, aes(x = Petal.Length)) +
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length colored by species showing a positive relationship and distinct clusters for each species."
 
-ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
   geom_point(size = 3)
 
 ```
@@ -214,10 +237,9 @@ ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length with different shapes by species showing a positive relationship and distinct clusters for each species."
 
-ggplot(iris, aes(x = Petal.Length,
-                 y = Petal.Width,
-                 shape = Species)) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, shape = Species)) +
   geom_point(size = 3)
 
 ```
@@ -230,8 +252,9 @@ ggplot(iris, aes(x = Petal.Length,
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length with different shapes by species showing a positive relationship and distinct clusters for each species. Points are enlarged."
 
-ggplot(iris, aes(x = Petal.Length, y = Petal.Width, shape = Species)) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, shape = Species)) +
   geom_point(size = 5)
 
 ```
@@ -244,11 +267,11 @@ ggplot(iris, aes(x = Petal.Length, y = Petal.Width, shape = Species)) +
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length colored by species showing a positive relationship and distinct clusters for each species. This plot uses the Moonrise2 palette."
 
 library(wesanderson)
-ggplot(iris, aes(x = Petal.Length, y = Petal.Width,
-                 color = Species)) + 
-  geom_point(size = 3) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point(size = 3) +
   scale_color_manual(values = wes_palette("Moonrise2"))
 ```
 
@@ -260,11 +283,11 @@ ggplot(iris, aes(x = Petal.Length, y = Petal.Width,
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length colored by species showing a positive relationship and distinct clusters for each species. This plot uses the viridis palette."
 
 library(viridis)
-ggplot(iris, aes(x = Petal.Length, y = Petal.Width,
-                 color = Species)) + 
-  geom_point(size = 3) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point(size = 3) +
   scale_color_viridis(discrete = TRUE, option = "viridis")
 ```
 
@@ -276,15 +299,12 @@ ggplot(iris, aes(x = Petal.Length, y = Petal.Width,
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length colored by species showing a positive relationship and distinct clusters for each species. This plot has custom axis labels."
 
-ggplot(iris, aes(x = Petal.Length,
-                 y = Petal.Width,
-                 color = Species)) + 
-  geom_point(size = 3) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point(size = 3) +
   scale_color_manual(values = wes_palette("Moonrise2")) +
-  labs(x = "Petal Length (cm)",
-       y = "Petal Width (cm)",
-       title = "Irises")
+  labs(x = "Petal Length (cm)", y = "Petal Width (cm)", title = "Irises")
 ```
 
 - Add some better axis labels
@@ -295,12 +315,12 @@ ggplot(iris, aes(x = Petal.Length,
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length showing a positive relationship, which is shown by a regression line with confidence intervals."
 
-ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
   geom_point(size = 3) +
   geom_smooth(formula = y ~ x, method = "lm") +
-  labs(x = "Petal Length (cm)",
-       y = "Petal Width (cm)")
+  labs(x = "Petal Length (cm)", y = "Petal Width (cm)")
 ```
 
 - `geom_line()` add a "smooth" line (but in this case linear [`lm`])
@@ -313,14 +333,12 @@ What if you add a color aesthetic?
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length showing a positive relationship, which is shown by separate regression lines for each species with confidence intervals."
 
-ggplot(iris, aes(x = Petal.Length,
-                 y = Petal.Width,
-                 color = Species)) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
   geom_point(size = 3) +
   geom_smooth(formula = y ~ x, method = "lm") +
-  labs(x = "Petal Length (cm)",
-       y = "Petal Width (cm)")
+  labs(x = "Petal Length (cm)", y = "Petal Width (cm)")
 ```
 
 
@@ -329,16 +347,14 @@ ggplot(iris, aes(x = Petal.Length,
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatter plot of petal width plotted against petal length showing a positive relationship, which is shown by separate regression lines for each species with confidence intervals. The x and y axes are log base 10."
 
-ggplot(iris, aes(x = Petal.Length, 
-                 y = Petal.Width,
-                 color = Species)) + 
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
   geom_point(size = 3) +
   geom_smooth(formula = y ~ x, method = "lm") +
   scale_x_log10() +
   scale_y_log10() +
-  labs(x = "Petal Length (log10 cm)",
-       y = "Petal Width (log10 cm)")
+  labs(x = "Petal Length (log10 cm)", y = "Petal Width (log10 cm)")
 
 ```
 
@@ -348,8 +364,9 @@ ggplot(iris, aes(x = Petal.Length,
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Histograms of petal length with each species in a separate row showing different means for the three groups."
 
-ggplot(iris, aes(x = Petal.Length)) + 
+ggplot(iris, aes(x = Petal.Length)) +
   geom_histogram() +
   facet_grid(Species ~ .)
 ```
@@ -367,5 +384,3 @@ ggplot(iris, aes(x = Petal.Length)) +
 - `geom_density()`
 - `geom_boxplot()`
 - `geom_dotplot()`
-
-

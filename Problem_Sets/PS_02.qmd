@@ -21,7 +21,6 @@ format:
 # Files needed
 #   - Size_Dimorphism.xlsx
 
-
 ```
 
 
@@ -67,7 +66,6 @@ Organize your files and set the working directory to the directory where this fi
 
 ```{r}
 
-
 ```
 
 
@@ -102,7 +100,7 @@ and then rerun the code chunk that includes the `library()`^[Inside the call to 
 
 ### Best practices (things to remember)
 
-- It is best to install packages (e.g., `install.packages("cowplot")`) from the command line only. If you include this code in a R code chunk, you risk R trying to reinstall the package each time you render your file. 
+- It is best to install packages (e.g., `install.packages("cowplot")`) from the command line only. If you include this code in a R code chunk, you risk R trying to reinstall the package each time you render your file.
 - Packages only need to be installed once on each computer. They are stored locally.
 - Packages do need to be loaded (`library()`) each time you restart R. Loaded packages are not persistent across R sessions.
 - Load all of the packages you need at the start of a document to keep track of what packages your analysis needs.
@@ -116,22 +114,22 @@ In the *Setup* code chunk at the beginning of this document, add code to load th
 1. `readxl`
 1. `cowplot`
 
-Install these packages if you need to (see **Loading Packages** above for the installation syntax). 
+Install these packages if you need to (see **Loading Packages** above for the installation syntax).
 
 
 ## Loading Data
 
-Sexual size dimorphism (SSD) refers to the difference in size between males and females of the same species. Spiders show some of the most dramatic cases where females are larger than males. 
+Sexual size dimorphism (SSD) refers to the difference in size between males and females of the same species. Spiders show some of the most dramatic cases where females are larger than males.
 
 The golden silk orb weaver (*Nephila clavipes*) is a species of spider that shows extreme SSD, in which males are about 2/3 smaller than females. This picture shows the size disparity between a female and male:
 
-![](https://cdn.shopify.com/s/files/1/0841/0073/products/il_570xN.917073770_s7se.jpg){width=50% fig-align="center"}
+![](https://cdn.shopify.com/s/files/1/0841/0073/products/il_570xN.917073770_s7se.jpg){width=50% fig-align="center" fig-alt="Image of a female and male golden silk orb weaver showing size dimorphism."}
 
 In contrast, in the wolf spider (*Pardosa ramulosa*), males and females do not show large size differences.
 
-![](https://crawford.tardigrade.net/journal/album/fordramulosa.jpg){width=50% fig-align="center"}
+![](https://crawford.tardigrade.net/journal/album/fordramulosa.jpg){width=50% fig-align="center" fig-alt="Image of wolf spiders showing no size dimorphism."}
 
-The file `Size_Dimorphism.xlsx` contains data on body mass and body length for males and females in these two species. 
+The file `Size_Dimorphism.xlsx` contains data on body mass and body length for males and females in these two species.
 
 
 ### Activity
@@ -162,25 +160,25 @@ Using the output of `str(SSD)`, answer the following questions.
 
 - How many rows are in `SSD`?
 
-> 
+>
 
 - Does this agree with the number of rows in the Excel file? Why or why not?
 
-> 
+>
 
 - How many columns are in `SSD`? Does this agree with the number of columns in the Excel file? Why or why not?
 
-> 
+>
 
 
 ## Number of Observations per Group
 
-This experiment is balanced, meaning there are equal numbers of males and females in each species (50 of each). 
+This experiment is balanced, meaning there are equal numbers of males and females in each species (50 of each).
 
 
-### Activity 
+### Activity
 
-Check that this is the case by creating a logical and summing the resulting TRUE/FALSE vector. i.e. how many female *Nephila clavipes* are there? 
+Check that this is the case by creating a logical and summing the resulting TRUE/FALSE vector. i.e. how many female *Nephila clavipes* are there?
 
 ```{r}
 
@@ -194,7 +192,7 @@ There are a few ways to figure out what might be going on. Try using the `unique
 
 ```
 
-You could use the results of your `which()` calls to find and correct your excel file after making a back up copy just in case you make a mistake (or use version control!). If you were planning to do more editing in Excel, this would be preferable. For this exercise will correct these within R here. We've given you the syntax for fixing one. Use this same format to fix the others. Run `unique()` again to make sure you got them all. 
+You could use the results of your `which()` calls to find and correct your excel file after making a back up copy just in case you make a mistake (or use version control!). If you were planning to do more editing in Excel, this would be preferable. For this exercise will correct these within R here. We've given you the syntax for fixing one. Use this same format to fix the others. Run `unique()` again to make sure you got them all.
 
 First change `eval: false` to `eval: true`. Changing this flag in the chunk will cause RStudio to evaluate the chunk when it is rendering the document. When `eval` is `false`, the chunk will be skipped. This is something that we need to do when writing the problem sets, so that they will render.
 
@@ -213,7 +211,7 @@ Now check the `Species` column in the same way. Fix any errors that you find.
 
 Saving yourself the trouble of doing this exercise is one big reason to be careful when you enter data!!
 
-One last step, let's write out your new, typo-free data. Look at the help for `write_csv()`, and write out your data to a new csv file named, `Size_Dimorphism_corrected.csv`. 
+One last step, let's write out your new, typo-free data. Look at the help for `write_csv()`, and write out your data to a new csv file named, `Size_Dimorphism_corrected.csv`.
 
 ```{r}
 
@@ -237,12 +235,12 @@ A very common activity when you are analyzing data is to take subsets, be they s
 
 To give you some practice filtering, filter your data in the following ways using both
 
-1. base R functions 
+1. base R functions
 2. tidyverse functions
 
 Verify your results match in each case. You do not need to save the resulting `data.frame`s.
 
-1. All *Pardosa ramulosa* 
+1. All *Pardosa ramulosa*
 2. All females of both species
 3. Body mass and sex for *Nephila clavipes*
 4. Rows 1-50 (either using base R or the `slice()` function from tidyverse [use `?slice` to load the help file])
@@ -275,7 +273,7 @@ There are some obvious groupings here, but we don't know which species or sex th
 
 ```
 
-You will get a message saying that "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`." That just means that you are using the default bin size for your histograms. In some situations, you would want to specify that value explicitly. For now, using the default value of 30 is fine. Later you can use the `binwidth` option to choose a different size. 
+You will get a message saying that "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`." That just means that you are using the default bin size for your histograms. In some situations, you would want to specify that value explicitly. For now, using the default value of 30 is fine. Later you can use the `binwidth` option to choose a different size.
 
 We could also visualize all groups with `facet_grid()`. Here is an example:
 
@@ -289,7 +287,7 @@ ggplot(SSD, aes(BodyLength)) +
 
 `facet_grid()` can take 1 or two arguments. The argument before `~` splits by rows, and after `~` splits by columns. If you only want one or the other use `.`. See the lecture slides for an example.
 
-With this you can clearly see SSD in *Nephila* but not in *Pardosa*. 
+With this you can clearly see SSD in *Nephila* but not in *Pardosa*.
 
 
 ## Scatterplot
@@ -307,7 +305,7 @@ Create a scatterplot of body length and body mass. Use color to show `Sex` and f
 
 Describe the patterns you observe. Do you think this is a useful visualization? Why or why not?
 
->  
+>
 
 Because body length and body mass are related by an exponential power, if we take advantage of the math of logarithms and log-transform the data, that will linearize the relationship. Ignoring the y-intercepts:
 
@@ -320,11 +318,11 @@ Make two new variables that are the log10-transformations of body length and bod
 
 ```
 
-What does this plot tell you? Do you think this is a more effective visualization of the data? 
+What does this plot tell you? Do you think this is a more effective visualization of the data?
 
-> 
+>
 
-Now add lines of best fit and transparency (`alpha`) to your points. 
+Now add lines of best fit and transparency (`alpha`) to your points.
 
 ```{r}
 
@@ -332,4 +330,4 @@ Now add lines of best fit and transparency (`alpha`) to your points.
 
 What do these regression lines tell you?
 
-> 
+>

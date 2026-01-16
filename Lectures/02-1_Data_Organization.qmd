@@ -42,7 +42,7 @@ For each R project/manuscript, create a set of folders. There are many options:
     - list the driving questions and purposes of the project
     - metadata & instructions for reproducing all analyses and plots
     - entries and notes for each time you work on the analysis
-    
+
 Note: Your code will stay cleaner if you use many smaller scripts, e.g., one for analyses, one for  figures *or* one for each analysis and the associated figures
 
 
@@ -78,22 +78,22 @@ See [Broman and Woo: Data Organization in Spreadsheets](https://kbroman.org/data
 
 ## Examples: Bad and good
 
-![](../images/Excel_1.png){fig-align="center"}
+![](../images/Excel_1.png){fig-align="center" fig-alt="Image of an Excel spreadsheet with color used for signaling important information."}
 
 
 ## Examples: Bad and good
 
-![](../images/Excel_2.png){fig-align="center"}
+![](../images/Excel_2.png){fig-align="center" fig-alt="Image of an Excel spreadsheet with cell comments used for signaling important information."}
 
 
 ## It would be nice to store data in csv files and edit in Excel, but... {.nostretch}
 
-![](https://i.imgur.com/AiwZwdq.png){fig-align="center" width=70%}
+![](https://i.imgur.com/AiwZwdq.png){fig-align="center" width=70% fig-alt="Image of the Excel warning message that appears when saving csv files."}
 
 
 ## and {.nostretch}
 
-![](https://i.imgur.com/YlwLXJN.png){fig-align="center" width=60%}
+![](https://i.imgur.com/YlwLXJN.png){fig-align="center" width=60% fig-alt="Image of the second Excel warning message that appears when saving csv files."}
 
 Working with csv files in Excel *not* a viable (i.e., non-aggravating) option.
 
@@ -105,7 +105,7 @@ Working with csv files in Excel *not* a viable (i.e., non-aggravating) option.
 
 Many ways to represent the same set of data in tables, but not all are tidy.
 
-![](https://i.imgur.com/DrgbZQw.png){fig-align="center"}
+![](https://i.imgur.com/DrgbZQw.png){fig-align="center" fig-alt="Image of different examples of data organization."}
 
 <br />
 <br />
@@ -120,14 +120,14 @@ Three interrelated rules make a dataset tidy:
   1. Each variable must have its own column.
   1. Each observation must have its own row.
   1. Each value must have its own cell.
-  
 
-![](https://i.imgur.com/qav6ips.png){fig-align="center"}
- 
+
+![](https://i.imgur.com/qav6ips.png){fig-align="center" fig-alt="Image showing examples of tidy data."}
+
 
 ## Which Dataset is Tidy?
 
-![](https://i.imgur.com/DrgbZQw.png){fig-align="center"}
+![](https://i.imgur.com/DrgbZQw.png){fig-align="center" fig-alt="Image of different examples of data organization."}
 
 . . .
 
@@ -147,7 +147,7 @@ Learn to go back and forth between long (tidy) and wide.
 
 ## Data Storage and Relational Data {.smaller}
 
--  Strive for relational data to keep your file sizes small 
+-  Strive for relational data to keep your file sizes small
     - Store data as smaller units (hierarchical and by type) and link through code
     - Use shared IDs so that you can match and merge data across files
 - Use code to link by shared IDs
@@ -165,11 +165,11 @@ Learn to go back and forth between long (tidy) and wide.
 :::: {.columns}
 
 ::: {.column width="50%"}
-![](../images/Excel_1.png){fig-align="center"}
+![](../images/Excel_1.png){fig-align="center" fig-alt="Image of Excel spreadsheet with redundant data."}
 :::
 
 ::: {.column width="50%"}
-![](../images/Excel_3.png){fig-align="center"}
+![](../images/Excel_3.png){fig-align="center" fig-alt="Image of a second Excel spreadsheet with redundant data."}
 :::
 
 ::::
@@ -177,4 +177,4 @@ Learn to go back and forth between long (tidy) and wide.
 
 ## Analysis workflow {.nostretch}
 
-![](../images/Workflow.drawio.png){fig-align="center" width="80%"}
+![](../images/Workflow.drawio.png){fig-align="center" width="80%" fig-alt="Flow chart showing different packages in the tidyverse which are used for data analysis."}

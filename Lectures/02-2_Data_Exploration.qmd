@@ -31,35 +31,36 @@ library(readxl)
 
 Base R refers to the set of code and functions that is automatically included when you install R and loaded when you launch R
 
-![](../images/Base_ex.png){width=60% fig-align="center"}
+![](../images/Base_ex.png){width=60% fig-align="center" fig-alt="IMage showing the base R help for mean()."}
+
 
 ## The Tidyverse {.nostretch}
 
 - Extensions for reading, writing, and working with data (selecting, filtering, aggregating, plotting)
 
-You may notice when you load the tidyverse you get a message that says that some libraries overwrite functions in base R. 
-  
+You may notice when you load the tidyverse you get a message that says that some libraries overwrite functions in base R.
+
 - For example, `dplyr` overwrites `filter()` and `lag()`.
     - To use functions from a specific package, you will need to use their full names: `stats::filter()` and `stats::lag()`.
 
 
 ## Should I learn/use base R or Tidyverse?
 
-- Both are useful 
+- Both are useful
     - Learn the basics of both
     - Learn when one tool is better suited for your task
 
 
 ## Analysis workflow - Tidy Data {.nostretch}
 
-![](../images/Workflow.drawio.png){fig-align="center" width="40%"}
+![](../images/Workflow.drawio.png){fig-align="center" width="40%" fig-alt="Flow chart showing different packages in the tidyverse which are used for data analysis."}
 
 Perform all manipulation via code (in R)
 
 - Preserves data integrity
 - The "hard" way now is the easy way in the long run
-  
-  
+
+
 ## Reading delimited files into R
 
 - csv: `read.csv()`
@@ -85,7 +86,7 @@ dat
 
 ## Reading Excel files into R
 
-Preferred package: [readxl](https://cran.r-project.org/web/packages/readxl/index.html)  
+Preferred package: [readxl](https://cran.r-project.org/web/packages/readxl/index.html)
 
 ```{r}
 #| echo: true
@@ -99,7 +100,7 @@ MM <- read_excel("MyFile.xlsx")
 
 ## Where do your files live?
 
-- To load data into R, you need to tell it where the file is on your computer. 
+- To load data into R, you need to tell it where the file is on your computer.
 - R will look relative to the "working directory"
 - **Always** set this to the "Source File Location" (this is where the script is)
     - Quarto will **always** render this way
@@ -113,8 +114,7 @@ MM <- read_excel("MyFile.xlsx")
 #| message: false
 #| warning: false
 
-MM <- read_excel("../data/Mouse_Weaning_Data.xlsx",
-                 na = "NA")
+MM <- read_excel("../data/Mouse_Weaning_Data.xlsx", na = "NA")
 ```
 
 Read file and assign to an object `MM`.
@@ -132,7 +132,7 @@ Read file and assign to an object `MM`.
 #| echo: true
 
 sqrt(c(1, 5, 13))
-c(1, 5, 13) |> 
+c(1, 5, 13) |>
   sqrt()
 ```
 
@@ -140,12 +140,12 @@ c(1, 5, 13) |>
 - You will also see the `magrittr::%>%`
 
 
-## Getting basic information: base 
+## Getting basic information: base
 
 ```{r}
 #| echo: true
 
-MM |> 
+MM |>
   str()
 
 ```
@@ -156,7 +156,7 @@ MM |>
 ```{r}
 #| echo: true
 
-MM |> 
+MM |>
   glimpse()
 
 ```
@@ -164,15 +164,15 @@ MM |>
 
 ## Analysis workflow - Tidy Data {.nostretch}
 
-![](../images/Workflow.drawio.png){fig-align="center" width="80%"}
+![](../images/Workflow.drawio.png){fig-align="center" width="80%" fig-alt="Flow chart showing different packages in the tidyverse which are used for data analysis."}
 
 
 ## Moving between wide and long (tidy data)
 
-Two important functions to learn:  
+Two important functions to learn:
 
 1.  **`pivot_longer()`** - when some of the column names are not the names of variables but the *values* of the variables
-    
+
 1.  **`pivot_wider()`** - when an observation for a single ID is scattered across multiple rows
 
 
@@ -186,32 +186,34 @@ table4a
 
 - Here for example, 1999 and 2000 are both values of the variable `year`
 - Note the backticks around 1999 and 2000
-  
-  
-## `pivot_longer()` {.nostretch} 
-  
+
+
+## `pivot_longer()` {.nostretch}
+
 ```{r}
 #| echo: true
 #| eval: true
 
 table4a
 
-pivot_longer(table4a,
-             cols = c("1999", "2000"),
-             names_to = "year",
-             values_to = "cases")
+pivot_longer(
+  table4a,
+  cols = c("1999", "2000"),
+  names_to = "year",
+  values_to = "cases"
+)
 
 ```
 
 
-## `pivot_longer()` 
+## `pivot_longer()`
 
-![](https://imgur.com/157Odvw.png){fig-align="center"}
+![](https://imgur.com/157Odvw.png){fig-align="center" fig-alt="Image showing pivoting data from wide to long format."}
 
 
 ## `pivot_wider()`
 
-Observations are across multiple rows. 
+Observations are across multiple rows.
 
 - Here data from Afghanistan in 1999 is in multiple rows
 
@@ -231,7 +233,7 @@ pivot_wider(table2, names_from = type, values_from = count)
 
 ## `pivot_wider()` {.nostretch}
 
-![](https://imgur.com/bWvSwUw.png){fig-align="center"}
+![](https://imgur.com/bWvSwUw.png){fig-align="center" fig-alt="Image showing pivoting data from long to wide format."}
 
 
 ## Selecting and filtering
@@ -259,8 +261,8 @@ MM$WnMass
 #| echo: true
 #| eval: false
 
-MM[ , "WnMass"]  # Only the column WnMass, all rows
-MM[ , 1:3]       # Columns 1-3, all rows
+MM[, "WnMass"] # Only the column WnMass, all rows
+MM[, 1:3] # Columns 1-3, all rows
 
 ```
 
@@ -279,7 +281,7 @@ If you want to select certain columns, use `select()`. For example, select the c
 #| echo: true
 #| eval: false
 
-MM |> 
+MM |>
   select(WnMass)
 
 ```
@@ -291,8 +293,8 @@ MM |>
 #| echo: true
 #| eval: false
 
-MM[1, ]     # Row 1, all columns
-MM[1:5, ]   # Rows 1-5, all columns
+MM[1, ] # Row 1, all columns
+MM[1:5, ] # Rows 1-5, all columns
 
 ```
 
@@ -321,9 +323,9 @@ MM |> slice_sample(prop = 0.25)
 ```
 
 
-## Logical Operators 
+## Logical Operators
 
-You can filter with logical or Boolean operators to select various sets. 
+You can filter with logical or Boolean operators to select various sets.
 
 - `==` is "equal"
 - `&` is "and"
@@ -333,7 +335,7 @@ You can filter with logical or Boolean operators to select various sets.
 
 ## Logical Operators {.nostretch}
 
-![](https://imgur.com/MiHIo1n.png){width=80% fig-align="center"}
+![](https://imgur.com/MiHIo1n.png){width=80% fig-align="center" fig-alt="Image showing different kinds of logical or Boolean operators."}
 
 
 *Boolean operators. The left circle is x, the right circle is y, and the shaded region indicates the given subset selected.*
@@ -367,7 +369,7 @@ head(MM[, c("MouseID", "Sex")], n = 10)
 
 ## Filtering rows: tidyverse
 
-`filter()`: The first argument is the object to filter, and the following arguments are the expressions for how you want to filter. 
+`filter()`: The first argument is the object to filter, and the following arguments are the expressions for how you want to filter.
 
 So say we only want to keep female mice.
 
@@ -473,4 +475,3 @@ _Note_ it will always rewrite your old file if you re-run your code. This is a g
 - `writexl::write_xlsx(object, "path", use_zip64 = FALSE)`
 - Ask yourself if you need to do this?
     - `csv` almost always preferred
-
