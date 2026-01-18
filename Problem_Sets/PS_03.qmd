@@ -307,3 +307,10 @@ This code replaces `x` with `xyz`. In the following chunk, overwrite `Species` w
 ```
 
 Your data is clean. At this point in the analysis, you could export your cleaned data to a new file. Alternately, you could just have these steps at the beginning of your qmd file with the analysis pipeline and just let me run each time your Rmd file is knitted. Either way would work, and there are benefits to both approaches. With the former, you will have a cleaned version of your data to work with (e.g., import) for later steps in the analysis. This is not ideal because it makes more files to keep track of. With the latter, you will have a full record of the steps you took to clean the data. The downside is that you need to make sure to run all the code each time you knit to be sure to have the corrected data. If you are analyzing data via a set of separate files, this might be impractical (e.g., if your 2nd analysis file needs the cleaned data).
+
+
+Please indicate whether you used any generative AI tools to help you with this problem set and explain how you used these. An example of how to structure this statement is below. If you did not use generative AI, you can simply state: "I did not use AI for this problem set."
+
+Example statement structure: "I acknowledge the use of AI in completing this assignment and would like to provide a brief explanation of how I utilized AI, specifically [LLM], as a tool to support my work. For this assignment, I employed [LLM] to [describe the specific purpose or task]. To do so I crafted the following prompts: [List prompts used]"
+
+>

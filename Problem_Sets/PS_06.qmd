@@ -249,3 +249,9 @@ Now you can fine tune the plots in the code chunk above:
 - Pass the argument `labels = c("a", "b", "c", "d")` to `plot_grid()` to add labels for each plot.
 
 As you can see rather than sequentially editing 4 sets of code, trying to make sure they all stay in sync, we can just edit one plotting statement and change the data in each iteration.
+
+Please indicate whether you used any generative AI tools to help you with this problem set and explain how you used these. An example of how to structure this statement is below. If you did not use generative AI, you can simply state: "I did not use AI for this problem set."
+
+Example statement structure: "I acknowledge the use of AI in completing this assignment and would like to provide a brief explanation of how I utilized AI, specifically [LLM], as a tool to support my work. For this assignment, I employed [LLM] to [describe the specific purpose or task]. To do so I crafted the following prompts: [List prompts used]"
+
+>

@@ -170,7 +170,7 @@ Progress Checks:
 # "Artificial Intelligence" {background-color="#40666e"}
 
 
-## Artificial intelligence is not intelligence
+## Artificial intelligence is not intelligence {.smaller}
 
 - We (unfortunately) use human terms to describe LLMs: "intelligence", "learn", "understand", "think", "know", "hallucinate"
 - LLMs generate responses based on probabilities (what character/word comes next?), which are derived from their training data.
@@ -196,7 +196,7 @@ $$1, 3, 5, 7, 17, 19, 21$$
 LLMs can answer the first but not the second.
 
 
-## Ways in which large language models can fail you
+## Ways in which large language models can fail you {.smaller}
 
 - *Outdated and/or incorrect information*: LLMs are trained on historical data, which might have changed or be incorrect
 - *Inability to explain*: If you don't code it yourself, you will have greater challenges explaining it
