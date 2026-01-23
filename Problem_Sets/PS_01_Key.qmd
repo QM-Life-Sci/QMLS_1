@@ -43,7 +43,7 @@ $$\bar{Y} = \frac{\sum^{n}_{i = 1}Y_i}{n}$$
 
 Quarto Markdown is the marriage of R and [markdown](https://en.wikipedia.org/wiki/Markdown), allowing you to write text and R code together that can include analysis, figures, and tables. Quarto Markdown has been extended for making slides (like the ones we use in this class), adding references, bibliographies, and cross references.
 
-Our usage in this class will be fairly pedestrian, but you can do some really complex things, like writing entire manuscripts, making a CV, making slides (all th slides for this course are rendered from qmd files), or generate a website.
+Our usage in this class will be fairly pedestrian, but you can do some really complex things, like writing entire manuscripts, making a CV, making slides (all the slides for this course are rendered from qmd files), or generate a website.
 
 Quarto markdown (.qmd) files can be converted to different formats. We will use HTML (PDF and Word are other options).
 
