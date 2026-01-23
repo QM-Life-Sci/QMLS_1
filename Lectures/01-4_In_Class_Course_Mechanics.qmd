@@ -244,14 +244,14 @@ Coming Soon
 
 ## Where to start
 
-> I am new to all of this, so it's all like a new language to me. I'd say even trouble-shooting or figuring out why something isn't working in R is a concern of mine. As many others have pointed out, the specific character requirement is tricky navigating (missing letters, underscores, slashes, etc.). When practicing with Swirl, it even told me to use spaces between my numbers. Aside from the little stuff, I am most curious how many people first use R in their research. My project is very qualitative, so any ideas as to how I can utilize R would be appreciated.
-
 > Because I do not have a programming background, I mainly need more practice getting used to the syntax, and perhaps learning more about how these tools can be used in practice.
+
+> ... Aside from the little stuff, I am most curious how many people first use R in their research. My project is very qualitative, so any ideas as to how I can utilize R would be appreciated.
 
 
 ## Where to start
 
-> I am new to this field too, so I still need to learn a lot. I noticed that, when discussing data reproducibility, it was mentioned that using R to process data from Excel and to generate figures can make it easier to annotate the data, which can improve reproducibility.  I always use GraphPad to process data and generate figures. I would like to ask: *in what situations should I choose which software for data processing and figure generation?*
+> ... I noticed that, when discussing data reproducibility, it was mentioned that using R to process data from Excel and to generate figures can make it easier to annotate the data, which can improve reproducibility.  I always use GraphPad to process data and generate figures. I would like to ask: *in what situations should I choose which software for data processing and figure generation?*
 
 > I gather that with repetition, one would eventually catch on as well, but with starting from a clean slate, I'm wondering *what the best approaches to good study habits would be*.
 
@@ -281,7 +281,7 @@ sqrt(y2)
 
 ## Directories and File Paths
 
-> I have to agree with Mitchell that I was not fully understanding the importance of paths and directories in that tutorial. I wasn't sure how all of the terminology fit into a broader framework of organization.
+> ... I was not fully understanding the importance of paths and directories in that tutorial. I wasn't sure how all of the terminology fit into a broader framework of organization.
 
 > I thought one thing that was challenging was the directories and filepath's portion. I did not understand well how to move between these things. I also did not understand the significance of them.
 
@@ -297,7 +297,7 @@ sqrt(y2)
 
 >  Something I am concerned about with reproducibility is storage space! At what point do you create a new version of something? Where is that line? As someone with limited storage space on my laptop, is there a way to zip up files and have them accessible, but share on storage space? Or is the solution here just to save to a hard drive?
 
-> ... While I don't often lack storage space on my laptop, I do regularly run into issues when trying to share large data files with colleagues especially when zipped files aren't accepted (usually due to security concerns in share drives or emails). *What are the best methods for sharing data/code that takes a lot of space?*
+> ... While I don't often lack storage space on my laptop, I do regularly run into issues when trying to share large data files with colleagues especially when zipped files aren't accepted ... . *What are the best methods for sharing data/code that takes a lot of space?*
 
 
 ## Images
