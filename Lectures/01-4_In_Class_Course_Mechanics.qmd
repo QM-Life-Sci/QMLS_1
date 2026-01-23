@@ -234,34 +234,87 @@ If you use AI, you must acknowledge it with some variation of this statement:
 
 ## This Week's questions
 
+Coming Soon
 
-## Coming soon
-
-- Extracting from data frames and matrices
-- Data visualization
-- Importing data
-- Cleaning data
 - Functions
-
-Asking these questions helps us know how much time you want to spend on these topics
-
-
-## tibble vs. data.frame
-
-> Tibble is an upgraded version of data.frames. But  in what cases can you only use data.frames, not tibble and vice versa?
-
-- There are rare cases where it matters.
-- We will encounter a few and point them out.
-- Don't worry about it.
+- Organizing data (wide vs. long)
+- Organizing and commenting code
+- Getting used to R (vs. other languages)
 
 
-## Learning R functions and Productivity
+## Where to start
 
-> What is the best way to write and understand detailed codes, especially when there are too many functions/assignments in the code? What would be the best way to practice?
+> I am new to all of this, so it's all like a new language to me. I'd say even trouble-shooting or figuring out why something isn't working in R is a concern of mine. As many others have pointed out, the specific character requirement is tricky navigating (missing letters, underscores, slashes, etc.). When practicing with Swirl, it even told me to use spaces between my numbers. Aside from the little stuff, I am most curious how many people first use R in their research. My project is very qualitative, so any ideas as to how I can utilize R would be appreciated.
 
-> How have you found it easiest to learn/memorize functions in R? Do you recommend practice, notes, flashcards, etc?
-
-> What things should I consider to improve productivity in R studio?
+> Because I do not have a programming background, I mainly need more practice getting used to the syntax, and perhaps learning more about how these tools can be used in practice.
 
 
-## Why would one make slides in R vs. Powerpoint, etc.?
+## Where to start
+
+> I am new to this field too, so I still need to learn a lot. I noticed that, when discussing data reproducibility, it was mentioned that using R to process data from Excel and to generate figures can make it easier to annotate the data, which can improve reproducibility.  I always use GraphPad to process data and generate figures. I would like to ask: *in what situations should I choose which software for data processing and figure generation?*
+
+> I gather that with repetition, one would eventually catch on as well, but with starting from a clean slate, I'm wondering *what the best approaches to good study habits would be*.
+
+
+## Syntax and Debugging
+
+> The largest issue I am having is remembering all of tiny nuances and the syntax that go into the coding. For example, some of the code requires you to put quotation marks around them with others don't, some require commas while others don't, and also I am struggling more just trying to learn and then retain the key words needed for entering data to make items like vectors. *With this in mind I'm more just wondering if there is there a general rule of thumb to follow when writing code or if it is reliant mostly on memorization?*
+
+> One topic I still struggle with is troubleshooting when there is an error in the code. I often get stuck for far to long trying to get a chunk to run.
+
+
+## Vectorization
+
+> One topic I often find challenging is remembering the differences between R vectors and arrays in other languages. Things like the different tricks R allows, and writing vectorized code.
+
+
+## Vectors and Printing
+
+```{r}
+#| echo: true
+
+y2 <- seq(1, 10, length = 20)
+y2
+sqrt(y2)
+```
+
+
+## Directories and File Paths
+
+> I have to agree with Mitchell that I was not fully understanding the importance of paths and directories in that tutorial. I wasn't sure how all of the terminology fit into a broader framework of organization.
+
+> I thought one thing that was challenging was the directories and filepath's portion. I did not understand well how to move between these things. I also did not understand the significance of them.
+
+
+## Directories and File Paths
+
+> I realized that I do not make file paths in the most efficient way - it looks like it can be linked to a general location where it is and not a whole series of folders to go through and are messed up when one changes. More guidance on best practices for that would be helpful!
+
+> I found the “workspace and files” tutorial in Swirl to be challenging and a little confusing. I didn’t quite understand what the directories were, what the point of using them was, and therefore, what I was overall doing while working through the tutorial.
+
+
+## Storage and Versioning
+
+>  Something I am concerned about with reproducibility is storage space! At what point do you create a new version of something? Where is that line? As someone with limited storage space on my laptop, is there a way to zip up files and have them accessible, but share on storage space? Or is the solution here just to save to a hard drive?
+
+> ... While I don't often lack storage space on my laptop, I do regularly run into issues when trying to share large data files with colleagues especially when zipped files aren't accepted (usually due to security concerns in share drives or emails). *What are the best methods for sharing data/code that takes a lot of space?*
+
+
+## Images
+
+> Specifically, I’m not sure what the best workflow is for handling images: how they should be stored (file formats, folder structure, etc.), how to import them into R, and which packages or approaches are commonly used for image quantification and analysis.
+
+
+## Character vectors
+
+> Question: What is the purpose of character vectors? Are they commonly used in the life sciences?
+
+
+## Rewriting files
+
+> I have a question about saving data when using R. We were told to keep raw data in Excel but for example, when I clean or transform data in R, what is the best way to save those processed data? Sometimes I just rerun the script, but other time I feel like saving the output would be helpful. Should we save them as CSV, or something else? And how do we decide when to save data vs just regenerating it from the code?
+
+
+## Keeping Up to Date
+
+> One thing I am wondering about is how one should stay up to date about newly released packages and how to assess if they are something worth utilizing. Is this something that is done as needed, or is it something that comes more from referrals from others?
