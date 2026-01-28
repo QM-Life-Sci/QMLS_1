@@ -33,17 +33,23 @@ theme_set(theme_cowplot())
 If we flip a coin 6 times, what are the possible outcomes?
 
 ```{r}
-#| fig-height: 4.5
+#| fig-alt: "Histogram showing the number of ways to get combinations of heads and tails for 6 flips."
 
 flips <- tibble(
   Ways = choose(n = 6, k = 0:6),
-  Flips = c("0 H", "1 H, 5 T", "2 H, 4 T",
-            "3 H, 3 T", "4 H, 2 T",
-            "5 H, 1 T", "6 H")) |>
+  Flips = c(
+    "0 H",
+    "1 H, 5 T",
+    "2 H, 4 T",
+    "3 H, 3 T",
+    "4 H, 2 T",
+    "5 H, 1 T",
+    "6 H"
+  )
+) |>
   mutate(Flips = fct_inorder(Flips))
 
-flips |> ggplot(aes(x = Flips, y = Ways)) +
-  geom_bar(stat = "Identity")
+flips |> ggplot(aes(x = Flips, y = Ways)) + geom_bar(stat = "Identity")
 ```
 
 
@@ -65,10 +71,9 @@ flips |> ggplot(aes(x = Flips, y = Ways)) +
 ## Frequency Distribution of Heads in 6 Flips
 
 ```{r}
-#| fig-height: 4.5
+#| fig-alt: "Histogram showing the number of ways to get combinations of heads and tails for 6 flips."
 
-flips |> ggplot(aes(x = Flips, y = Ways)) +
-  geom_bar(stat = "Identity")
+flips |> ggplot(aes(x = Flips, y = Ways)) + geom_bar(stat = "Identity")
 ```
 
 
@@ -114,17 +119,17 @@ flips$Ways / sum(flips$Ways)
 ## Probability Distribution of Heads in 6 Flips
 
 ```{r}
-#| fig-height: 4.5
+#| fig-alt: "Histogram showing the relative probabilities of different combinations of heads and tails for 6 flips."
 
 flip6 <- tibble(
   Ways = c(1, 6, 15, 20, 15, 6, 1),
-  Flips = c("0 H", "1 H", "2 H",
-            "3 H", "4 H",
-            "5 H", "6 H"),
-  Prob = Ways / sum(Ways)) |>
+  Flips = c("0 H", "1 H", "2 H", "3 H", "4 H", "5 H", "6 H"),
+  Prob = Ways / sum(Ways)
+) |>
   mutate(Flips = fct_inorder(Flips))
 
-flip6 |> ggplot(aes(x = Flips, y = Prob)) +
+flip6 |>
+  ggplot(aes(x = Flips, y = Prob)) +
   geom_bar(stat = "Identity") +
   labs(y = "Probability")
 ```
@@ -157,8 +162,8 @@ M <- tibble(x = rnorm(n = 200, mean = 0, sd = 1))
 ## Frequency distributions: Continuous data
 
 ```{r}
-#| echo: false
 #| message: false
+#| fig-alt: "Histogram of 200 random numbers."
 
 ggplot(M, aes(x = x)) +
   geom_histogram() +
@@ -170,6 +175,7 @@ ggplot(M, aes(x = x)) +
 
 ```{r}
 #| message: false
+#| fig-alt: "Histogram of 200 random numbers with a vertical red line at 1.7."
 
 ggplot(M, aes(x = x)) +
   geom_histogram() +
@@ -183,6 +189,7 @@ ggplot(M, aes(x = x)) +
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Density plot of 200 random numbers."
 
 ggplot(M, aes(x = x)) +
   geom_density() +
@@ -198,6 +205,7 @@ A frequency distribution has an underlying probability distribution.
 
 ```{r}
 #| message: false
+#| fig-alt: "Density plot of 200 random numbers overlying a histogram of the same observations."
 
 ggplot(M, aes(x = x)) +
   geom_histogram(aes(y = after_stat(density)), fill = "gray") +
@@ -229,9 +237,9 @@ $$
 
 ```{r}
 #| echo: true
-normal <- function(Y, mu = 0, sigma = 1){
-  1 / sqrt(2 * pi * sigma ^ 2) *
-    exp((-(Y - mu) ^ 2 / (2 * sigma ^ 2)))
+
+normal <- function(Y, mu = 0, sigma = 1) {
+  1 / sqrt(2 * pi * sigma^2) * exp((-(Y - mu)^2 / (2 * sigma^2)))
 }
 ```
 
@@ -240,6 +248,7 @@ normal <- function(Y, mu = 0, sigma = 1){
 
 ```{r}
 #| message: false
+#| fig-alt: "Density plot of 200 random numbers overlying a histogram of the same observations."
 
 Y <- seq(-3, 3, length = 200)
 prob <- normal(Y)
@@ -267,19 +276,24 @@ Distribution of variables you might encounter
 ## Normal (Gaussian)
 
 ```{r}
+#| fig-alt: "Density plot of 200 random numbers showing a nearly perfect normal distribution."
+#|
 M <- tibble(
   x = seq(-4, 4, length = 200),
-  y = dnorm(x))
-ggplot(M, aes(x, y)) + geom_line() +
-  labs(y = "Probability Density")
+  y = dnorm(x)
+)
+
+ggplot(M, aes(x, y)) + geom_line() + labs(y = "Probability Density")
 ```
 
 
 ## Binomial
 
 ```{r}
-M <- tibble(Successes = 0:10,
-            Probability = dbinom(0:10, 10, prob = 0.8))
+#| fig-alt: "Histogram of binomial probabilities from 0 to 10 with a probability of 0.8."
+
+M <- tibble(Successes = 0:10, Probability = dbinom(0:10, 10, prob = 0.8))
+
 ggplot(M, aes(Successes, Probability)) +
   geom_bar(stat = "identity") +
   scale_x_continuous(breaks = seq(0, 10, by = 1)) +
@@ -290,9 +304,11 @@ ggplot(M, aes(Successes, Probability)) +
 ## Poisson
 
 ```{r}
+#| fig-alt: "Histogram of Poisson probabilities from 0 to 20 with a mean of 5."
+
 trials <- 20
-M <- tibble(Successes = 0:trials,
-            Probability = dpois(0:trials, lambda = 5))
+
+M <- tibble(Successes = 0:trials, Probability = dpois(0:trials, lambda = 5))
 ggplot(M, aes(Successes, Probability)) +
   geom_bar(stat = "identity") +
   scale_x_continuous(breaks = seq(0, trials, by = 2)) +
@@ -302,7 +318,7 @@ ggplot(M, aes(Successes, Probability)) +
 
 ## A miscellanea of distributions {.nostretch}
 
-![](https://i.imgur.com/Mks8NPD.png"){fig-align="center" width="80%"}
+![](https://i.imgur.com/Mks8NPD.png"){fig-align="center" width="80%" fig-alt="Figure showing a range of different distributions and their interrelationships."}
 
 
 ## References

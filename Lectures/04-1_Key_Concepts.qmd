@@ -89,7 +89,7 @@ A **sample** is a representative subset of a population, ideally randomly chosen
 
 ## Goals of data collection: Low sampling error and low bias {#myImagePage}
 
-![](https://i.imgur.com/eP5dSny.png){fig-align="center"}
+![](https://i.imgur.com/eP5dSny.png){fig-align="center" fig-alt="Figure showing four dart boards with clusters of points in all combinations of Accurate-Inaccurate and Precise-Imprecise."}
 
 
 ## Thinking about sampling error and bias
@@ -160,7 +160,7 @@ Standard assumption of most statistical tests.
 
 Randomly select 20 trees (left) or randomly select 20 square quadrats with 0 or more trees (right).
 
-![](https://i.imgur.com/KcKmZYi.png){fig-align="center" width=80%}
+![](https://i.imgur.com/KcKmZYi.png){fig-align="center" width=80% fig-alt="Pair of figures of an experimental forest. On the left, individual trees are selected. On the right random plots are selected."}
 
 <center>
 How realistic is this?

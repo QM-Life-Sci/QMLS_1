@@ -44,7 +44,7 @@ The **conditional probability** of a dependent event is the probability of that 
 
 . . .
 
-![](http://scitechdaily.com/images/Leptopilina_boulardi.jpg){fig-align="center" width="50%"}
+![](http://scitechdaily.com/images/Leptopilina_boulardi.jpg){fig-align="center" width="50%" fig-alt="Photograph of a small parasitic wasp."}
 
 <center>
 *Leptopilina boulardi*
@@ -53,12 +53,12 @@ The **conditional probability** of a dependent event is the probability of that 
 
 ## Conditional probability
 
-![](https://i.imgur.com/S56RM5u.png){fig-align="center"}
+![](https://i.imgur.com/S56RM5u.png){fig-align="center" fig-alt="Figure showing different probabilities for male or female given that the host is or is not already parasitized."}
 
 
 ## Conditional probability {.nostretch}
 
-![](../images/Probability_Conditional.drawio.png){fig-align="center"}
+![](../images/Probability_Conditional.drawio.png){fig-align="center" fig-alt="Flow chart showing different ways to get male or female eggs which are dependent on parasitized state."}
 
 
 ## Conditional probability {.nostretch}
@@ -66,10 +66,10 @@ The **conditional probability** of a dependent event is the probability of that 
 - What proportion of all eggs are Male?
 - What proportion of all eggs are Female?
 
-![](../images/Probability_Conditional.drawio.png){fig-align="center"}
+![](../images/Probability_Conditional.drawio.png){fig-align="center" fig-alt="Flow chart showing different ways to get male or female eggs which are dependent on parasitized state."}
 
 
-## Conditional probability 
+## Conditional probability
 
 $$Pr[A|B] \times Pr[B] = Pr[B|A] \times Pr[A]$$
 
@@ -100,21 +100,21 @@ The conditional probability of $A$ given $B$ relies not only on the probability 
 
 Suppose that you wake up one day with spots all over your face. The doctor tells you that 90% of people who have smallpox and 80% of people with chickenpox have these symptoms.
 
-![](https://i.imgur.com/l0XzqV5.jpg){fig-align="center" width="60%"}
+![](https://i.imgur.com/l0XzqV5.jpg){fig-align="center" width="60%" fig-alt="Flow chart demonstrating the role of priors in Bayes' Rule."}
 
 
 ## Bayes' Rule {.nostretch}
 
-![](https://i.imgur.com/VCRHJoG.jpg){fig-align="center" width="80%"}
+![](https://i.imgur.com/VCRHJoG.jpg){fig-align="center" width="80%" fig-alt="Flow chart demonstrating the different priors in using Bayes' Rule to determine if someone has chickenpox."}
 
 
 ## Bayes' Rule {.nostretch}
 
-You collect a male wasp larva. What is the probability that it was laid in a parisitized host?
+You collect a male wasp larva. What is the probability that it was laid in a parasitized host?
 
 $$Pr[M|P] = \frac{\mathbf{Pr[P|M]} \times Pr[M]}{Pr[P]}$$
 
-![](../images/Probability_Conditional.drawio.png){fig-align="center" width="50%"}
+![](../images/Probability_Conditional.drawio.png){fig-align="center" width="50%" fig-alt="Flow chart showing different ways to get male or female eggs which are dependent on parasitized state."}
 
 
 ## Bayes' Rule
@@ -126,7 +126,7 @@ Pr[M|P] &= \frac{\mathbf{Pr[P|M]} \times Pr[M]}{Pr[P]}\\
 0.82 &= \mathbf{Pr[P|M]}
 \end{align*}
 
-There is an 82% chance that the egg was laid in a parisitized host.
+There is an 82% chance that the egg was laid in a parasitized host.
 
 
 ## Bayes' Rule
