@@ -224,9 +224,10 @@ Look at the help file for `sample()` and see what the arguments below mean.
 
 ```{r}
 set.seed(592777)
-pp_all <- tibble(id = letters[1:26],
-                 tx = sample(c('Treatment', 'Control'), 26,
-                             replace = TRUE))
+pp_all <- tibble(
+  id = letters[1:26],
+  tx = sample(c('Treatment', 'Control'), 26, replace = TRUE)
+)
 ```
 
 Try the following:
@@ -241,7 +242,7 @@ sample(pp_all$id, 5)
 
 # 2
 pp_all[sample(seq(1, nrow(pp_all)), 5), ]
-pp_all |> 
+pp_all |>
   slice_sample(n = 5)
 ```
 
@@ -249,7 +250,7 @@ How would you use `slice_sample()` to randomly select 50% of the rows without fi
 
 ```{r}
 ## FIXME
-pp_all |> 
+pp_all |>
   slice_sample(prop = 0.5)
 ```
 
@@ -274,34 +275,60 @@ For each of the following, generate a set of values and plot a histogram. You ma
 7. 1000 values from a uniform distribution with a minimum of 0 and maximum of 100.
 
 ```{r}
+#| fig-alt: "Histogram of normal distribution when n = 5."
+
 #FIXME
 set.seed(42878979)
 
 # 1
 ggplot(tibble(num = rnorm(5, 5, 1)), aes(num)) +
   geom_histogram(bins = 4)
+```
+
+```{r}
+#| fig-alt: "Histogram of normal distribution when n = 100."
 
 # 2
 ggplot(tibble(num = rnorm(100, 5, 1)), aes(num)) +
   geom_histogram(bins = 30)
+```
+
+```{r}
+#| fig-alt: "Histogram of normal distribution when n = 100000."
 
 # 3
 xx3 <- tibble(num = rnorm(100000, 5, 1))
 ggplot(xx3, aes(num)) +
   geom_histogram(bins = 50)
+```
+
+```{r}
+#| fig-alt: "Histogram of normal distribution when n = 5 and sd = 5."
 
 # 4
 ggplot(tibble(num = rnorm(5, 5, 5)), aes(num)) +
   geom_histogram(bins = 4)
+```
+
+```{r}
+#| fig-alt: "Histogram of normal distribution when n = 100 and sd = 5."
 
 # 5
 ggplot(tibble(num = rnorm(100, 5, 5)), aes(num)) +
   geom_histogram(bins = 30)
+```
+
+```{r}
+#| fig-alt: "Histogram of normal distribution when n = 100000 and sd = 5."
 
 # 6
 xx6 <- tibble(num = rnorm(100000, 5, 5))
 ggplot(xx6, aes(num)) +
   geom_histogram(bins = 50)
+```
+
+```{r}
+#| fig-alt: "Histogram of uniform distribution between 0 and 100 when n = 1000."
 
 # 7
 ggplot(tibble(num = runif(1000, 0, 100)), aes(num)) +
@@ -312,27 +339,37 @@ ggplot(tibble(num = runif(1000, 0, 100)), aes(num)) +
 Create a density plot for #3 and #6 above on the same plot. First create a single data frame with both sets and a column identifying each group.
 
 ```{r}
+#| fig-alt: "Density plot of two normal distributions with the same mean but different standard deviations."
+
 #FIXME
 n <- 100000
-xx.b <- tibble(id = rep(c('a', 'b'), each = n),
-               value = c(rnorm(n, 5, 1), rnorm(n, 5, 5)))
+xx.b <- tibble(
+  id = rep(c('a', 'b'), each = n),
+  value = c(rnorm(n, 5, 1), rnorm(n, 5, 5))
+)
 
 ggplot(xx.b, aes(x = value, color = id)) +
   geom_density()
 
 # or
+```
+
+```{r}
+#| fig-alt: "Density plot of two normal distributions with the same mean but different standard deviations with different fill colors."
 
 ggplot(xx.b, aes(x = value, color = id, fill = id)) +
-  geom_density(alpha = 1/5)
+  geom_density(alpha = 0.2)
 ```
 
 Add a vertical line to your plot at x = 7.
 
 ```{r}
+#| fig-alt: "Density plot of two normal distributions with the same mean but different standard deviations with different fill colors and a vertical line at x = 7."
+
 #FIXME
 ggplot(xx.b, aes(x = value, color = id, fill = id)) +
   geom_vline(xintercept = 7) +
-  geom_density(alpha = 1/5)
+  geom_density(alpha = 0.2)
 ```
 
 Consider #3 and #6 from above. What proportion of values from each set are above 7?

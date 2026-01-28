@@ -44,27 +44,27 @@ What are the probabilities that a randomly selected individual has:
 
 a. Type A+ blood
 
-> 
+>
 
 b. Type O blood
 
-> 
+>
 
 c. Type AB blood
 
-> 
+>
 
 d. *Not* Type AB blood
 
-> 
+>
 
 e. Type A *or* type B blood
 
-> 
+>
 
 f. Rh+ blood
 
-> 
+>
 
 
 ## PSA
@@ -95,18 +95,13 @@ Calculate the following:
 ```{r}
 # Total with cancer
 
-
 # Total with no cancer
-
 
 # Positive tests among cancer group
 
-
 # Positive tests among no cancer group
 
-
 # Total positive tests
-
 
 # Ratio of true positives to total positives
 
@@ -123,7 +118,7 @@ $$Pr[Ca|Positive~Test] = \frac{Pr[Positive~Test|Ca] \times Pr[Ca]}{Pr[Positive~T
 
 How would you counsel a family member who had a positive test?
 
-> 
+>
 
 How do your results change when one of the values changes? Calculate each of the following separately. If you haven't already done so, you may wish to return to the code you wrote above and assign variables that you can change:
 
@@ -137,7 +132,7 @@ How do your results change when one of the values changes? Calculate each of the
 
 What is your interpretation of the factors that result in the condition, given a single positive test?
 
-> 
+>
 
 ## Random Samples
 
@@ -160,7 +155,7 @@ Now, set the seed for the random number generator, and do the same as above. Cho
 
 ```
 
-> 
+>
 
 What would happen if you set the seed, generate AA, set the seed again with the same number and then generate BB? Try this.
 
@@ -168,7 +163,7 @@ What would happen if you set the seed, generate AA, set the seed again with the 
 
 ```
 
-> 
+>
 
 One key feature for simulating randomness in R is the `sample()` function. Imagine you had a list of potential participants for a study (e.g., the list of likely voters in the U.S.). You could use `sample()` to choose a random set. Let's try this with a set of letters representing people and we will randomly assign each to a group by sampling `c('Treatment','Control')` *with replacement*.
 
@@ -176,8 +171,10 @@ Look at the help file for `sample()` and see what the arguments below mean.
 
 ```{r}
 set.seed(592777)
-pp_all <- tibble(id = letters[1:26],
-                 tx = sample(c('Treatment', 'Control'), 26, replace = TRUE))
+pp_all <- tibble(
+  id = letters[1:26],
+  tx = sample(c('Treatment', 'Control'), 26, replace = TRUE)
+)
 ```
 
 Try the following:
@@ -246,7 +243,7 @@ pnorm(7, mean = 5, sd = 5, lower.tail = FALSE)
 
 Compare the values returned by `pnorm()` to those you calculated manually above:
 
-> 
+>
 
 Although `pnorm()` (and the other `p` functions) use equations to calculate probabilities, as n gets very large, the values will asymptotically approach simply summing up observations above or below some critical value.
 
