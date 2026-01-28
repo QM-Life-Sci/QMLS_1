@@ -55,13 +55,36 @@ set.seed(32742)
 
 b1 <- beaver1 %>%
   mutate(time = as.integer(time)) %>%
-  select(-activ) %>% slice(1:10)
+  select(-activ) %>%
+  slice(1:10)
 
 air_temps <- tibble(
   day = 346,
-  time = as.integer(c(830, 835, 840, 845, 850, 855,
-                      900, 905, 910, 915, 920, 930, 935, 940, 945, 950, 955,
-                      1000, 1005, 1010, 1015, 1020, 1025)),
+  time = as.integer(c(
+    830,
+    835,
+    840,
+    845,
+    850,
+    855,
+    900,
+    905,
+    910,
+    915,
+    920,
+    930,
+    935,
+    940,
+    945,
+    950,
+    955,
+    1000,
+    1005,
+    1010,
+    1015,
+    1020,
+    1025
+  )),
   air_temp = runif(length(time), 9, 10)
 )
 ```
@@ -70,19 +93,23 @@ air_temps <- tibble(
 :::: {.columns}
 
 ::: {.column width="40%"}
+
 ```{r}
 #| echo: true
 
 print(b1)
 ```
+
 :::
 
 ::: {.column width="60%"}
+
 ```{r}
 #| echo: true
 
 print(air_temps, n = 23)
 ```
+
 :::
 
 ::::
@@ -121,18 +148,34 @@ left_join(b1, air_temps, by = join_by(time))
 ## Separate
 
 ```{r}
-IDs <- structure(list(Sample = c("10339243_20240604_dbea51c1-46d7-41f7-9cc9-bb3eabc41326", 
-"10351235_20240620_b6571277-2cdf-4bba-8c66-63e79b4c56df", "10353170_20240607_78232c77-f77f-42ba-86a1-898485970ebb", 
-"10353307_20240612_97094286-e01d-4291-8624-d9eb5a5ae0ce", "10353940_20240613_a2471b7a-07b5-4e44-8e30-20485101147b", 
-"10361965_20240605_f33a532f-0286-478d-ad9d-3c8b2a88c1f1", "10370824_20240613_99dda9ae-d870-4029-956d-8f71d7c2dfc3", 
-"10371188_20240522_d0c56972-4354-4cd2-b55f-ec58ec2e6597", "10371698_20240610_eecbdc43-bf70-4f81-857f-ef85207fde43", 
-"10378521_20240725_09331911-0694-46f9-94fc-e650e075f415", "10379207_20240314_a20a47a7-7605-4726-a34d-06292597b94a", 
-"10379323_20240610_44fb64da-896e-4027-8041-90e901e98577", "10384854_20240619_1cc47e47-5cbc-478e-ab53-1073c10ae392", 
-"10385289_20240619_09e7b6f5-19d2-487e-9d49-bfa2d9cb3d54", "10386633_20240722_1bc766ab-bd55-49cd-8597-7c59a741fdf0", 
-"10397351_20240606_28793edf-d507-407e-ba38-0b81d204f4d3", "10403455_20240619_f65a4b72-3542-4c00-b058-a4d411d20b50", 
-"10404017_20240612_ba30b6d9-ea83-4ff9-88fd-819a8456c6c3", "10405726_20240626_eb28d39c-633e-430a-bf13-8b5df2164ca3", 
-"10408995_20240702_9be496f0-b677-4e08-b6a2-57fca34a16e9")), row.names = c(NA, 
--20L), class = c("tbl_df", "tbl", "data.frame"))
+IDs <- structure(
+  list(
+    Sample = c(
+      "10339243_20240604_dbea51c1-46d7-41f7-9cc9-bb3eabc41326",
+      "10351235_20240620_b6571277-2cdf-4bba-8c66-63e79b4c56df",
+      "10353170_20240607_78232c77-f77f-42ba-86a1-898485970ebb",
+      "10353307_20240612_97094286-e01d-4291-8624-d9eb5a5ae0ce",
+      "10353940_20240613_a2471b7a-07b5-4e44-8e30-20485101147b",
+      "10361965_20240605_f33a532f-0286-478d-ad9d-3c8b2a88c1f1",
+      "10370824_20240613_99dda9ae-d870-4029-956d-8f71d7c2dfc3",
+      "10371188_20240522_d0c56972-4354-4cd2-b55f-ec58ec2e6597",
+      "10371698_20240610_eecbdc43-bf70-4f81-857f-ef85207fde43",
+      "10378521_20240725_09331911-0694-46f9-94fc-e650e075f415",
+      "10379207_20240314_a20a47a7-7605-4726-a34d-06292597b94a",
+      "10379323_20240610_44fb64da-896e-4027-8041-90e901e98577",
+      "10384854_20240619_1cc47e47-5cbc-478e-ab53-1073c10ae392",
+      "10385289_20240619_09e7b6f5-19d2-487e-9d49-bfa2d9cb3d54",
+      "10386633_20240722_1bc766ab-bd55-49cd-8597-7c59a741fdf0",
+      "10397351_20240606_28793edf-d507-407e-ba38-0b81d204f4d3",
+      "10403455_20240619_f65a4b72-3542-4c00-b058-a4d411d20b50",
+      "10404017_20240612_ba30b6d9-ea83-4ff9-88fd-819a8456c6c3",
+      "10405726_20240626_eb28d39c-633e-430a-bf13-8b5df2164ca3",
+      "10408995_20240702_9be496f0-b677-4e08-b6a2-57fca34a16e9"
+    )
+  ),
+  row.names = c(NA, -20L),
+  class = c("tbl_df", "tbl", "data.frame")
+)
 ```
 
 ```{r}
@@ -147,9 +190,8 @@ IDs
 ```{r}
 #| echo: true
 
-IDs |> 
-  separate(Sample, into = c("Sample", "Date", "Random_String"),
-           sep = "_")
+IDs |>
+  separate(Sample, into = c("Sample", "Date", "Random_String"), sep = "_")
 ```
 
 
@@ -158,9 +200,8 @@ IDs |>
 ```{r}
 #| echo: true
 
-IDs |> 
-  separate(Sample, into = c("ID", "Date", "Random_String"),
-           sep = "_") |> 
+IDs |>
+  separate(Sample, into = c("ID", "Date", "Random_String"), sep = "_") |>
   mutate(Date = ymd(Date))
 ```
 
@@ -170,9 +211,11 @@ IDs |>
 ```{r}
 #| echo: true
 
-IDs |> 
-  mutate(ID = str_sub(Sample, start = 1, end = 8),
-         Date = str_sub(Sample, start = 10, end = 17))
+IDs |>
+  mutate(
+    ID = str_sub(Sample, start = 1, end = 8),
+    Date = str_sub(Sample, start = 10, end = 17)
+  )
 ```
 
 
@@ -208,7 +251,7 @@ ids
 4 == 1:10 # Vector of T/F
 
 (x <- 20:30)
-(y <- c(21,25))
+(y <- c(21, 25))
 
 which(x %in% y) # Returns indices
 which(y %in% x)

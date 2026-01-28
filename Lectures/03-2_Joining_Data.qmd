@@ -37,7 +37,7 @@ Datasets
 
 -->
 
-![](https://www.scientificlib.com/en/Biology/Animalia/Chordata/Aves/images/MalurusCyaneus1.jpg){fig-align="center"}
+![](https://www.scientificlib.com/en/Biology/Animalia/Chordata/Aves/images/MalurusCyaneus1.jpg){fig-align="center" fig-alt="Photograph of a Superb Fairywren."}
 
 - ~30 years of breeding data for ~1900 female Superb Fairywrens (*Malurus cyaneus*)
 - Individuals tracked for many years (number of fledged offspring, reproductive senescence, etc.)
@@ -58,34 +58,41 @@ Relations are always built between pairs of tables.
 
 ```{r}
 #| echo: false
-wren_surv <- read_csv("../data/wren_female_surv.csv", show_col_types = FALSE,
-                      col_types = "-cn-nc") |>
-  rename(longevity = long_years) |>
-  arrange(ID, longevity) |>
-  group_by(ID) |>
-  summarise(final_obs_year = max(year),
-            longevity = max(longevity),
-            sex = sex[1])
+wren_surv <- read_csv(
+    "../data/wren_female_surv.csv",
+    show_col_types = FALSE,
+    col_types = "-cn-nc"
+) |>
+    rename(longevity = long_years) |>
+    arrange(ID, longevity) |>
+    group_by(ID) |>
+    summarize(
+        final_obs_year = max(year),
+        longevity = max(longevity),
+        sex = sex[1]
+    )
 
-wren_repro <- read_csv("../data/wren_female_repro.csv", show_col_types = FALSE,
-                       col_types = "-cnnn-n-") |>
-  rename(n_offspring = offspring_inde,
-         senescent = final_breed) |>
-  mutate(mass = rnorm(n(), mean = 10.5, sd = 1) |> round(digits = 1))
+wren_repro <- read_csv(
+    "../data/wren_female_repro.csv",
+    show_col_types = FALSE,
+    col_types = "-cnnn-n-"
+) |>
+    rename(n_offspring = offspring_inde, senescent = final_breed) |>
+    mutate(mass = rnorm(n(), mean = 10.5, sd = 1) |> round(digits = 1))
 ```
 
 ```{r}
 #| echo: false
 
 wren_surv |>
-  slice_head(n = 5) |>
-  gt() |>
-  tab_header("Survival")
+    slice_head(n = 5) |>
+    gt() |>
+    tab_header("Survival")
 
 wren_repro |>
-  slice_head(n = 5) |>
-  gt() |>
-  tab_header("Reproductive Success")
+    slice_head(n = 5) |>
+    gt() |>
+    tab_header("Reproductive Success")
 
 ```
 
@@ -144,14 +151,14 @@ union(names(wren_surv), names(wren_repro))
 #| echo: false
 
 wren_surv |>
-  slice_head(n = 5) |>
-  gt() |>
-  tab_header("Survival")
+    slice_head(n = 5) |>
+    gt() |>
+    tab_header("Survival")
 
 wren_repro |>
-  slice_head(n = 5) |>
-  gt() |>
-  tab_header("Reproductive Success")
+    slice_head(n = 5) |>
+    gt() |>
+    tab_header("Reproductive Success")
 
 ```
 
@@ -221,7 +228,7 @@ WR |> filter(ID == "574717-YOO")
 
 ## Summary of joins
 
-![](https://data-lessons.github.io/gapminder-R/fig/dplyr-joins.png){fig-align="center"}
+![](https://james-sr.github.io/study-notes-master/images/DplyrJoins.png){fig-align="center"}
 
 ## Missing Values
 
@@ -237,9 +244,10 @@ Joining & pivoting your data brings up the importance of missing values. These c
 #| echo: true
 
 frogs <- tibble(
-  year = c(2019, 2019, 2019, 2019, 2018, 2018, 2018),
-  individual = c(1, 2, 3, 4, 2, 3, 4),
-  mass = c(2.88, 3.51, 1.95, NA, 2.72, 2.17, 3.32))
+    year = c(2019, 2019, 2019, 2019, 2018, 2018, 2018),
+    individual = c(1, 2, 3, 4, 2, 3, 4),
+    mass = c(2.88, 3.51, 1.95, NA, 2.72, 2.17, 3.32)
+)
 ```
 
 ```{r}
@@ -253,9 +261,12 @@ frogs
 
 In our case here, you can make implicit missing values become **explicit** by using `pivot_wider()` to turn the years into columns
 
-```{r, eval=TRUE, echo=TRUE}
+```{r}
+#| eval: true
+#| echo: true
+
 frogs |>
-  pivot_wider(names_from = year, values_from = mass)
+    pivot_wider(names_from = year, values_from = mass)
 ```
 
 
@@ -264,11 +275,18 @@ frogs |>
 If missing values are not important, you can turn these explicit values into **implicit** ones by using `values_drop_na = TRUE`.
 
 \footnotesize
-```{r, eval=TRUE, echo=TRUE}
+```{r}
+#| eval: true
+#| echo: true
+
 frogs |>
-  pivot_wider(names_from = year, values_from = mass) |>
-  pivot_longer(c('2018','2019'), names_to = "year", values_to = "mass",
-               values_drop_na = TRUE)
+    pivot_wider(names_from = year, values_from = mass) |>
+    pivot_longer(
+        c('2018', '2019'),
+        names_to = "year",
+        values_to = "mass",
+        values_drop_na = TRUE
+    )
 
 ```
 
@@ -278,7 +296,10 @@ frogs |>
 You can also make missing values explicit with `complete()`
 
 
-```{r, eval=TRUE, echo=TRUE}
+```{r}
+#| eval: true
+#| echo: true
+
 frogs |>
-  complete(year, individual)
+    complete(year, individual)
 ```

@@ -16,6 +16,8 @@ code-annotations: hover
 bibliography: QMLS_Bibliography.bib
 csl: evolution.csl
 ---
+
+
 ## Analysis workflow - Tidy Data {.nostretch}
 
 ```{r}
@@ -27,7 +29,6 @@ library(readxl)
 library(cowplot)
 theme_set(theme_cowplot())
 
-
 ```
 
 <!--
@@ -36,14 +37,14 @@ Datasets
 -->
 
 
-![](../images/Workflow.drawio.png){fig-align="center" width="40%"}
+![](../images/Workflow.drawio.png){fig-align="center" width="40%" fig-alt="Flow chart showing different packages in the tidyverse which are used for data analysis."}
 
 Perform all manipulation via code (in R)
 
 - Preserves data integrity
 - The "hard" way now is the easy way in the long run
 
-  
+
 ## Useful transformation functions
 
 - `separate()`
@@ -57,11 +58,13 @@ Perform all manipulation via code (in R)
 
 ## Eastern Red Bat morphology data
 
-![](https://imgur.com/vG2psDp.png){fig-align="center" width="70%"}
+![](https://imgur.com/vG2psDp.png){fig-align="center" fig-alt="Photograph of an Eastern Red Bat" width="70%"}
+
 
 ## Eastern Red Bat morphology data
 
-![](https://imgur.com/RHmGsV8.png){fig-align="center"}
+![](https://imgur.com/RHmGsV8.png){fig-align="center" fig-alt="Screen capture showing the paper where the Eastern Red Bat data come from."}
+
 
 ## Eastern Red Bat morphology data
 
@@ -71,7 +74,7 @@ Perform all manipulation via code (in R)
 #| warning: false
 
 bats <- read_csv("../data/bats.csv")
-bats[1:10,]
+bats[1:10, ]
 ```
 
 
@@ -83,7 +86,7 @@ Turns two columns into one. The default for `sep` is an underscore (_), so if yo
 #| echo: true
 
 bats |>
-  unite("age_sex", age:sex)
+    unite("age_sex", age:sex)
 
 ```
 
@@ -110,9 +113,9 @@ Pulls apart one column into multiple columns wherever a separator appears.
 ```{r}
 #| echo: true
 
-bats <- 
-  bats |>
-  separate(age_sex, into = c("age","sex"), sep = "_")
+bats <-
+    bats |>
+    separate(age_sex, into = c("age", "sex"), sep = "_")
 bats
 
 ```
@@ -133,7 +136,7 @@ bats$age_sex <- paste0(bats$age, "_", bats$sex)
 ```{r}
 #| echo: true
 
-str_split(bats$age_sex, "_", simplify=TRUE)
+str_split(bats$age_sex, "_", simplify = TRUE)
 
 ```
 
@@ -141,7 +144,7 @@ str_split(bats$age_sex, "_", simplify=TRUE)
 ## `arrange()` {.smaller}
 
 The function `arrange()` sorts by both ascending numerical and alphabetical order, but you can flip this to descending order with `desc()`.
-  
+
   - `arrange()` always puts `NA`'s at the end, no matter if your sort in ascending or descending order.
 
 ```{r}
@@ -149,13 +152,13 @@ The function `arrange()` sorts by both ascending numerical and alphabetical orde
 #| message: false
 
 bats |>
-  arrange(desc(avg_temp), desc(condition), desc(RFA))
+    arrange(desc(avg_temp), desc(condition), desc(RFA))
 ```
 
 
 ## `mutate()` {.smaller}
 
-Mutate always adds a new column at the end of the data. So say you want to know the ratio of each bat's right forearm length (RFA) to its bodymass (mass).
+Mutate always adds a new column at the end of the data. So say you want to know the ratio of each bat's right forearm length (RFA) to its body mass (mass).
 
 
 ```{r}
@@ -163,7 +166,7 @@ Mutate always adds a new column at the end of the data. So say you want to know 
 #| message: false
 
 bats |>
-  mutate(ratio = RFA / mass)
+    mutate(ratio = RFA / mass)
 ```
 
 
@@ -176,13 +179,13 @@ bats |>
 #| message: false
 
 bats$ratio <- bats$RFA / bats$mass
-bats[1:5,]
+bats[1:5, ]
 ```
 
 
 ## Useful Creation Functions
 
-There are a lot of useful functions for creating new variables out there.  Examples include: 
+There are a lot of useful functions for creating new variables out there.  Examples include:
 
 - Arithmetic operators: `+, -, *, /, ^`
 - Logs: `log()` - which is a natural log, `log2()`, `log10()`
@@ -199,8 +202,8 @@ There are a lot of useful functions for creating new variables out there.  Examp
 #| echo: true
 #| message: false
 
-bats |> 
-  summarize(avg_mass = mean(mass))
+bats |>
+    summarize(avg_mass = mean(mass))
 ```
 
 
@@ -212,9 +215,9 @@ If you want to summarize by multiple groups, use `group_by()` and `|>`
 #| echo: true
 #| message: false
 
-bats |> 
-  group_by(sex) |>
-  summarize(avg_mass = mean(mass))
+bats |>
+    group_by(sex) |>
+    summarize(avg_mass = mean(mass))
 ```
 
 ```{r}
@@ -222,8 +225,8 @@ bats |>
 #| message: false
 
 bats |>
-  group_by(sex, age) |>
-  summarize(avg_mass = mean(mass))
+    group_by(sex, age) |>
+    summarize(avg_mass = mean(mass))
 ```
 
 
@@ -241,15 +244,14 @@ Here are some of the many functions that can be useful with `summarize()`
 - You can combine multiple operations with the "pipe", or `|>`.
 - This makes your code clean and more human-readable if you translate `|>` to "then".
 
-```{r,  echo=TRUE, message=FALSE}
+```{r}
 #| echo: true
 #| message: false
 
-bats |> 
-  group_by(sex, age, condition) |>
-  summarize(avg_mass = mean(mass)) |>
-  arrange(desc(avg_mass))
+bats |>
+    group_by(sex, age, condition) |>
+    summarize(avg_mass = mean(mass)) |>
+    arrange(desc(avg_mass))
 ```
 
-> Read the code above as take the bats tibble, then group by sex, age, and condition and get the average mean for each combination. Finally, arrange the data in decending order by mass. 
-
+> Read the code above as take the bats tibble, then group by sex, age, and condition and get the average mean for each combination. Finally, arrange the data in descending order by mass.

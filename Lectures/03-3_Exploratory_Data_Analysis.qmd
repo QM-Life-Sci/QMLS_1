@@ -37,7 +37,7 @@ Datasets
 Visually exploring your data is often called Exploratory Data Analysis (EDA)
 
 - Helps you figure out what is going on
-- Can identify errors or problems with your data 
+- Can identify errors or problems with your data
 - An imperative first step to data analysis
 - Allows you to feel confident with analyses
 - Not a formal process, simply whatever you like to do to examine your data
@@ -45,7 +45,7 @@ Visually exploring your data is often called Exploratory Data Analysis (EDA)
 
 ## EDA with ggplot2
 
-![](../images/Workflow.drawio.png){fig-align="center" width="40%"}
+![](../images/Workflow.drawio.png){fig-align="center" width="40%" fig-alt="Flow chart showing different packages in the tidyverse which are used for data analysis."}
 
 
 ## Let's do some EDA on our Bats Data
@@ -56,7 +56,7 @@ Visually exploring your data is often called Exploratory Data Analysis (EDA)
 #| message: false
 
 bats <- read_csv("../data/bats.csv")
-bats[1:10,]
+bats[1:10, ]
 ```
 
 
@@ -87,11 +87,13 @@ Different variations, but the most standard recipe is:
 #| echo: true
 #| warning: false
 #| message: false
+#| fig-alt: "Boxplot of body mass in female and male bats showing that female bats are slightly larger."
 
-ggplot(data = bats, aes(x = sex, y = mass))+
+ggplot(data = bats, aes(x = sex, y = mass)) +
   geom_boxplot()
-  
+
 ```
+
 
 ## Raw data as an alternative to boxplots
 
@@ -99,10 +101,11 @@ ggplot(data = bats, aes(x = sex, y = mass))+
 #| echo: true
 #| warning: false
 #| message: false
+#| fig-alt: "Scatterplot of body mass in female and male bats showing a wide range of masses."
 
-ggplot(bats, aes(x = sex, y = mass))+
+ggplot(bats, aes(x = sex, y = mass)) +
   geom_point(size = 3)
-  
+
 ```
 
 
@@ -113,11 +116,10 @@ Add a little jitter and transparency on the x axis to keep from overplotting.
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatterplot of body mass in female and male bats with jitter added to avoid overplotting showing a wide range of masses."
 
-ggplot(bats, aes(x = sex, y = mass))+
-  geom_point(position = position_jitter(width = 0.3),
-             alpha = 0.5,
-             size = 3)
+ggplot(bats, aes(x = sex, y = mass)) +
+  geom_point(position = position_jitter(width = 0.3), alpha = 0.5, size = 3)
 
 ```
 
@@ -127,13 +129,16 @@ ggplot(bats, aes(x = sex, y = mass))+
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatterplot of body mass in female and male bats with jitter added to avoid overplotting overlaid with a boxplot showing a wide range of masses."
 
 ggplot(bats, aes(x = sex, y = mass)) +
   geom_boxplot(outlier.shape = NA) +
-  geom_point(position = position_jitter(width = 0.3),
-             alpha = 0.5, 
-             color = "blue",
-             size = 3)
+  geom_point(
+    position = position_jitter(width = 0.3),
+    alpha = 0.5,
+    color = "blue",
+    size = 3
+  )
 
 ```
 
@@ -147,14 +152,16 @@ You can "bring the boxplot to the front" by switching the order of `geom_point()
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Scatterplot of body mass in female and male bats with jitter added to avoid overplotting overlaid with a boxplot on top showing a wide range of masses."
 
-ggplot(bats, aes(x = sex, y = mass))+
-  geom_point(position = position_jitter(width = 0.3),
-             alpha = 0.5, 
-             color = "blue",
-             size = 3) +
-  geom_boxplot(alpha = 2/3,
-               outlier.shape = NA)
+ggplot(bats, aes(x = sex, y = mass)) +
+  geom_point(
+    position = position_jitter(width = 0.3),
+    alpha = 0.5,
+    color = "blue",
+    size = 3
+  ) +
+  geom_boxplot(alpha = 2 / 3, outlier.shape = NA)
 
 ```
 
@@ -166,13 +173,16 @@ You can also pick a different variable to group by and flip your axes.
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Boxplot of reproductive condition in bats with groups on the y-axis."
 
-ggplot(bats, aes(x = condition, y = RFA))+
-  geom_boxplot(outlier.shape = NA)+
-  geom_point(position = position_jitter(width = 0.3),
-             alpha = 0.5, 
-             color = "blue",
-             size = 3) +
+ggplot(bats, aes(x = condition, y = RFA)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_point(
+    position = position_jitter(width = 0.3),
+    alpha = 0.5,
+    color = "blue",
+    size = 3
+  ) +
   coord_flip()
 
 ```
@@ -186,16 +196,21 @@ Sometimes you want your groups in a specific order, not alphabetical
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Boxplot of reproductive condition in bats with groups on the y-axis manually ordered."
 
-bats$condition <- factor(bats$condition,
-                         levels = c("L", "P","PL", "TD", "NR"))
+bats$condition <- factor(
+  bats$condition,
+  levels = c("L", "P", "PL", "TD", "NR")
+)
 
-ggplot(bats, aes(x = condition, y = RFA))+
+ggplot(bats, aes(x = condition, y = RFA)) +
   geom_boxplot(outlier.shape = NA) +
-  geom_point(position = position_jitter(width = 0.3),
-             alpha = 0.5, 
-             color = "blue",
-             size = 3) +
+  geom_point(
+    position = position_jitter(width = 0.3),
+    alpha = 0.5,
+    color = "blue",
+    size = 3
+  ) +
   coord_flip()
 
 ```
@@ -207,12 +222,12 @@ ggplot(bats, aes(x = condition, y = RFA))+
 
 ```{r}
 #| echo: true
+#| fig-alt: "Histogram of body mass in bats showing that most bats weigh 10 grams."
 
-ggplot(bats)+
-  geom_histogram(aes(x = mass),
-                 binwidth = 0.5)+
+ggplot(bats) +
+  geom_histogram(aes(x = mass), binwidth = 0.5) +
   theme(text = element_text(size = 18))
-  
+
 ```
 
 
@@ -222,11 +237,12 @@ ggplot(bats)+
 
 ```{r}
 #| echo: true
+#| fig-alt: "Density plot of body mass in bats with sex colored showing that female bats weigh slightly more than males."
 
-ggplot(bats)+
-  geom_density(aes(x = mass, fill = sex))+
+ggplot(bats) +
+  geom_density(aes(x = mass, fill = sex)) +
   theme(text = element_text(size = 18))
-  
+
 ```
 
 
@@ -236,11 +252,12 @@ Let's check the moonlight data
 
 ```{r}
 #| echo: true
+#| fig-alt: "Histogram of moonlight data showing mostly small values with a few large observation at 1000."
 
-ggplot(bats)+
-  geom_histogram(aes(x = moonlight), alpha = 0.5)+
-  theme(text = element_text(size=18))
-  
+ggplot(bats) +
+  geom_histogram(aes(x = moonlight), alpha = 0.5) +
+  theme(text = element_text(size = 18))
+
 ```
 
 
@@ -249,8 +266,8 @@ ggplot(bats)+
 ```{r}
 #| echo: true
 
-bats |> 
-  select(bat_ID, age, mass, moonlight) |> 
+bats |>
+  select(bat_ID, age, mass, moonlight) |>
   arrange(moonlight)
 
 ```
@@ -261,8 +278,8 @@ bats |>
 ```{r}
 #| echo: true
 
-bats |> 
-  select(bat_ID, age, mass, moonlight) |> 
+bats |>
+  select(bat_ID, age, mass, moonlight) |>
   arrange(desc(moonlight))
 
 ```
@@ -296,49 +313,55 @@ max(bats_filt$moonlight)
 
 bats$moonlight[bats$moonlight == 1000] <- 100
 
-bats$moonlight[bats$moonlight == 990 &
-                  bats$bat_ID == 155] <- 99
+bats$moonlight[
+  bats$moonlight == 990 &
+    bats$bat_ID == 155
+] <- 99
 
-bats$moonlight[bats$moonlight == 990 &
-                  bats$bat_ID == 1] <- 0
+bats$moonlight[
+  bats$moonlight == 990 &
+    bats$bat_ID == 1
+] <- 0
 ```
 
 
-## Doublecheck your fixes
+## Double check your fixes
 
 ```{r}
 #| echo: true
 
-bats |> 
-  select(bat_ID, age, mass, moonlight) |> 
+bats |>
+  select(bat_ID, age, mass, moonlight) |>
   arrange(moonlight)
 ```
 
 
-## Doublecheck your fixes
+## Double check your fixes
 
 ```{r}
 #| echo: true
 
-bats |> 
-  select(bat_ID, age, mass, moonlight) |> 
+bats |>
+  select(bat_ID, age, mass, moonlight) |>
   arrange(desc(moonlight)) |>
   print(n = 11)
 ```
 
 
-## Doublecheck your fixes {.smaller}
+## Double check your fixes {.smaller}
 
 Let's re-check the moonlight data
 
 ```{r}
 #| echo: true
+#| fig-alt: "Histogram of moonlight data showing a fairly even distribution between 0 and 100."
 
 ggplot(bats) +
   geom_histogram(aes(x = moonlight), alpha = 0.5) +
   theme(text = element_text(size = 18))
-  
+
 ```
+
 
 ## Write out the new dataset
 
@@ -347,5 +370,5 @@ ggplot(bats) +
 #| eval: false
 
 write_csv(bats, file = "bats_corrected.csv")
-  
+
 ```
