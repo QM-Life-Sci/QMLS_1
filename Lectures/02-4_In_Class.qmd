@@ -28,177 +28,81 @@ library(readxl)
 
 ## Today's Discussion
 
-- Data Organization
+- Rtools, command line tools, updating R & RStudio
+- Working directory, data organization, & RStudio Projects
 - Plotting (not much discussion today - will plot all semester)
-- Pivoting
-- Pipes
-- Base R vs Tidyverse
-- Getting Help & Debugging
+- Tidyverse & Base R
 
 
-## Data Organization
+## Rtools, command line tools, updating R & RStudio
 
-> On the last lab I had some issues with data organization. How can you prevent the different datasets from overlapping?
+- Install git (if asked)
+- Install RTools (Windows) or Command Line Tools (MacOS)
+- "package [tidyverse] was built..."
+- Setting the R version in RStudio
 
-> Could you reiterate the purpose of creating projects and saving an environment in R? How do you recommend doing this in your workflow and organization?
+## Working directory, data organization, & RStudio Projects {.smaller}
 
+> I think that I'm still confused on what the working directory actually is. When we change it to "Source File Location," is R moving files around, or just changing where it looks for them when running code? I don't have a clear picture on what exactly the setting does. 
 
-## Data Organization: NAs
+> Can you please explain the working directory and where it "should" be so code can be shared between people/computers? Right now mine is just in my "Documents" through my OnceDrive Do you recommend to move the working directory to a folder outside the "cloud"?
 
-> I understand that I should use NA for missing data. But how would the graph be affected by missing date "NA" when plotting? And how to handle it?
+> I wanted to ask for clarification on when y'all said not to use setwd(). Is that just we should avoid using it in the .qmd because of how quarto rendering works, or should we avoid using it in general? 
 
-> How can we remove NA data points without completely removing a row or column from our data set? Is it possible to only exclude one data point? What is the simplest way to remove outliers?
+## Working directory, data organization, & RStudio Projects {.smaller}
 
+> When I was working with some of my own data in R I was trying to import the data and I was having trouble importing specific pages of my excel file. I remember in the video there was a way to do that but I wanted to ask if there is an efficient way to do that? Also when I was trying to set my working directory I kept getting an error. It was on a new script so I am not entirely sure what the issue is.
 
-## Data Organization: NAs {.smaller}
+> I also have a question regarding using git to keep track of code revision. You always set the file to "source file location" but is this redundant if we are using git properly and keeping updated file versions through there? 
 
-> My question has to do with blank cells within Excel/CSV. In the lesson and article, we're instructed never to leave cells blank and add NA. Usually, I leave those cells blank and set up my code to interpret those blank cells as NA. Is that not enough?
+> Secondly, (slide 10), when do we need to use "../" to make R look one layer "above" where the file actually is in order to access it?
 
-> I understand that -9 has been used in some past code projects to attempt to indicate "N/A" values and that modern coding practices no longer consider -9 a sufficient indicator for such "N/A" values, but I was wondering if there was any particular coding reason as to why R or other coding languages would read the numerical value "-9" specifically as representing the value "N/A." Moreover, if a particular data set being coded in R contains the value -9 in some form, how would we structure it in our code so it reads as the numerical value -9 instead of thinking we are attempting to write an "N/A" value?
+## Reading from Excel {.smaller}
 
-## Plotting
+> When importing data into R from Excel is it necessary or at all beneficial to remove any formulas built into the entries? Or is it best to strip any of that away and do even simpler calculations within R itself?
 
-> Do you normally switch between facet_wrap() and facet_grid()? is it typically dependent on the number of variables being considered?
 
-> Using ggplot, I have struggled before to set and alter scales on graphs, especially when trying to compare distributions of data. How can you change a scale, or even better center a plot at a specific location?
+## Plotting {.smaller}
 
-> I am a little bit confuse about using ggplot layers to enhance my figures. I have struggled with compact labbling axes. How can I make the plots more informative and clear?
+> Do you have any recommendations on places where one can go to practice working with ggplot? It seems very useful and I would like to have more chances to engage with it.
 
+> I was trying to work with the Iris dataset while watching the lecture, but every time I tried to use ggplot(iris), nothing appeared. When I type glimpse(iris) I am able to see the tibble, but nothing plots when I try to use ggplot. Am I doing something incorrectly, or do I need to download a package or something? 
 
-## Pivoting
+> I often have errors thrown when using ggplot that take quite a bit of troubleshooting to fix. There are so many options for plotting with ggplot but any helpful tips or resources on the basics would be great!
 
-> In comparing wide vs long format for data, why would it be better to analyze from long format in a practical sense? Is it easier for R to parse rows instead of columns?
+## Plotting: colors {.smaller}
 
-> I am a little confused about the differences between pivot_wider() and pivot_longer(). I understand the reason to use these on your data, but what benefit does one have over the other. Maybe I just need some more examples on how these could be used.
+> In plots like stacked bar charts with many groups, I often end up needing a lot of colors and then some of them become hard to see or the text is not readable anymore. I get stuck trying to fix one or two categories (which I think is the most important ones to show my point) without changing everything else. In cases like this, is it better to rethink the type of plot (instead of forcing more colors)?
 
+> Some of my data when plotted uses too many colors (e.g. stacked bar chart showing top 10 bacterial families between ag and prairie; n <= 20 colors). Very few color packages can plot this many colors, and I end up getting stuck with one or two "bars" being too light/dark of a color for the overlayed white/black text to be visible, and it seems to be impossible to get these one or two "bars" to let me change their font color without changing everything else. What is the best way to handle data visualization when you would need too many colors? Throw the whole graphic out and try something else?
 
-## Pivoting
+## Plotting: colors {.smaller}
 
-- Longer
-    - Multiple columns into rows
-    - We use 99% of the time
-- Wider
-    - Rows into multiple columns
-    - We use 1% of the time
 
+> I really enjoyed using the iris data with ggplot. It was helpful to get a feel for working with an actual dataset and how to alter the graphs. How do you upload new color palettes?
 
-## Pivoting to long format
+> When you want to use a specific color or a set of colors, do you install them the same way you would install a package, or is there a different method you need to use? Is there also a resource that tells you all the different types of aesthetics and colors you can use?
 
-```{r}
-#| echo: true
+> A question I have is what are some of the best accessible pallets that are distinctive? Lately I have noticed a lot of graphs have the same color schemes and I want to make sure when presenting my work it is visually accessible and engaging. 
 
-set.seed(423747)
-DD <- tibble(ID = 1:10, Column_1 = runif(10), Column_2 = rnorm(10, mean = 10))
-DD
-```
+## Tidyverse & Base R {.smaller}
 
+> If I start by using tidyverse. For example, importing a file with read_csv ( ), do I need to keep using tidyverse functions afterward? For example, when selecting rows, should I use MM |> slice (1) instead of MM [1, ]?
 
-## Pivoting to long format
+> I understand that once dplyr is loaded, you can’t use the base R filter() anymore. Do the base R and dyplr filter() do the same thing? 
 
-```{r}
-#| echo: true
+> I thought the most challenging part of the last unit was setting up data frames. I struggled with creating the correct orientation to bind the data together from control to repeats. 
 
-DD_long <- DD |>
-  pivot_longer(cols = -ID, names_to = "old_column", values_to = "random_number")
-DD_long
-```
 
+## Tidyverse & Base R: Pipes {.smaller}
 
-## Plotting long data
+> Lecture 02-2: I think I understand that pipes help readability and organization, but I'm not sure I'd know when to use it over base R coding. What types of data sets would call for this "piping" a series together? How can I easily identify when I should use it? (Or is it going to become an "all the time" thing?)
 
-```{r}
-#| echo: true
-#| output-location: slide
-#| fig-alt: "Scatter plot of random numbers plotted against ID showing two clusters of points."
+> I learned how to use R with the maggitr pipe (%>%) and this is what I default to in my code. I am almost always loading the tidyverse package anyway, so I haven't had problems, but should I look at switching over to the base R pipe? 
 
-ggplot(DD_long, aes(x = ID, y = random_number, color = old_column)) +
-  geom_point(size = 3) +
-  theme_bw()
-```
+## Tidyverse: Pivoting & Joining {.smaller}
 
+> Also, for moving between wide and long format, what if you have multiple columns of data rather than just the one "cases" data file in the example. Will that change what you put in the names_to = "year" and values_to = "cases". I am trying to figure out what we are actually doing with this code. 
 
-## Pivoting to wide format
+> And for the data I work with it comes on many different excel sheets and I often keep things organized by keeping one sample in a file and having the different mixes of information (which need to all be read together) in the sheets. How would one combine information from multiple sheets and multiple files at once?
 
-```{r}
-#| echo: true
-DD_long |>
-  pivot_wider(names_from = old_column, values_from = random_number)
-```
-
-
-## The pivot round trip
-
-1. Pivot to long format
-2. Do some calculations
-3. Pivot to wide format
-
-## Pipes
-
-> When needing to use a pipe, I have always written %>% in the past instead of |>. Is this a recent change or is there just a specific time to use one or the other? I interpreted the lecture video as one is used for base R and another for tidy, but I believe most of my experience has come from working with tidy.
-
-- `%>%` was developed first within tidyverse
-- `|>` can now be used in all of R
-
-## Pipes
-
-> I didn't understand very well the function of pipe, why is it better to use that instead of just writing the functions?
-
-> Can you nest pipes or are you limited to just one?
-
-> Is there a way to combine the pipe with vectors? Is is possible to pipe to multiple steps (filtering or other) and then save the output as a vector in some way? In the past I've had trouble reconciling these two steps.
-
-
-## Pipes
-
-```{r}
-#| echo: true
-MM <- read_excel("../data/Mouse_Weaning_Data.xlsx", na = "NA") |>
-  filter(Sex == 0) |>
-  group_by(DamID) |>
-  summarise(MeanMass = mean(WnMass))
-
-MM
-
-```
-
-## Pipes
-
-```{r}
-#| echo: true
-
-MM.vec <- MM |>
-  select(MeanMass) |>
-  as.vector()
-
-str(MM.vec)
-
-MM.vec <- MM.vec$MeanMass
-str(MM.vec)
-
-```
-
-
-## Base R vs. tidyverse?
-
-- What should I learn?
-- When should I use which?
-
-> Is there an advantage to using base R to visualize or is ggplot the best choice for all circumstances?
-
-> Can you use still use functions from BaseR once you have imported the tidyverse library?
-
-
-## Why do we learn multiple tools?
-
-Which tool is the best for what situation does not have a single answer
-
-## Getting Help & Debugging
-
-> I have found it challenging on knowing how to search for help in R. I tried to use the “?” Function but sometimes I feel like it does not help me with my specific code or nothing shows up
-
-> During the last problem set, I faced a lot of unknown errors, even though my code was exactly the same as my friend's. How can I fix these kinds of issues in R?
-
-## Some common issues that cause frustration
-
-- Stray backticks `
-- R waiting for more input +

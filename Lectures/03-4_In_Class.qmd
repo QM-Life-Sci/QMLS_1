@@ -24,6 +24,72 @@ library(tidyverse)
 ```
 
 
+### saving from last year
+
+
+## Pivoting
+
+- Longer
+    - Multiple columns into rows
+    - We use 99% of the time
+- Wider
+    - Rows into multiple columns
+    - We use 1% of the time
+
+
+## Pivoting to long format
+
+```{r}
+#| echo: true
+
+set.seed(423747)
+DD <- tibble(ID = 1:10, Column_1 = runif(10), Column_2 = rnorm(10, mean = 10))
+DD
+```
+
+
+## Pivoting to long format
+
+```{r}
+#| echo: true
+
+DD_long <- DD |>
+  pivot_longer(cols = -ID, names_to = "old_column", values_to = "random_number")
+DD_long
+```
+
+
+## Plotting long data
+
+```{r}
+#| echo: true
+#| output-location: slide
+#| fig-alt: "Scatter plot of random numbers plotted against ID showing two clusters of points."
+
+ggplot(DD_long, aes(x = ID, y = random_number, color = old_column)) +
+  geom_point(size = 3) +
+  theme_bw()
+```
+
+
+## Pivoting to wide format
+
+```{r}
+#| echo: true
+DD_long |>
+  pivot_wider(names_from = old_column, values_from = random_number)
+```
+
+
+## The pivot round trip
+
+1. Pivot to long format
+2. Do some calculations
+3. Pivot to wide format
+
+
+
+
 ## How to use the problem set keys
 
 Compare your answers and study alternate approaches
