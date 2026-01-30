@@ -18,9 +18,6 @@ format:
 #| message: false
 #| warning: false
 
-# Files needed
-#   - Size_Dimorphism.xlsx
-
 ```
 
 
@@ -28,10 +25,12 @@ format:
 
 By default, R will read and write files from its working directory. The status of the current directory can be found at the top of the Console window. You can also check the current working directory with the command `getwd()`.
 
+- If you use RStudio Projects, then most of the challenges of working directories are avoided, because you will be in the correct directory and all file operations will take place relative to that directory.
+
 
 ### Best practices
 
-Store all the files for an analysis (problem set) in a single directory. You might have the following directory structure:
+Store all the files for an analysis (i.e., problem set) in a single directory. You might have the following directory structure:
 
 - Quant_Meth_Life_Sci
     - Lecture_Slides
@@ -56,7 +55,7 @@ As you get more comfortable with R, you can move files around, use sub-directori
 
 You will often see tutorials online that advise you to set the working directory explicitly in an R script using the function `setwd()`. This practice is unnecessary and often counterproductive for a couple of reasons.
 
-- When you are working with `.qmd` files and click "Render" RStudio starts a new R session in the directory that the qmd file is located. Thus if you use `setwd()` within a R chunk of an qmd file, you will get a warning. Better practice when working with an qmd file interactively is to set the R working directory using the menu commands: **Session $\rightarrow$ Set Working Directory $\rightarrow$ To Source File Location**. This way, you will be able to work interactively in RStudio and the relative paths will be the same as when you render.
+- When you are working with `.qmd` files and click "Render" RStudio starts a new R session *in the directory* that the qmd file is located. Thus, if you use `setwd()` within a R chunk of an qmd file, you will get a warning. Better practice when working with an qmd file interactively is to set the R working directory using the menu commands: **Session $\rightarrow$ Set Working Directory $\rightarrow$ To Source File Location**. This way, you will be able to work interactively in RStudio and the relative paths will be the same as when you render. Using an RStudio project does this step for you.
 - If you set the working directory explicitly, then your files will be less portable. For example, if you move the file from one machine to another, it is very likely that the full path to your working directory will change. So you are left with either changing that every time you change computers or switching between `setwd()` statements. Better to just set the working directory with the RStudio menu and not have to go through such contortions.
 
 
@@ -65,6 +64,7 @@ You will often see tutorials online that advise you to set the working directory
 Organize your files and set the working directory to the directory where this file and the required data files for this problem set are located. In the code chunk below check your working directory and use the '#' to outline and describe the folder structure you have chosen.
 
 ```{r}
+
 
 ```
 
@@ -87,22 +87,16 @@ Packages much be installed before they can be loaded. If you get a message like:
 Error in library("tidyverse") : there is no package called 'tidyverse'
 ```
 
-It means that the package is not installed. First install the package (note that the quotes are required):
+It means that the package is not installed. First install the package using the "Packages" pane.
 
-```{r}
-#| eval: false
-
-install.packages("tidyverse")
-```
-
-and then rerun the code chunk that includes the `library()`^[Inside the call to `library()`, package names do not need to be quoted (but they can be without incident). `install.packages()`, on the other hand, expects to receive a string or vector of strings, so you do need quotes.] commands.
+After you have installed the package, rerun the code chunk that includes the `library()`^[Inside the call to `library()`, package names do not need to be quoted (but they can be without incident).] commands.
 
 
 ### Best practices (things to remember)
 
-- It is best to install packages (e.g., `install.packages("cowplot")`) from the command line only. If you include this code in a R code chunk, you risk R trying to reinstall the package each time you render your file.
+- Although you can install packages from the command line (e.g., `install.packages("cowplot")`), if you use the **Packages** pane, then you won't make the mistake of leaving `install.packages()` in a code chunk that runs each time to render a file.
 - Packages only need to be installed once on each computer. They are stored locally.
-- Packages do need to be loaded (`library()`) each time you restart R. Loaded packages are not persistent across R sessions.
+- Packages *need to be loaded* (`library()`) each time you restart R. Loaded packages are not persistent across R sessions.
 - Load all of the packages you need at the start of a document to keep track of what packages your analysis needs.
 
 
@@ -111,32 +105,79 @@ and then rerun the code chunk that includes the `library()`^[Inside the call to 
 In the *Setup* code chunk at the beginning of this document, add code to load the following packages, which you will need for this problem set:
 
 1. `tidyverse`
-1. `readxl`
-1. `cowplot`
+2. `cowplot`
 
-Install these packages if you need to (see **Loading Packages** above for the installation syntax).
+## National Health and Nutrition Examination Survey (NHANES)
 
-
-## Loading Data
-
-Sexual size dimorphism (SSD) refers to the difference in size between males and females of the same species. Spiders show some of the most dramatic cases where females are larger than males.
-
-The golden silk orb weaver (*Nephila clavipes*) is a species of spider that shows extreme SSD, in which males are about 2/3 smaller than females. This picture shows the size disparity between a female and male:
-
-![](https://cdn.shopify.com/s/files/1/0841/0073/products/il_570xN.917073770_s7se.jpg){width=50% fig-align="center" fig-alt="Image of a female and male golden silk orb weaver showing size dimorphism."}
-
-In contrast, in the wolf spider (*Pardosa ramulosa*), males and females do not show large size differences.
-
-![](https://crawford.tardigrade.net/journal/album/fordramulosa.jpg){width=50% fig-align="center" fig-alt="Image of wolf spiders showing no size dimorphism."}
-
-The file `Size_Dimorphism.xlsx` contains data on body mass and body length for males and females in these two species.
+The National Health and Nutrition Examination Survey (NHANES) was established to assess the health and nutrition status of a broad cross-section of the United States population. It contains [many measured variables](https://wwwn.cdc.gov/nchs/nhanes/Default.aspx), but we will work with heights.
 
 
-### Activity
+### Loading data
 
-Using the `read_excel()` function, load the file `Size_Dimorphism.xlsx` in R. Assign it to the object, `SSD`.
+- Load the file `NHANES.csv`
+- Filter individuals where Sex is "Male" (individuals self-identifying as male)
 
 ```{r}
+
+
+```
+
+How many observations are there?
+
+> 
+
+
+### Data visualization
+
+Plot a histogram of Height using the NHANES data.
+
+```{r}
+
+
+```
+
+You will get a message saying that "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`." That just means that you are using the default bin size for your histograms. In some situations, you would want to specify that value explicitly. For now, using the default value of 30 is fine. Later you can use the `binwidth` option to choose a different size.
+
+Describe the pattern you see:
+
+> 
+
+
+Now make a scatterplot of Height vs. Age.
+
+```{r}
+
+
+```
+
+What patterns do you observe? Does this plot help you make sense of the histogram above?
+
+> 
+
+
+Filter out any individuals less than Age 20. Make a second histogram of just this data.
+
+```{r}
+
+
+```
+
+Describe what patterns you observe.
+
+> 
+
+
+
+## Plant Growth Rates
+
+### Loading Data
+
+We will will use a dataset from Hautier, Yann, et al. (2020), *Fast and furious: Early differences in growth rate drive short-term plant dominance and exclusion under eutrophication.* In this paper, the authors are trying to understand the mechanisms by which diversity is lost under fertilization (i.e., eutrophication). One way they think some species have an advantage is by having a fast early growth rate.  Let's tidy up this dataset so we can look at the trends in growth of different plant species.
+
+Read in the plant growth data in "growthrate_data.csv" using the function `read_csv()`, assign it as an object `gr`, and print the object by putting `gr` on a line by itself.
+
+```{r}
+
 
 ```
 
@@ -150,190 +191,181 @@ You can use two functions to get a quick overview of the columns of a `data.fram
 
 ### Activity
 
-Type `str(SSD)` into the code chunk below and then render the .qmd file or execute the code chunk in the R console (green arrow in the upper right corner of the code chunk).
+Type `str(gr)` or `glimpse(gr)` into the code chunk below and then render the .qmd file or execute the code chunk in the R console (green arrow in the upper right corner of the code chunk).
 
 ```{r}
 
+
 ```
 
-Using the output of `str(SSD)`, answer the following questions.
+Using the output of `str(gr)` or `glimpse(gr)`, answer the following questions.
 
-- How many rows are in `SSD`?
+- How many rows are in `gr`?
 
->
-
-- Does this agree with the number of rows in the Excel file? Why or why not?
-
->
-
-- How many columns are in `SSD`? Does this agree with the number of columns in the Excel file? Why or why not?
-
->
+> 
 
 
-## Number of Observations per Group
+- Does this agree with the number of rows in the csv file? Why or why not?
 
-This experiment is balanced, meaning there are equal numbers of males and females in each species (50 of each).
+> 
+
+
+- How many columns are in `gr`? Does this agree with the number of columns in the csv file? Why or why not?
+
+> 
+
+
+### Tidy Data
+
+We will be using `library(tidyverse)` quite often in this course, and one thing that makes this set of packages function really well is having "tidy" data. This will help you for future data manipulation, cleaning, visualization and analysis.
+
+
+#### Activity
+
+What are the 3 rules that make data tidy?
+
+> 
+
+
+
+The researchers entered their data with columns for plot, species, and then multiple columns for the biomass at the various days they collected their measurements. 
+
+Unfortunately, this data is not tidy.  Why not?
+
+> 
+
+
+To make this data go from wide to long format, you need to use the function `pivot_longer()`. Use this function to create a new object called `gr_long` that is tidy, with biomass as the value that fills a single column.
+
+```{r}
+
+
+```
+
+Now that you have tidied this data, explain why it is tidy. Hint - use the column and row descriptions to explain each of the three rules above.
+
+> 
+
+
+## Separating Columns
+
+The `separate()` function from the tidyverse allows you to split columns of your data into two or more new columns.
+
+Read the help file for `separate()` to see what options are available for converting new column types and for immediately dropping new columns that are created.
 
 
 ### Activity
 
-Check that this is the case by creating a logical and summing the resulting TRUE/FALSE vector. i.e. how many female *Nephila clavipes* are there?
+If you print the structure of `gr`, you can see the `day` column is a `<chr>`, but we really only need the numeric part (i.e., removing the string "day_" from each). To be able to plot plant biomass growth through time, in the chunk below, pipe `gr_long` to `separate()` to split this column into two, making sure the column of integers for the day number is called `days`.
+
 
 ```{r}
 
+
 ```
 
-It looks like something is not right.
+Check the structure of your modified tibble. You may notice that your new column `days` is still a character.  If so, go back and fix the code above so it is no longer a character.
 
-There are a few ways to figure out what might be going on. Try using the `unique()` function to check for typos in the `Sex` column. If you pass a vector to `unique()` it will return all unique values in that vector. If all of our data is coded correctly, the result *should* be just two values: "M", and "F". Use the `which()` function to identify the observations with typos. `%in%` might be useful here as well, but there are other ways to do this step -- find one that works for you.
+
+### Data Counts
+
+One way to get counts by group uses `group_by()` and `tally()`, which are part of tidyverse. `group_by()` splits data by factors (most commonly, but numeric types will work as well) and `tally()` adds up the number of observations in each of those groups. Similarly, the `count()` function does both steps in one, grouping by the columns inside `()` and then counting.
+
+If you only want the counts, then using `count()` saves a step. However, if you plan further operations on the grouped data using `group_by()`, then the first method is preferred.
+
+
+#### Activity
+
+In the chunk below, pipe `gr_long` to `group_by()`, grouping by species. Then pipe that to `tally()`. `tally()` does not require any arguments when used this way. Also try the same using `count()`.
 
 ```{r}
 
-```
-
-You could use the results of your `which()` calls to find and correct your excel file after making a back up copy just in case you make a mistake (or use version control!). If you were planning to do more editing in Excel, this would be preferable. For this exercise will correct these within R here. We've given you the syntax for fixing one. Use this same format to fix the others. Run `unique()` again to make sure you got them all.
-
-First change `eval: false` to `eval: true`. Changing this flag in the chunk will cause RStudio to evaluate the chunk when it is rendering the document. When `eval` is `false`, the chunk will be skipped. This is something that we need to do when writing the problem sets, so that they will render.
-
-```{r}
-#| eval: false
-
-SSD$Sex[SSD$Sex == 'f'] <- 'F'
 
 ```
 
-Now check the `Species` column in the same way. Fix any errors that you find.
+Do you have equal sample size across all species?
 
-```{r}
+> 
 
-```
 
-Saving yourself the trouble of doing this exercise is one big reason to be careful when you enter data!!
+### Missing Data (NA's)
 
-One last step, let's write out your new, typo-free data. Look at the help for `write_csv()`, and write out your data to a new csv file named, `Size_Dimorphism_corrected.csv`.
+Missing data can sometimes throw off our estimates if we are not sure if data is there or not. R will code blank cells in your dataset as `NA` when you read in your data. `NA`'s are explicit if you can see them in your dataset, and they are implicit if a row does not exist in a dataset when a data value is missing. Explicit `NA`'s will be counted by `tally()`.
+
+
+#### Activity
+
+Our code above indicates that we have equal sample size in our data for each species, however you may have noticed that in our initial dataset there are some `NA`'s (check in Excel).  Do we still have `NA`'s in our dataset?
+
+> 
+
+The function `is.na()` returns true when a value is `NA`. By summing the number of `TRUE` `NA`'s, you can see how many there are. Below write a line of code that sums the result of `is.na()` applied to the `biomass` column.
 
 ```{r}
 
+
 ```
 
-Now read your new file back in as if this next section is a new script. Feel free to overwrite your previous object, `SSD`. This is a good idea to avoid confusion. Use `read_csv()`.
+How many `NA`'s are there?
 
-We prefer to use `write_csv()`, which is part of tidyverse, to R's built-in `write.csv()` (note _ vs. .). `write_csv()` has some friendlier default settings.
+> 
+
+So based on this, do we really have equal sample size?  Why not?
+
+> 
+
+
+The `drop_na()` function allows you to drop rows that have `NA`s in them in order to check to see if your sample size is equal. In the chunk below, pipe `gr_long` to `drop_na()` and save it as a new dataset called `gr_long2`. Then re-tally your data to see if you have equal sample size across all species.
 
 ```{r}
 
+
 ```
 
+Are the sample sizes equal across species?
 
-## Data Filtering
+> 
 
-A very common activity when you are analyzing data is to take subsets, be they subsets of rows or one or more columns (or both simultaneously). Gaining experience at this kind of filtering will make you much more efficient.
+
+## Data Visualization
+
+Let's look at this growth rate data to see if we see any differences between species.
+
+The `cowplot` package has a nice built-in ggplot theme that produces nice plots (there are lots of ggplot themes available). A good place to set this is in the setup chunk at the top of this document. Go there and add this code (without the tic marks): `theme_set(theme_cowplot())`.
 
 
 ### Activity
 
-To give you some practice filtering, filter your data in the following ways using both
+Using your object `gr_long2`, create a plot that shows the biomass per species at each date as a scatter plot, and draw a straight line through the average of all points per species using `geom_smooth()`.  Make sure each species is differentiated by assigning the color aesthetic to `species` (inside `aes()`), which will also plot a separate line for each. Also make sure to clean up your plot by adding a little jitter, if your points are strongly overlapping.
 
-1. base R functions
-2. tidyverse functions
-
-Verify your results match in each case. You do not need to save the resulting `data.frame`s.
-
-1. All *Pardosa ramulosa*
-2. All females of both species
-3. Body mass and sex for *Nephila clavipes*
-4. Rows 1-50 (either using base R or the `slice()` function from tidyverse [use `?slice` to load the help file])
-5. Mass of the largest female (by mass) in each species
-6. Male *Pardosa ramulosa* with body lengths less than 4 or greater than 6
 
 ```{r}
 
+
 ```
 
+Which species appears to have the fastest rate of growth (biomass change per time)?
 
-## Plotting Histograms
-
-To start looking at sexual size dimorphism, we will make some histograms. This is the easiest method to visualize univariate data.
+> 
 
 
-### Activity
-
-The `cowplot` has a nice built-in ggplot theme that produces nice plots (there are lots of ggplot themes available). A good place to set this is in the setup chunk at the top of this document. Go there and add this code (without the tic marks): `theme_set(theme_cowplot())`.
-
-Start with a histogram of body length overall. Follow the code in the lectures if you need to.
+Look back at the plot you just made. It appears a straight line, linear fit doesn't model the data very well. Growth rate appears to be flat for early days and then increases exponentially. In addition, the linear fit is predicting negative biomasses for early time points. Let's transform how our data is plotted to see if we can improve the fit. Make a new plot and add the geom `scale_y_log10()` to plot the y-axis on a log10 scale.
 
 ```{r}
 
-```
-
-There are some obvious groupings here, but we don't know which species or sex the clusters represent. We need to separate both species and sex. One approach is to make a plot for each species with `fill` coding for sex (this is analogous to using color, but works with histograms). Try this.
-
-```{r}
 
 ```
 
-You will get a message saying that "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`." That just means that you are using the default bin size for your histograms. In some situations, you would want to specify that value explicitly. For now, using the default value of 30 is fine. Later you can use the `binwidth` option to choose a different size.
+Does a log transformation of biomass improve the linear fit of the model?
 
-We could also visualize all groups with `facet_grid()`. Here is an example:
-
-```{r}
-#| eval: false
-
-ggplot(SSD, aes(BodyLength)) +
-  geom_histogram() +
-  facet_grid(Sex ~ Species)
-```
-
-`facet_grid()` can take 1 or two arguments. The argument before `~` splits by rows, and after `~` splits by columns. If you only want one or the other use `.`. See the lecture slides for an example.
-
-With this you can clearly see SSD in *Nephila* but not in *Pardosa*.
+> 
 
 
-## Scatterplot
-
-You might be interested in the relationship between body length and body mass. Scatterplots are the most common way to visualize such bivariate relationships.
-
-
-### Activity
-
-Create a scatterplot of body length and body mass. Use color to show `Sex` and facet by `Species.` Put body length on the x-axis. Add axis labels, but don't worry about units for now.
-
-```{r}
-
-```
-
-Describe the patterns you observe. Do you think this is a useful visualization? Why or why not?
-
->
-
-Because body length and body mass are related by an exponential power, if we take advantage of the math of logarithms and log-transform the data, that will linearize the relationship. Ignoring the y-intercepts:
-
-$$Mass \propto Length^b$$
-$$\log(Mass) \propto b \log(Length)$$
-
-Make two new variables that are the log10-transformations of body length and body mass using `mutate()` and plot the data again. Look at the help for `mutate` for hints. Then add new axis labels.
-
-```{r}
-
-```
-
-What does this plot tell you? Do you think this is a more effective visualization of the data?
-
->
-
-Now add lines of best fit and transparency (`alpha`) to your points.
-
-```{r}
-
-```
-
-What do these regression lines tell you?
-
->
+## AI Statement
 
 Please indicate whether you used any generative AI tools to help you with this problem set and explain how you used these. An example of how to structure this statement is below. If you did not use generative AI, you can simply state: "I did not use AI for this problem set."
 
 Example statement structure: "I acknowledge the use of AI in completing this assignment and would like to provide a brief explanation of how I utilized AI, specifically [LLM], as a tool to support my work. For this assignment, I employed [LLM] to [describe the specific purpose or task]. To do so I crafted the following prompts: [List prompts used]"
 
 >
+
