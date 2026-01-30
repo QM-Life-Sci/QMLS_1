@@ -183,7 +183,7 @@ ggplot(NHANES, aes(x = Age, y = Height)) +
 
 What patterns do you observe? Does this plot help you make sense of the histogram above?
 
-> From age 0 to ~20, height increases. Then it becomes stady or decreases slightly. Now we can see that the small measures in the histogram are growing individuals.
+> From age 0 to ~20, height increases. Then it becomes steady or decreases slightly. Now we can see that the small measures in the histogram are growing individuals.
 
 Filter out any individuals less than Age 20. Make a second histogram of just this data.
 
@@ -264,7 +264,7 @@ What are the 3 rules that make data tidy?
 > Tidy data has 3 rules. 1) Each variable must have its own column. 2) Each observation must have its own row. 3) Each value must have its own cell.
 
 
-The researchers entered their data with columns for plot, species, and then multiple columns for the biomass at the various days they collected their measurements. 
+The researchers entered their data with columns for plot, species, and then multiple columns for the biomass at the various days they collected their measurements.
 
 Unfortunately, this data is not tidy.  Why not?
 
@@ -497,4 +497,3 @@ Please indicate whether you used any generative AI tools to help you with this p
 Example statement structure: "I acknowledge the use of AI in completing this assignment and would like to provide a brief explanation of how I utilized AI, specifically [LLM], as a tool to support my work. For this assignment, I employed [LLM] to [describe the specific purpose or task]. To do so I crafted the following prompts: [List prompts used]"
 
 >
-
