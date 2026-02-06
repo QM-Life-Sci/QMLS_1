@@ -95,36 +95,6 @@ summarize(
 > What should I use when I want to generate a summary table with a count? Is there a way to use the functions from the problem set, do I need to use a different function, or just do count separately?
 
 
-## Joins {.smaller}
-
-> When it comes to data joining, we learned about left_join() and right_join(). Will there be a time when right_join() should be used instead of left_join(), vice versa, or is it a preference on what one likes more?
-
-> For joining data, I was curious about examples of when you would want to use anti_join over the other joins
-
-> When you are joining data and they have multiple matches which leads to repeating of data, could the repetition of certain data point cause a skew in the results causing the graph made from the table to be inaccurate? Or does RStudio neglect those repeats?
-
-
-## Joins {.smaller}
-
-> I’m still a bit confused about how dplyr chooses the joining variables by default. If I run full_join(air_temps, b1) without specifying by, will it automatically join on all columns with the same names (e.g., both day and time)? And in cases where the time variables are recorded at different intervals (e.g., every 5 minutes vs every 10 minutes), what is the recommended approach if we want to match measurements in a sensible way (exact matches vs nearest-time matching)?
-
-> When two data frames share two keys that can be used for joining, will the default join use both of them? For example, in Quiz 03-2 with left_join(), does a sample need to match on both "day" and "time" in order to be joined?
-
-> Just wondering, after doing a join, how do you check if the data matched correctly (especially when you have a huge data)? Are there any simple functions or tricks to see if something went wrong?
-
-
-## Complex joins {.smaller}
-
-> For joining data, I have data that is structured the same, e.g. the same columns exist and so do the components, the only things that change are the location and time of the collection and then the values gathered at those times. If I wanted to look at multiple times/locations at once, I would combine them using join_by and probably use the components' name, but I want to be sure I am still able to tell them apart and not accidentally jumble up the information. Do you have suggestions for ways to go about this?
-
-
-## Complex joins {.smaller}
-
-> And do you find it best when working with big data sets to read in the individual CSV files separately and go from there or make one big data table that you pull from. I am just worried I will lose track of what is happening if they all go in one big set, but it also seems confusing to have to call lots of various files.
-
-> For managing many files that we need to do the same kind of cleaning/reorganizing, is there a way to do multiple at the same time and still keep them separate or is it best to do them one at a time and give them that close attention.
-
-
 ## Remembering functions {.smaller}
 
 > Is there a cheat sheet or some convenient way to list all of the ways that we could check the structure or content of a data file to check of errors, values, etc? So far we have learned str(), glimpse(), dim(), list(), summary(), arange(), summarize(), and probably something else I can't remember. I'm not sure when each is most appropriate or helpful, but is that just something you get used to over time?
@@ -193,6 +163,36 @@ DD_long |>
 1. Pivot to long format
 2. Do some calculations
 3. Pivot to wide format
+
+
+## Joins {.smaller}
+
+> When it comes to data joining, we learned about left_join() and right_join(). Will there be a time when right_join() should be used instead of left_join(), vice versa, or is it a preference on what one likes more?
+
+> For joining data, I was curious about examples of when you would want to use anti_join over the other joins
+
+> When you are joining data and they have multiple matches which leads to repeating of data, could the repetition of certain data point cause a skew in the results causing the graph made from the table to be inaccurate? Or does RStudio neglect those repeats?
+
+
+## Joins {.smaller}
+
+> I’m still a bit confused about how dplyr chooses the joining variables by default. If I run full_join(air_temps, b1) without specifying by, will it automatically join on all columns with the same names (e.g., both day and time)? And in cases where the time variables are recorded at different intervals (e.g., every 5 minutes vs every 10 minutes), what is the recommended approach if we want to match measurements in a sensible way (exact matches vs nearest-time matching)?
+
+> When two data frames share two keys that can be used for joining, will the default join use both of them? For example, in Quiz 03-2 with left_join(), does a sample need to match on both "day" and "time" in order to be joined?
+
+> Just wondering, after doing a join, how do you check if the data matched correctly (especially when you have a huge data)? Are there any simple functions or tricks to see if something went wrong?
+
+
+## Complex joins {.smaller}
+
+> For joining data, I have data that is structured the same, e.g. the same columns exist and so do the components, the only things that change are the location and time of the collection and then the values gathered at those times. If I wanted to look at multiple times/locations at once, I would combine them using join_by and probably use the components' name, but I want to be sure I am still able to tell them apart and not accidentally jumble up the information. Do you have suggestions for ways to go about this?
+
+
+## Complex joins {.smaller}
+
+> And do you find it best when working with big data sets to read in the individual CSV files separately and go from there or make one big data table that you pull from. I am just worried I will lose track of what is happening if they all go in one big set, but it also seems confusing to have to call lots of various files.
+
+> For managing many files that we need to do the same kind of cleaning/reorganizing, is there a way to do multiple at the same time and still keep them separate or is it best to do them one at a time and give them that close attention.
 
 
 ## Joining
