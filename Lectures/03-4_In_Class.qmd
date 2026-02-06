@@ -23,8 +23,106 @@ csl: evolution.csl
 library(tidyverse)
 ```
 
+## New Questions {.smaller}
 
-### saving from last year
+> I downloaded the bat dataset to follow along in the 03-1 lecture, and I noticed that the column names in your code were all lowercase, but in the original CSV, the column names have a capitalized first letter (i.e., "Age," "Sex," "Reproduction Condition," etc.). I used the capitalized column names in my code and it ran fine (after telling me "age" didn't exist), but I was wondering if you all (or anyone with R/coding experience) enter code at the beginning of transforming the data that renames columns and/or rows as all lowercase to make transformations simpler, or if those changes are made in the raw data file itself. Since I will be working with R for data exploitation, transformation, and analysis, should I get in the habit of naming my columns/rows all lowercase to avoid having to add "extra" code?
+
+
+## Organizing data {.smaller}
+
+> I want to apply these concepts to flow data as I can see how it will save a lot of time manually processing and help streamline! If the highlighted column "P4% Parent" represents CD3+ population, what is the most efficient way to define it as such early before filtering, summarizing, etc, for clarity and subsequent interpretation? Define explicitly? New labeled column? Have these definitions as notes and not part of code? Is there a benefit to not relabeling?
+
+
+## Sharing code {.smaller}
+
+> When it comes to publishing data is it always necessary to clean up the code via shortened or combined functions and such? Given the problems my group ran into with constantly having to rerun all chunks above and one little change in the code throwing the entire project off, I worry that going back into a project to clean it up and make it more presentable risks ruining the code itself. I understand keeping the code readable so it can be checked and repeated but as a novice the "cleaning up" aspect makes me anxious.
+
+> Also I have a question from Unit 2. Can you provide an example of how you document (in your lab notebook) the steps you used to process your data?
+
+
+
+## Type conversions {.smaller}
+
+> Our group for problem set 2 was having some issues on converting the "days" column to integer/numeric. We got it to work, but noticed rerunning the code chunk will convert the entire column into NA's, and you have to rerun all chunks above to get your result back. So my question is why does this happen? I would guess that the issue is because if the column is already in integer/numeric, trying to convert it again to integer/numeric erases the values, but I'm wondering why R would have that in it's logic.
+
+```
+gr_long <- gr_long %>% separate(col = days, into = c("prefix", "days"), sep = "_")
+gr_long
+gr_long$days <- as.integer(gr_long$days)
+gr_long
+```
+
+
+## Visualization {.smaller}
+
+> I have a hard time thinking of ways to visualize my data in useful ways when doing an exploratory data analysis. Do y'all have any recommendations for resources we can refer to for advice, ideas, useful figures, etc.?
+
+> are there any data visualization "taboos" or types of graphs that should always be avoided in scientific research. I was in a lab in undergrad where violin plots were "banned". In your opinion is there any way we should know to not present our data in. Like for example never present the means of two different species as the same data point, or never combine different trials?
+
+> Is there any specific methodology that you use to decide which sort of data visualization is best for a given data set? There seem to me so many different options and I run into the worry of being overwhelmed with choices.
+
+
+
+## Visualization {.smaller}
+
+> Can we talk a bit about manuscript ready plots? I do quite a bit of data visualization with my current datasets, but there is often a big jump from a visual you use for yourself to just get an idea of what your data looks like versus the one that gets published.
+
+> And what is the difference between 'geom_jitter' and 'position_jitter'?
+
+> When we're first exploring a new dataset, what should we be looking for when deciding what type of plot to use? I'm not always sure how to tell which visualization actually fits the structure of the data. Sometimes multiple plots seem plausible, and I'm not sure how to decide which one makes the most sense.
+
+
+
+## Counting {.smaller}
+
+> I needed to use the group by function on some data outside of class, and wanted to generate the count, mean, and sd of each group. Since we had just covered this in PS2 I first tried using count() and tally()
+
+```
+data |> group_by(Initials) |>
+summarize(
+  Obs = count(Score) or count() or tally(Score) or tally(),
+  avg = mean(Score),
+  stdev = sd(Score)
+)
+```
+
+> With this, I could not get count() or tally() to work, both with and without score within the function. I finally googled and it said to us n() with nothing inside of it.
+
+> What should I use when I want to generate a summary table with a count? Is there a way to use the functions from the problem set, do I need to use a different function, or just do count separately?
+
+
+## Joins {.smaller}
+
+> When it comes to data joining, we learned about left_join() and right_join(). Will there be a time when right_join() should be used instead of left_join(), vice versa, or is it a preference on what one likes more?
+
+> For joining data, I was curious about examples of when you would want to use anti_join over the other joins
+
+> I'd say the most challenging thing for me during this unit was the joining data section. The joining of data makes sense to me conceptually, but I feel like it can get confusing when trying to plan out how you want to join your data without making it a mess. I definitely need to practice with it more, so I understand it more fully. Additionally, I did not understand the purpose of the anti-join function, but I realize that it may not be important to focus on right now, as it is not all that commonly used.
+
+> I'm having trouble visualizing how each join type works in my head, even with the figure shown in the slides. Why would you want to use left/right_join if full_join is an option? This seems like it is the most complete, and you could edit from there.
+
+> When you are joining data and they have multiple matches which leads to repeating of data, could the repetition of certain data point cause a skew in the results causing the graph made from the table to be inaccurate? Or does RStudio neglect those repeats?
+
+> I’m still a bit confused about how dplyr chooses the joining variables by default. If I run full_join(air_temps, b1) without specifying by, will it automatically join on all columns with the same names (e.g., both day and time)? And in cases where the time variables are recorded at different intervals (e.g., every 5 minutes vs every 10 minutes), what is the recommended approach if we want to match measurements in a sensible way (exact matches vs nearest-time matching)?
+
+> When two data frames share two keys that can be used for joining, will the default join use both of them? For example, in Quiz 03-2 with left_join(), does a sample need to match on both "day" and "time" in order to be joined?
+
+> Just wondering, after doing a join, how do you check if the data matched correctly (especially when you have a huge data)? Are there any simple functions or tricks to see if something went wrong?
+
+
+
+## Complex joins {.smaller}
+
+> For joining data, I have data that is structured the same, e.g. the same columns exist and so do the components, the only things that change are the location and time of the collection and then the values gathered at those times. If I wanted to look at multiple times/locations at once, I would combine them using join_by and probably use the components' name, but I want to be sure I am still able to tell them apart and not accidentally jumble up the information. Do you have suggestions for ways to go about this?
+
+> And do you find it best when working with big data sets to read in the individual CSV files separately and go from there or make one big data table that you pull from. I am just worried I will lose track of what is happening if they all go in one big set, but it also seems confusing to have to call lots of various files.
+
+> For managing many files that we need to do the same kind of cleaning/reorganizing, is there a way to do multiple at the same time and still keep them separate or is it best to do them one at a time and give them that close attention.
+
+
+## Remembering functions {.smaller}
+
+> Is there a cheat sheet or some convenient way to list all of the ways that we could check the structure or content of a data file to check of errors, values, etc? So far we have learned str(), glimpse(), dim(), list(), summary(), arange(), summarize(), and probably something else I can't remember. I'm not sure when each is most appropriate or helpful, but is that just something you get used to over time?
 
 
 ## Pivoting
@@ -54,7 +152,11 @@ DD
 #| echo: true
 
 DD_long <- DD |>
-  pivot_longer(cols = -ID, names_to = "old_column", values_to = "random_number")
+  pivot_longer(
+    cols = -ID,
+    names_to = "old_column",
+    values_to = "random_number"
+  )
 DD_long
 ```
 
