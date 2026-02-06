@@ -23,7 +23,7 @@ csl: evolution.csl
 library(tidyverse)
 ```
 
-## New Questions {.smaller}
+## Reproducing the slides {.smaller}
 
 > I downloaded the bat dataset to follow along in the 03-1 lecture, and I noticed that the column names in your code were all lowercase, but in the original CSV, the column names have a capitalized first letter (i.e., "Age," "Sex," "Reproduction Condition," etc.). I used the capitalized column names in my code and it ran fine (after telling me "age" didn't exist), but I was wondering if you all (or anyone with R/coding experience) enter code at the beginning of transforming the data that renames columns and/or rows as all lowercase to make transformations simpler, or if those changes are made in the raw data file itself. Since I will be working with R for data exploitation, transformation, and analysis, should I get in the habit of naming my columns/rows all lowercase to avoid having to add "extra" code?
 
@@ -45,11 +45,15 @@ library(tidyverse)
 
 > Our group for problem set 2 was having some issues on converting the "days" column to integer/numeric. We got it to work, but noticed rerunning the code chunk will convert the entire column into NA's, and you have to rerun all chunks above to get your result back. So my question is why does this happen? I would guess that the issue is because if the column is already in integer/numeric, trying to convert it again to integer/numeric erases the values, but I'm wondering why R would have that in it's logic.
 
-```
-gr_long <- gr_long %>% separate(col = days, into = c("prefix", "days"), sep = "_")
-gr_long
-gr_long$days <- as.integer(gr_long$days)
-gr_long
+```{r}
+#| echo: true
+
+x <- 2
+
+class(x)
+class(as.integer(x))
+
+class(as.integer(2L))
 ```
 
 
@@ -57,7 +61,7 @@ gr_long
 
 > I have a hard time thinking of ways to visualize my data in useful ways when doing an exploratory data analysis. Do y'all have any recommendations for resources we can refer to for advice, ideas, useful figures, etc.?
 
-> are there any data visualization "taboos" or types of graphs that should always be avoided in scientific research. I was in a lab in undergrad where violin plots were "banned". In your opinion is there any way we should know to not present our data in. Like for example never present the means of two different species as the same data point, or never combine different trials?
+> Are there any data visualization "taboos" or types of graphs that should always be avoided in scientific research. I was in a lab in undergrad where violin plots were "banned". In your opinion is there any way we should know to not present our data in. Like for example never present the means of two different species as the same data point, or never combine different trials?
 
 > Is there any specific methodology that you use to decide which sort of data visualization is best for a given data set? There seem to me so many different options and I run into the worry of being overwhelmed with choices.
 
@@ -86,7 +90,7 @@ summarize(
 )
 ```
 
-> With this, I could not get count() or tally() to work, both with and without score within the function. I finally googled and it said to us n() with nothing inside of it.
+> With this, I could not get count() or tally() to work, both with and without score within the function. **I finally googled and it said to us n() with nothing inside of it.**
 
 > What should I use when I want to generate a summary table with a count? Is there a way to use the functions from the problem set, do I need to use a different function, or just do count separately?
 
@@ -97,11 +101,10 @@ summarize(
 
 > For joining data, I was curious about examples of when you would want to use anti_join over the other joins
 
-> I'd say the most challenging thing for me during this unit was the joining data section. The joining of data makes sense to me conceptually, but I feel like it can get confusing when trying to plan out how you want to join your data without making it a mess. I definitely need to practice with it more, so I understand it more fully. Additionally, I did not understand the purpose of the anti-join function, but I realize that it may not be important to focus on right now, as it is not all that commonly used.
-
-> I'm having trouble visualizing how each join type works in my head, even with the figure shown in the slides. Why would you want to use left/right_join if full_join is an option? This seems like it is the most complete, and you could edit from there.
-
 > When you are joining data and they have multiple matches which leads to repeating of data, could the repetition of certain data point cause a skew in the results causing the graph made from the table to be inaccurate? Or does RStudio neglect those repeats?
+
+
+## Joins {.smaller}
 
 > I’m still a bit confused about how dplyr chooses the joining variables by default. If I run full_join(air_temps, b1) without specifying by, will it automatically join on all columns with the same names (e.g., both day and time)? And in cases where the time variables are recorded at different intervals (e.g., every 5 minutes vs every 10 minutes), what is the recommended approach if we want to match measurements in a sensible way (exact matches vs nearest-time matching)?
 
@@ -110,10 +113,12 @@ summarize(
 > Just wondering, after doing a join, how do you check if the data matched correctly (especially when you have a huge data)? Are there any simple functions or tricks to see if something went wrong?
 
 
-
 ## Complex joins {.smaller}
 
 > For joining data, I have data that is structured the same, e.g. the same columns exist and so do the components, the only things that change are the location and time of the collection and then the values gathered at those times. If I wanted to look at multiple times/locations at once, I would combine them using join_by and probably use the components' name, but I want to be sure I am still able to tell them apart and not accidentally jumble up the information. Do you have suggestions for ways to go about this?
+
+
+## Complex joins {.smaller}
 
 > And do you find it best when working with big data sets to read in the individual CSV files separately and go from there or make one big data table that you pull from. I am just worried I will lose track of what is happening if they all go in one big set, but it also seems confusing to have to call lots of various files.
 
@@ -188,32 +193,6 @@ DD_long |>
 1. Pivot to long format
 2. Do some calculations
 3. Pivot to wide format
-
-
-
-
-## How to use the problem set keys
-
-Compare your answers and study alternate approaches
-
-
-## File organization
-
-- Updating data loaded from external files
-- `library()` vs. `install.packages()`
-- How often should you save processed files?
-    - Separate scripts for data cleaning and data analysis
-    - Most often: Raw Data $\rightarrow$ Output file with cleaned data
-- Working directory practice
-    - Relative paths
-
-
-## Joins
-
-- Joins create or combine rows; retain or create columns as
-- `left_join()` vs. `right_join()` vs. `full_join()` vs. `anti_join()`
-    - `left_join(A, B)` == `right_join(B, A)`
-- Quiz 3-2
 
 
 ## Joining
@@ -312,142 +291,3 @@ full_join(b1, air_temps)
 left_join(b1, air_temps, by = join_by(time))
 ```
 
-
-## Separate
-
-```{r}
-IDs <- structure(
-  list(
-    Sample = c(
-      "10339243_20240604_dbea51c1-46d7-41f7-9cc9-bb3eabc41326",
-      "10351235_20240620_b6571277-2cdf-4bba-8c66-63e79b4c56df",
-      "10353170_20240607_78232c77-f77f-42ba-86a1-898485970ebb",
-      "10353307_20240612_97094286-e01d-4291-8624-d9eb5a5ae0ce",
-      "10353940_20240613_a2471b7a-07b5-4e44-8e30-20485101147b",
-      "10361965_20240605_f33a532f-0286-478d-ad9d-3c8b2a88c1f1",
-      "10370824_20240613_99dda9ae-d870-4029-956d-8f71d7c2dfc3",
-      "10371188_20240522_d0c56972-4354-4cd2-b55f-ec58ec2e6597",
-      "10371698_20240610_eecbdc43-bf70-4f81-857f-ef85207fde43",
-      "10378521_20240725_09331911-0694-46f9-94fc-e650e075f415",
-      "10379207_20240314_a20a47a7-7605-4726-a34d-06292597b94a",
-      "10379323_20240610_44fb64da-896e-4027-8041-90e901e98577",
-      "10384854_20240619_1cc47e47-5cbc-478e-ab53-1073c10ae392",
-      "10385289_20240619_09e7b6f5-19d2-487e-9d49-bfa2d9cb3d54",
-      "10386633_20240722_1bc766ab-bd55-49cd-8597-7c59a741fdf0",
-      "10397351_20240606_28793edf-d507-407e-ba38-0b81d204f4d3",
-      "10403455_20240619_f65a4b72-3542-4c00-b058-a4d411d20b50",
-      "10404017_20240612_ba30b6d9-ea83-4ff9-88fd-819a8456c6c3",
-      "10405726_20240626_eb28d39c-633e-430a-bf13-8b5df2164ca3",
-      "10408995_20240702_9be496f0-b677-4e08-b6a2-57fca34a16e9"
-    )
-  ),
-  row.names = c(NA, -20L),
-  class = c("tbl_df", "tbl", "data.frame")
-)
-```
-
-```{r}
-#| echo: true
-
-IDs
-```
-
-
-## Separate
-
-```{r}
-#| echo: true
-
-IDs |>
-  separate(Sample, into = c("Sample", "Date", "Random_String"), sep = "_")
-```
-
-
-## Separate
-
-```{r}
-#| echo: true
-
-IDs |>
-  separate(Sample, into = c("ID", "Date", "Random_String"), sep = "_") |>
-  mutate(Date = ymd(Date))
-```
-
-
-## Separate by sub-strings
-
-```{r}
-#| echo: true
-
-IDs |>
-  mutate(
-    ID = str_sub(Sample, start = 1, end = 8),
-    Date = str_sub(Sample, start = 10, end = 17)
-  )
-```
-
-
-## Problematic splitting
-
-```{r}
-ids <- paste0("Sample", rep(1:10, each = 10), "-", 1:10)
-```
-
-Use: `_ - .`
-
-Characters to avoid: `/ \ # @ & > < ,`
-
-```{r}
-#| echo: true
-
-ids
-```
-
-
-## Missing data and pivoting and joining {.smaller}
-
-- I understand how to go from explicit to implicit values and vice versa using pivoting. If we have `pivot_wider()`, what is the purpose of `complete()`? Aren't they both performing the same function?
-- How does dropping or completing the missing data values NA could affect further analysis?
-- In some of my own research data, I have a treatment and then different things I measured in that treatment. For example: looking at number of native plants, number of nonnative plants, tree, forbs, etc. In this case, should I have broken up my data collection sheets or would I simply not need to pivot?
-
-
-## `%in%`
-
-```{r}
-#| echo: true
-
-4 == 1:10 # Vector of T/F
-
-(x <- 20:30)
-(y <- c(21, 25))
-
-which(x %in% y) # Returns indices
-which(y %in% x)
-
-1 %in% 1:10 # T/F
-
-"F" %in% (c("F", "f")) # T/F
-
-"F" %in% (c("M", "m")) # T/F
-```
-
-
-## Histogram bin size
-
-```{r}
-#| echo: true
-
-x <- runif(100)
-
-ggplot(tibble(x), aes(x)) + geom_histogram()
-```
-
-
-## Outliers vs. "Extreme values"
-
-- In the event that there are "real outliers", is it always safe to include it in the plot? I guess it depends on what the datapoint mean.
-
-
-## Working with large numbers of variables / observations
-
-- I am also wondering if there are further considerations when visualizing raw data when there are many different variables with 1,000s +  observations per variable. I recall in previous stats classes we use the basic plot() function on the data set and observe all the relations to look for anything "interesting" (such as potential relationships), but I never found it particularly helpful for making decisions on how to move forward with analysis.
