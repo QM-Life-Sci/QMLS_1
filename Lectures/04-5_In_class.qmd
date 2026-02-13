@@ -36,8 +36,8 @@ theme_set(theme_cowplot())
 ## Progress Check 1 next week
 
 - Available Monday 9 am
-- Work alone, but use all your resources
-- Question due Wednesday night (Units 1-4)
+- Work alone, but use all your resources (please)
+- Question due **Wednesday** night (Units 1-4)
 - Ask us if you get stuck or have questions
 
 
@@ -46,63 +46,87 @@ theme_set(theme_cowplot())
 ![](../images/QM_PC.png)
 
 
-## PS 3
+## (Not) Quoting Column Names
 
-> During PS3, we were asked to join "plot_ID" and "richness." I was curious if it really matters what order you place objects within the join. If I wrote `left_join(ID, richness)` or `left_join(richness, ID)` it seems like I would get the same results but have a different column order. At the end of the day, does it really matter which object I state first, or should I spend more time understanding what might make one format better than the other in certain situations?
+> When it comes to using a title of a column in a string of code, we either put them in "" or we do not. Is there a cheat sheet or something that we know when to do either one? I have been using trial and error and hoping for the best.
+
+- Base R: Usually, except for `$`
+- Tidyverse: Usually not
 
 
-## Multiple joins
+## Sampling
+
+> In my research, I measure cell length after deleting one gene and I usually work with thousand of cells. But I often skip the cells that are joined together because they are hard to measure. Does this mean my sample is not random anymore? How does this affect the probability of my results being accurate or representative of the real population?
+
+
+## Sample size {.smaller}
+
+> How are statistical analyses impacted by smaller samples sizes, and how can we, as scientists, maximize our validity despite having smaller samples sizes? I think I understand that usually the higher the n, the better we can estimate true probability which helps with wider application, but I'm curious about other methods.
+
+> How significantly does a difference of sample size matter when comparing two samples? In my research I'm comparing the data collected at two different sites but one is much larger than the other and I'm curious if this would skew the data too much and require the samples be narrowed down to only compare factors with more similar proportions.
+
+
+
+## Many ways to solve a coding problem
+
+> In problem set 3 our group used mutate rather than summarize to get the richness info.
 
 ```{r}
-set.seed(32742)
-
-b1 <- beaver1 |> 
-  mutate(time = as.integer(time)) |> 
-  select(-activ) |> slice(1:10)
-
-air_temps <- tibble(
-  day = 346,
-  time = as.integer(c(830, 835, 840, 845, 850, 855,
-                      900, 905, 910, 915, 920, 930, 935, 940, 945, 950, 955,
-                      1000, 1005, 1010, 1015, 1020, 1025)),
-  air_temp = runif(length(time), 9, 10)
-)
-```
-
-```{r}
+#| eval: false
 #| echo: true
 
-LJ <- left_join(b1, air_temps, by = join_by(time))
-left_join(LJ, air_temps, by = join_by(time))
+richness <- comp |>
+  group_by(subplot, plot_no) |>
+  mutate(richness = length(unique(species))) #what we did in our project
 ```
 
-
-## Distributions
-
-- Binomial -- more practice coming (`rbinom()` and `dbinom()`)
-
-> Is there a way to get the a distribution and determine if its correct based on preliminary data?
-
-> What would you do if data/value falls out of distribution range (a data point in a dataset is significantly higher or lower than the typical values within the rest of the data) like the question 3 in the quiz 4? 
+> How is this different/superior to the summarize? I guess I don't understand why you would use summarize rather than just adding new columns of info.
 
 
-## Thinking about probabilities
+## When to make a new object
 
-Why learn probability?
-
-- You could learn all the statistical analyses/tests without really understanding probability.
+> When joining tables in R, is it necessary (or recommended) to rename the resulting joined table? I previously (PS 3) used the same name (“richness”) for the newly joined table as one of the original tables, and I encountered problems when creating a plot. After renaming the joined table, the issue was resolved. Is renaming important to avoid such problems in later analyses?
 
 
-## Maize kernel germination
+## Distributions {.smaller}
 
-Given the following probabilities for maize kernel germination, what is the probability of finding one kernel that is germinated and one that is not?
+> Since several distributions can look similar in a histogram (slides 21-24 class 04-4 Distributions), what are the best practical steps to decide whether my data are better modeled as normal, binomial, or Poisson. Should I base it mainly on how the data are generated (continuous mass vs. counts vs. successes out of trials), or are there simple diagnostic checks I should use to confirm?
 
-![](../images/Probability_Constant.drawio.png){fig-align="center"}
+> When working with large numerical datasets, how can we determine whether the data follow a normal distribution? Is there a statistical method to test whether a dataset is normally distributed, even if the experimental design suggests that the data should be approximately normal? Or should we simply assume normality based on the study design?
+
+> Do we choose the distribution type we look at based on the data we collect? Or is the distribution something that innately results from our data?
 
 
-## Germination probabilities
+## Genetic similarity
 
-- In lecture Video 2, when we are determining the number of corn we need to plant, do you have to keep trying different sample numbers until you reach a probability close enough to 1 to be considered probable? For example, if you were running sum(dbinom(30:#, #, prob = 0.75), would you try random numbers of sample size until you get a probability close to 1. Then, you know with that number of plants it is likely that you will have at least 30 plants germinate? 
+> What are some ways that genetic similarity or genetic variation can affect a distribution. For example if everything shares one parent what shape or how should a distribution be normalized?
+
+- Coming soon and in Unit 12
+
+
+## Quiz Review
+
+- 4-2
+- 4-3
+
+
+## Conditional Probability {.smaller}
+
+> I am not sure about the meaning of Pr[B|A] in Pr[A|B]= Pr[B|A] x Pr[A]/Pr[B]. If the probability of B depends on the probability of A, why can the probability of B affect the probability of A? Like why would the probability of bringing an umbrella can affect the probability of rain?
+
+> How can I interpret probabilities when some events seem to be dependent rather than independent? Many variables in my data affect each other and probability calculations might be misleading if I assume independence. For example, if a nightjar vocalizes, it is more likely to vocalize again or entice another bird to call; if it's raining they call less; and if its after sunset they call more.
+
+- Interactions coming soon
+
+
+## Exploratory Data Analysis
+
+> In my experience, initial data visualization is not a priority. It is honestly only this class where I have been encouraged to just look at the data, then tidy it up to make it more manageable for analysis. Is this anyone else's experience? Or have most people been encouraged to initially do this?
+
+
+## Transformations
+
+> When is it acceptable/necessary to log transform data?
 
 
 ## Binomial probabilities
@@ -186,9 +210,9 @@ sum(dbinom(1:24, 24, prob = 0.1))
 ## Binomial probabilities for Pr[left] = 0.1
 
 ```{r}
-M <- tibble(Lefties = 0:24,
-            Probability = dbinom(0:24, 24, prob = 0.1))
-ggplot(M, aes(Lefties, Probability)) + 
+M <- tibble(Lefties = 0:24, Probability = dbinom(0:24, 24, prob = 0.1))
+
+ggplot(M, aes(Lefties, Probability)) +
   geom_bar(stat = "identity") +
   labs(x = "n Left-handers") +
   scale_x_continuous(breaks = seq(0, 24, by = 5))
@@ -200,10 +224,10 @@ $n > 8$ have very low probabilities.
 ## Binomial probabilities for Pr[left] = 0.1
 
 ```{r}
-M <- tibble(Lefties = 0:24,
-            Probability = dbinom(0:24, 24, prob = 0.1)) |> 
+M <- tibble(Lefties = 0:24, Probability = dbinom(0:24, 24, prob = 0.1)) |>
   mutate(log_Prob = log10(Probability))
-ggplot(M, aes(Lefties, log_Prob)) + 
+
+ggplot(M, aes(Lefties, log_Prob)) +
   geom_bar(stat = "identity") +
   labs(x = "n Left-handers", y = "log10 Probability") +
   scale_x_continuous(breaks = seq(0, 24, by = 5))
@@ -275,9 +299,11 @@ What if the order had to be correct as well?
 Expected value is >$2 when the jackpot is >$584,402,676
 
 
-## Conditional probability
+## Practicing Bayes Rule {.smaller}
 
-- In terms of conditional probability equations, are there any particular situations where it would be more beneficial to solve with natural numbers over probabilities or vice versa? I'd imagine that the ease of which method to use might depend on the overall sizes of the numbers involved in the equation, but I'd be interested to know more about when it would be preferential to utilize one method of solving an equation over the other and vice versa.
+> I'm having trouble with keeping track of the different probabilities in Bayes rule. It can get a bit confusing when trying to figure out which value is the prior, which is conditional, and what goes in the denominator. Is there some sort of standard method or procedure we should follow when setting up Bayes rule calculations?
+
+> I haven’t taken math or stats in a couple years and I need to review it. I also got a little turned around on which values went where on the smallpox/chicken pox example. Are there any additional practice resources you would recommend?
 
 
 ## Breast cancer screening
@@ -285,11 +311,14 @@ Expected value is >$2 when the jackpot is >$584,402,676
 Approximately correct numbers:
 
 1. 1 in 100 women in the age range 40-50 have breast cancer
-2. 20% with cancer have a negative mammogram (false negative)
-3. 90% without cancer have a negative mammogram (true negative)
+2. 20% with cancer have a negative mammogram (*false negative*)
+3. 90% without cancer have a negative mammogram (*true negative*)
+
+::: {.callout-tip}
+## Question
 
 What is the probability of a randomly sampled woman having breast cancer, given a negative test?
-
+:::
 
 ## Breast cancer screening
 
@@ -312,12 +341,12 @@ Without cancer: 99 * 0.9 = 89.1
 
 Total negative tests: 0.2 + 89.1 = 89.3
 
-Probability of having cancer, given negative test: 
+Probability of having cancer, given negative test:
 
 ```{r}
 #| echo: true
 
-0.2/89.3
+0.2 / 89.3
 ```
 
 
@@ -329,7 +358,11 @@ Approximately correct numbers:
 2. 80% with cancer have a positive mammogram (true positives)
 3. 10% without cancer have a positive mammogram (false positives)
 
+::: {.callout-tip}
+## Question
+
 What is the probability of a randomly sampled woman having breast cancer, given a positive test?
+:::
 
 
 ## Breast cancer screening
@@ -363,4 +396,3 @@ $$Pr[C|T] = \frac{Pr[T|C] \times Pr[C]}{Pr[T]}$$
 
 (0.8 * 0.01) / ((0.8 * 0.01) + (0.1 * 0.99))
 ```
-
