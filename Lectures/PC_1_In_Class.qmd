@@ -32,6 +32,73 @@ island_data <- tibble(
 ```
 
 
+## Questions
+
+The topic I often find most difficult is the data wrangling. I would love to go over use of Nrow and slicing during class since this seems to be what stumps me the most. I know how to use other related functions. Also going over filter would be helpful. 
+
+Data wrangling gives me the most trouble. Specifically, in the progress check, we work on slicing- is there a way to specifically select just even or odd rows, without physically typing out each number? I tried to look through the help page on R but didn't come up with anything. This is what i have at the moment: slice(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110)
+
+====
+
+I would like to review pivoting data, especially how to think conceptually about when to use pivot_longer() versus pivot_wider(). I can usually follow along with examples, but when I’m working independently, I'm a bit more hesitant because I’m unsure what the final tidy structure should look like. 
+
+I have some problems with pivoting data, and I'm not sure in what situations I should use pivoting. One thing that confuses me is that, for some datasets which should be pivoted, I don't really understand why they need to be pivoted. If I were making the table in Excel, I would probably format it in the same way.
+
+I've mainly gotten stuck when pivoting data to other formats. More specifically in situations where I am creating new columns from my original dataset, using functions like the pivot_ functions, mutate, and rename. 
+
+I think the problem I have struggled the most with is transforming data. Pivot wider has been challenging. I also think merging data of different lengths in terms of column length.
+
+====
+
+The main problem for me is joining datasets and reshaping data. Pivoting is also hard and confusing for me at times and I am still learning how to use it properly.
+
+I’m having trouble joining (combining) two datasets or tables and then continuing the analysis with the combined dataset. Also, I would like some simple tips on how to remember the steps for generating values when creating a plot.
+
+====
+
+One thing that I am having a hard time wrapping my head around is piping and how exactly it works. Like, what exactly does the pipe take from the previous object? 
+
+=====
+
+For the progress check I have a question about what the y~x means in this plot, I know it's the formula, but what is it saying and what other options are there to work with?
+
+new |>
+  ggplot(aes(x=EVI, y=Rs, color=Crop)) +
+  geom_point(size = 3, alpha = 0.5) +
+  geom_smooth(formula = y~x, method = "lm", se=FALSE) +
+  facet_grid(Crop~.) +
+  labs(x = "Enhanced Vegative Index", y= "Soil Respiration")
+  
+=====
+
+I don't fully understand when to use variables and manipulations within the ggplot() function vs. within the geom() function. 
+
+====
+
+Is there any rationale to picking a bin number when plotting, I have been trying different numbers but not sure if that introduces bias for representing data?
++2
+====
+
+Can you direct me to some resources for utilizing the equation for conditional probability? For example, with the parasitized wasp question, finding the probability of Male and probability of parasitized make sense, but finding P|M confuses me a bit still. 
+
+====
+
+A topic I struggle with in general is syntax, which I'm sure just comes with practice. More specifically though,  I think it's hard to remember what order code should be in within one string. An example off the top of my head is using something like mutate(), where you can have multiple functions within the parenthesis. Another example would be summarize() where you may have something like summarize(*function_A(*function_B(x))).
+
+Any advice for memorizing correct syntax of commands? Looking up functions most every time I use them works, but costs additional time. 
+
+I don't think I have a specific question this week as I've become more comfortable with R but I am still struggling with remembering the syntax and order of operations each time. I assume this is just something that will come from practice and/or I'll always have a cheat sheet on standby. 
+
+
+
+
+
+
+
+
+
+
+
 ## Topics for Today
 
 1. PS 4
