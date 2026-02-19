@@ -24,7 +24,7 @@ theme_set(theme_cowplot())
 
 ## Combining probabilities
 
-Among a hypothetical population, blood type probabilities for all the combinations of AB antigens and Rh status:
+Among a hypothetical population, blood type probabilities for all the combinations of AB antigens and Rh antigens:
 
 |Type |Probability|
 |-----|-----------|
@@ -36,6 +36,8 @@ Among a hypothetical population, blood type probabilities for all the combinatio
 | B-  |     0.004 |
 | AB+ |     0.07  |
 | AB- |     0.001 |
+
+AB antigens and Rh antigens are independent events and can occur in all combinations.
 
 
 ### Activity
@@ -110,15 +112,13 @@ Calculate the following:
 
 #### Via Bayes' Rule
 
+Now try to solve for the probability using Bayes Rule using the individual probabilities rather than using counts of people.
+
 $$Pr[Ca|Positive~Test] = \frac{Pr[Positive~Test|Ca] \times Pr[Ca]}{Pr[Positive~Test]}$$
 
 ```{r}
 
 ```
-
-How would you counsel a family member who had a positive test?
-
->
 
 How do your results change when one of the values changes? Calculate each of the following separately. If you haven't already done so, you may wish to return to the code you wrote above and assign variables that you can change:
 
@@ -147,7 +147,8 @@ Without setting the seed, generate two objects named AA and BB consisting of 5 n
 
 ```
 
-> No. You get different answers each time.
+>
+
 
 Now, set the seed for the random number generator, and do the same as above. Chose any integer and place it in `set.seed()`. Run this chunk more than once. Do you get the same answer each time? Are AA and BB the same?
 
