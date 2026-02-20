@@ -1,5 +1,5 @@
 ---
-title: "PC1_Code_InClass"
+title: "PC1 In Class Code"
 format: html
 ---
 
@@ -7,94 +7,40 @@ format: html
 #| message: false
 
 library(tidyverse)
-library(cowplot)
-theme_set(theme_cowplot())
+theme_set(theme_classic())
 
 ```
 
 
-## Outliers
+## Slicing
 
 ```{r}
 set.seed(49387)
-ExDat <- tibble(SampleID = paste0("S",1:30),
-                Concentration = c(0.12,rnorm(29,15,3)),
-                Treatment = rep(c("C","T"), each = 15),
-                Notes = c("Not sure this sample was added", rep("none",29))
-                )
-ExDat <- ExDat[sample(1:nrow(ExDat)),]
+
+dd <- tibble(
+  ID = c(rbind(1:50, NA)),
+  x = c(rbind(rnorm(50, mean = 10), NA)),
+  Group = c(rbind(sample(LETTERS[1:5], size = 50, replace = TRUE), NA))
+)
+
+dd |> print(n = 100)
 ```
 
+## `slice()` and `slice_head()`
+
+```{r}
+dd |> slice(1:5)
+dd |> slice_head(n = 5)
+```
+
+## `slice()` can take a vector
+
+```{r}
+dd |> slice(c(1, 3, 5, 7, 9))
+```
+
+Make a sequence
 
 ```{r}
 
-# Plot the data
-
-ExDat |>
-  ggplot(aes(Treatment, Concentration)) +
-  geom_point(position = position_jitter(width = 0.2)) +
-  ylim(c(0,21))
-
-
-# Find the low point
-
-ww <- which.min(ExDat$Concentration)
-
-# Look at this row
-
-ExDat[ww,]
-unique(ExDat$Notes)
-
-ExDat |>
-  filter(Notes != "none")
-
 ```
-
-```{r}
-set.seed(49387)
-ExDat <- tibble(SampleID = paste0("S",1:30),
-                Concentration = c(2.5,rnorm(29,15,3)),
-                Treatment = rep(c("C","T"), each = 15),
-                Notes = c("Not sure this sample was added", rep("none",29))
-                )
-ExDat <- ExDat[sample(1:nrow(ExDat)),]
-```
-
-
-```{r}
-
-# Plot the data
-
-ExDat |>
-  ggplot(aes(Treatment, Concentration)) +
-  geom_point(position = position_jitter(width = 0.2)) +
-  ylim(c(0,21))
-
-```
-
-
-
-
-```{r}
-set.seed(49387)
-ExDat <- tibble(SampleID = paste0("S",1:30),
-                Concentration = c(3.5,rnorm(29,15,3)),
-                Treatment = rep(c("C","T"), each = 15),
-                Notes = c("Not sure this sample was added", rep("none",29))
-                )
-ExDat <- ExDat[sample(1:nrow(ExDat)),]
-```
-
-
-```{r}
-
-# Plot the data
-
-ExDat |>
-  ggplot(aes(Treatment, Concentration)) +
-  geom_point(position = position_jitter(width = 0.2)) +
-  ylim(c(0,21))
-
-```
-
-
