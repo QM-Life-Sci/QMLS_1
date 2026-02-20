@@ -160,6 +160,8 @@ DD
 ## Piping
 
 ```{r}
+#| echo: true
+
 DD |>
   filter(x1 >= 0) |>
   summarize(Min_x1 = min(x1),
@@ -170,6 +172,8 @@ DD |>
 ## Piping
 
 ```{r}
+#| echo: true
+
 DD |>
   mutate(x3 = x1 + x2) |> 
   filter(x1 >= 0) |>
@@ -182,6 +186,8 @@ DD |>
 ## Not Piping
 
 ```{r}
+#| echo: true
+
 DD2 <- mutate(DD, x3 = x1 + x2)
 DD3 <- filter(DD2, x1 >= 0)
 summarize(DD3, Min_x1 = min(x1),
@@ -193,6 +199,8 @@ summarize(DD3, Min_x1 = min(x1),
 ## Base R
 
 ```{r}
+#| echo: true
+
 DD$x3 <- DD$x1 + DD$x2 
 DD <- DD[DD$x1 >= 0, ]
 data.frame(Min_x1 = min(DD$x1),
@@ -205,20 +213,22 @@ data.frame(Min_x1 = min(DD$x1),
 ## Base R
 
 ```{r}
+#| echo: true
+
 data.frame(Min_x1 = min(DD[DD$x1 >= 0, "x1"]),
            Max_x2 = max(DD[DD$x1 >= 0, "x2"]),
            Median_x3 = median(DD[DD$x1 >= 0, "x1", drop=T] + DD[DD$x1 >= 0, "x2",drop=T]))
 ```
 
 
-## Pivot!
+## Pivot! {.smaller}
 
 > I would like to review pivoting data, especially how to think conceptually about when to use `pivot_longer()` versus `pivot_wider()`. I can usually follow along with examples, but when I’m working independently, I'm a bit more hesitant because I’m unsure what the final tidy structure should look like.
 
 > I have some problems with pivoting data, and I'm not sure in what situations I should use pivoting. One thing that confuses me is that, for some datasets which should be pivoted, I don't really understand why they need to be pivoted. If I were making the table in Excel, I would probably format it in the same way.
 
 
-## Pivot!
+## Pivot! {.smaller}
 
 > I've mainly gotten stuck when pivoting data to other formats. More specifically in situations where I am creating new columns from my original dataset, using functions like the pivot_ functions, mutate, and rename.
 
@@ -438,7 +448,7 @@ penguins_long |>
 > I’m having trouble joining (combining) two datasets or tables and then continuing the analysis with the combined dataset. Also, I would like some simple tips on how to remember the steps for generating values when creating a plot.
 
 
-## Joins
+## Joins {.smaller}
 
 > I am mostly still trying to wrap my head around joining, it is sometimes difficult to imagine what R is doing when I tell it to join two data frames.
 
