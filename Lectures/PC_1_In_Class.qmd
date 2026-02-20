@@ -45,7 +45,7 @@ island_data <- tibble(
 
 ## Syntax
 
-> A topic I struggle with in general is syntax, which I'm sure just comes with practice. More specifically though,  I think it's hard to remember what order code should be in within one string. An example off the top of my head is using something like mutate(), where you can have multiple functions within the parenthesis. Another example would be summarize() where you may have something like `summarize(function_A(function_B(x)))`.
+> A topic I struggle with in general is syntax, which I'm sure just comes with practice. More specifically though,  I think it's hard to remember what order code should be in within one string. An example off the top of my head is using something like `mutate()`, where you can have multiple functions within the parenthesis. Another example would be `summarize()` where you may have something like `summarize(x_AB = function_A(function_B(x)))`.
 
 
 ## Syntax
@@ -452,7 +452,7 @@ penguins_long |>
 
 > I am mostly still trying to wrap my head around joining, it is sometimes difficult to imagine what R is doing when I tell it to join two data frames.
 
-> In general its something I just need to work on. More specifically, in problem set 4, when we were tasked with combining 2 data frames into a single data frame, I attempted to use the left_join function, but the results weren’t ideal. My group came up with another solution of using a bind_row() function, and I noticed that in the PS2 key, you just made a new tibble altogether, instead of joining the two previously made tibbles. So, does a case like this not classify as joining data?
+> In general its something I just need to work on. More specifically, in problem set 4, when we were tasked with combining 2 data frames into a single data frame, I attempted to use the `left_join` function, but the results weren’t ideal. My group came up with another solution of using a `bind_row()` function, and I noticed that in the PS2 key, you just made a new tibble altogether, instead of joining the two previously made tibbles. So, does a case like this not classify as joining data?
 
 
 ## Tidyverse: joins
