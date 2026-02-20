@@ -23,13 +23,13 @@ library(tidyverse)
 library(cowplot)
 theme_set(theme_cowplot())
 
-library(palmerpenguins)
 island_data <- tibble(
   island = as.character(levels(penguins$island)),
   latitude = c(-64.766667, -65.433333, -64.733333),
   longitude = c( -64.083333, -65.5, -64.233333)
 )
 ```
+
 
 ## Topics for Today
 
@@ -42,15 +42,18 @@ island_data <- tibble(
 1. Data visualization
 1. Probability
 
-## Syntax
-
-A topic I struggle with in general is syntax, which I'm sure just comes with practice. More specifically though,  I think it's hard to remember what order code should be in within one string. An example off the top of my head is using something like mutate(), where you can have multiple functions within the parenthesis. Another example would be summarize() where you may have something like summarize(*function_A(*function_B(x))).
 
 ## Syntax
 
-Any advice for memorizing correct syntax of commands? Looking up functions most every time I use them works, but costs additional time. 
+> A topic I struggle with in general is syntax, which I'm sure just comes with practice. More specifically though,  I think it's hard to remember what order code should be in within one string. An example off the top of my head is using something like mutate(), where you can have multiple functions within the parenthesis. Another example would be summarize() where you may have something like `summarize(function_A(function_B(x)))`.
 
-I don't think I have a specific question this week as I've become more comfortable with R but I am still struggling with remembering the syntax and order of operations each time. I assume this is just something that will come from practice and/or I'll always have a cheat sheet on standby. 
+
+## Syntax
+
+> Any advice for memorizing correct syntax of commands? Looking up functions most every time I use them works, but costs additional time.
+
+> I don't think I have a specific question this week as I've become more comfortable with R but I am still struggling with remembering the syntax and order of operations each time. I assume this is just something that will come from practice and/or I'll always have a cheat sheet on standby.
+
 
 ## R "Vocabulary"
 
@@ -63,7 +66,7 @@ qmds_lecture <- list.files(
   pattern = "^[0-4]*-[1-6].*qmd$",
   path = "../Lectures",
   full.names = TRUE
-)[1:7]
+)[1:17]
 
 qmds_problems_sets <- list.files(
   pattern = "^PS_[0-9]*[_Key]*.qmd$",
@@ -78,7 +81,8 @@ extract_functions(c(qmds_lecture, qmds_problems_sets))
 
 ## Seed
 
-I don’t fully understand what it means to set the seed, and if the number we place within that function is just an arbitrary number, or if it actually means something. 
+> I don’t fully understand what it means to set the seed, and if the number we place within that function is just an arbitrary number, or if it actually means something.
+
 
 ## What does set seed do?
 
@@ -107,26 +111,27 @@ sample(xx)
 
 ## Slicing
 
-The topic I often find most difficult is the data wrangling. I would love to go over use of Nrow and slicing during class since this seems to be what stumps me the most. I know how to use other related functions. Also going over filter would be helpful. 
+> The topic I often find most difficult is the data wrangling. I would love to go over use of Nrow and slicing during class since this seems to be what stumps me the most. I know how to use other related functions. Also going over filter would be helpful.
 
-Data wrangling gives me the most trouble. Specifically, in the progress check, we work on slicing- is there a way to specifically select just even or odd rows, without physically typing out each number? I tried to look through the help page on R but didn't come up with anything. This is what i have at the moment: slice(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110)
+> Data wrangling gives me the most trouble. Specifically, in the progress check, we work on slicing- is there a way to specifically select just even or odd rows, without physically typing out each number? I tried to look through the help page on R but didn't come up with anything. This is what I have at the moment: slice(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110)
 
 
 ## Slicing
 
-For the rattlesnake dataset, I used the slice(... by = 2) and got all the NAs that you all asked about. Why is that? I know that is one of the questions, but I really don't know why that would happen--it feels like it shouldn't?
+> For the rattlesnake dataset, I used the `slice(... by = 2)` and got all the NAs that you all asked about. Why is that? I know that is one of the questions, but I really don't know why that would happen--it feels like it shouldn't?
 
-Again for rattlesnake data: it was asked to compare the raw csv to each tibble we made--when I tried to do this by slice_head() for the new tibble, it printed the whole tibble. I even did slice_head(n=2) for raw and new tibble to see if the second value in raw was the same as the first one in the new tibble, and it still printed the whole tibble for the new one I made without the NAs. Do you know what the issue might be?
 
 ## Filter vs replace vs na
 
-To turn the outlier value in the "soil respiration" dataset for the progress check, I used mutate and na_if and set it equal to the outlier value. If I have more than one outlier that I want to do away with, is it better to do this for each one, or to set na_if > than some value (given that multiple outliers are too high)?
+> To turn the outlier value in the "soil respiration" dataset for the progress check, I used `mutate` and `na_if` and set it equal to the outlier value. If I have more than one outlier that I want to do away with, is it better to do this for each one, or to set `na_if` > than some value (given that multiple outliers are too high)?
+
 
 ## The Pipe
 
-One thing that I am having a hard time wrapping my head around is piping and how exactly it works. Like, what exactly does the pipe take from the previous object? 
+> One thing that I am having a hard time wrapping my head around is piping and how exactly it works. Like, what exactly does the pipe take from the previous object?
 
-I have a hard time knowing exactly how to enter code for specific parts within a dataset. I think I understand that if you pipe from the dataset, you don't have to enter it again in the parentheses for the next part in whatever function you're using. However, I get lost on this if we're trying to just graph a specific column for instance. When we do that, we enter the dataset$column, but is there another way?
+> I have a hard time knowing exactly how to enter code for specific parts within a dataset. I think I understand that if you pipe from the dataset, you don't have to enter it again in the parentheses for the next part in whatever function you're using. However, I get lost on this if we're trying to just graph a specific column for instance. When we do that, we enter the dataset$column, but is there another way?
+
 
 ## Piping
 
@@ -144,30 +149,83 @@ xx |> mean()
 ```{r}
 #| echo: true
 
+set.seed(3423)
+
 DD <- tibble(x1 = rnorm(10),
-            x2 = runif(10))
+             x2 = runif(10))
+DD
+```
 
-DD |> pull(x1) |> mean()
-DD |> pull(x2) |> mean()
 
-DD |> summarize(x1 = mean(x1),
-               x2 = mean(x2))
+## Piping
+
+```{r}
+DD |>
+  filter(x1 >= 0) |>
+  summarize(Min_x1 = min(x1),
+            Max_x2 = max(x2))
+```
+
+
+## Piping
+
+```{r}
+DD |>
+  mutate(x3 = x1 + x2) |> 
+  filter(x1 >= 0) |>
+  summarize(Min_x1 = min(x1),
+            Max_x2 = max(x2),
+            Median_x3 = median(x3))
+```
+
+
+## Not Piping
+
+```{r}
+DD2 <- mutate(DD, x3 = x1 + x2)
+DD3 <- filter(DD2, x1 >= 0)
+summarize(DD3, Min_x1 = min(x1),
+          Max_x2 = max(x2),
+          Median_x3 = median(x3))
+```
+
+
+## Base R
+
+```{r}
+DD$x3 <- DD$x1 + DD$x2 
+DD <- DD[DD$x1 >= 0, ]
+data.frame(Min_x1 = min(DD$x1),
+           Max_x2 = max(DD$x2),
+           Median_x3 = median(DD$x3))
+```
+
+
+
+## Base R
+
+```{r}
+data.frame(Min_x1 = min(DD[DD$x1 >= 0, "x1"]),
+           Max_x2 = max(DD[DD$x1 >= 0, "x2"]),
+           Median_x3 = median(DD[DD$x1 >= 0, "x1", drop=T] + DD[DD$x1 >= 0, "x2",drop=T]))
 ```
 
 
 ## Pivot!
 
-I would like to review pivoting data, especially how to think conceptually about when to use pivot_longer() versus pivot_wider(). I can usually follow along with examples, but when I’m working independently, I'm a bit more hesitant because I’m unsure what the final tidy structure should look like. 
+> I would like to review pivoting data, especially how to think conceptually about when to use `pivot_longer()` versus `pivot_wider()`. I can usually follow along with examples, but when I’m working independently, I'm a bit more hesitant because I’m unsure what the final tidy structure should look like.
 
-I have some problems with pivoting data, and I'm not sure in what situations I should use pivoting. One thing that confuses me is that, for some datasets which should be pivoted, I don't really understand why they need to be pivoted. If I were making the table in Excel, I would probably format it in the same way.
+> I have some problems with pivoting data, and I'm not sure in what situations I should use pivoting. One thing that confuses me is that, for some datasets which should be pivoted, I don't really understand why they need to be pivoted. If I were making the table in Excel, I would probably format it in the same way.
+
 
 ## Pivot!
 
-I've mainly gotten stuck when pivoting data to other formats. More specifically in situations where I am creating new columns from my original dataset, using functions like the pivot_ functions, mutate, and rename. 
+> I've mainly gotten stuck when pivoting data to other formats. More specifically in situations where I am creating new columns from my original dataset, using functions like the pivot_ functions, mutate, and rename.
 
-I think the problem I have struggled the most with is transforming data. Pivot wider has been challenging. I also think merging data of different lengths in terms of column length.
+> I think the problem I have struggled the most with is transforming data. Pivot wider has been challenging. I also think merging data of different lengths in terms of column length.
 
-I understand that I need to choose the columns I want to include in a pivot, but while pivoting, how can I choose all the columns without typing in each column name individually?
+> I understand that I need to choose the columns I want to include in a pivot, but while pivoting, how can I choose all the columns without typing in each column name individually?
+
 
 ## Pivots
 
@@ -217,10 +275,10 @@ island_data
 
 ```{r}
 penguins_long <- penguins |>
-  select(species, sex, body_mass_g, bill_length_mm, bill_depth_mm) |> 
+  select(species, sex, body_mass_g, bill_length_mm, bill_depth_mm) |>
   pivot_longer(cols = -c(species, sex, body_mass_g),
                names_to = "bill_measure",
-               values_to = "length") |> 
+               values_to = "length") |>
   drop_na()
 
 ggplot(penguins_long, aes(x = body_mass_g, y = length, color = species)) +
@@ -250,15 +308,6 @@ penguins |>
   select(species, sex, body_mass_g, bill_length_mm, bill_depth_mm)
 ```
 
-or
-
-```{r}
-#| echo: true
-
-penguins[, c("species", "sex", "body_mass_g",
-             "bill_length_mm", "bill_depth_mm")]
-```
-
 
 ## `pivot_longer()`
 
@@ -266,10 +315,10 @@ penguins[, c("species", "sex", "body_mass_g",
 #| echo: true
 
 penguins_long <- penguins |>
-  select(species, sex, body_mass_g, bill_length_mm, bill_depth_mm) |> 
+  select(species, sex, body_mass_g, bill_length_mm, bill_depth_mm) |>
   pivot_longer(cols = c(bill_length_mm, bill_depth_mm),
                names_to = "bill_measure",
-               values_to = "length") |> 
+               values_to = "length") |>
   drop_na()
 ```
 
@@ -279,10 +328,10 @@ or
 #| echo: true
 
 penguins_long <- penguins |>
-  select(species, sex, body_mass_g, bill_length_mm, bill_depth_mm) |> 
+  select(species, sex, body_mass_g, bill_length_mm, bill_depth_mm) |>
   pivot_longer(cols = -c(species, sex, body_mass_g),
                names_to = "bill_measure",
-               values_to = "length") |> 
+               values_to = "length") |>
   drop_na()
 ```
 
@@ -314,7 +363,7 @@ ggplot(penguins_long, aes(x = body_mass_g, y = length, color = species)) +
 ```{r}
 #| echo: true
 
-penguins_long <- penguins_long |> 
+penguins_long <- penguins_long |>
   mutate(bill_measure = str_remove(bill_measure, "_mm"),
          bill_measure = str_remove(bill_measure, "bill_"))
 
@@ -328,8 +377,9 @@ Be careful:
 
 ```{r}
 #| echo: true
+#| warning: true
 
-penguins_long |> 
+penguins_long |>
   pivot_wider(id_cols = c(species, sex, body_mass_g),
               names_from = bill_measure, values_from = length)
 ```
@@ -342,18 +392,19 @@ penguins_long |>
 ```{r}
 #| echo: true
 
-penguins_long |> 
+penguins_long |>
   count(species, sex, body_mass_g)
 ```
+
 
 ## Paste
 
 ```{r}
 #| echo: true
 
-penguins <- penguins |> 
+penguins <- penguins |>
   mutate(id_1 = paste(species, seq(1, n()), sep = "_"),
-         id_2 = paste0(species, "_", seq(1, n()))) |> 
+         id_2 = paste0(species, "_", seq(1, n()))) |>
   relocate(id_1, id_2)
 penguins$id_1[1:10]
 penguins$id_2[1:10]
@@ -366,41 +417,41 @@ penguins$id_2[1:10]
 #| echo: true
 
 penguins_long <- penguins |>
-  select(id_1,species, sex, body_mass_g, bill_length_mm, bill_depth_mm) |> 
+  select(id_1,species, sex, body_mass_g, bill_length_mm, bill_depth_mm) |>
   pivot_longer(cols = -c(id_1,species, sex, body_mass_g),
                names_to = "bill_measure",
-               values_to = "length") |> 
+               values_to = "length") |>
   drop_na()
 
-penguins_long |> 
+penguins_long |>
   pivot_wider(id_cols = c(id_1, species, sex, body_mass_g),
               names_from = bill_measure, values_from = length)
 
 
 ```
 
-## Joins
-
-The main problem for me is joining datasets and reshaping data. Pivoting is also hard and confusing for me at times and I am still learning how to use it properly.
-
-I’m having trouble joining (combining) two datasets or tables and then continuing the analysis with the combined dataset. Also, I would like some simple tips on how to remember the steps for generating values when creating a plot.
 
 ## Joins
 
-I am mostly still trying to wrap my head around joining, it is sometimes difficult to imagine what R is doing when I tell it to join two data frames.
+> The main problem for me is joining datasets and reshaping data. Pivoting is also hard and confusing for me at times and I am still learning how to use it properly.
 
-In general its something I just need to work on. More specifically, in problem set 4, when we were tasked with combining 2 data frames into a single data frame, I attempted to use the left_join function, but the results weren’t ideal. My group came up with another solution of using a bind_row() function, and I noticed that in the PS2 key, you just made a new tibble altogether, instead of joining the two previously made tibbles. So, does a case like this not classify as joining data? 
+> I’m having trouble joining (combining) two datasets or tables and then continuing the analysis with the combined dataset. Also, I would like some simple tips on how to remember the steps for generating values when creating a plot.
+
+
+## Joins
+
+> I am mostly still trying to wrap my head around joining, it is sometimes difficult to imagine what R is doing when I tell it to join two data frames.
+
+> In general its something I just need to work on. More specifically, in problem set 4, when we were tasked with combining 2 data frames into a single data frame, I attempted to use the left_join function, but the results weren’t ideal. My group came up with another solution of using a bind_row() function, and I noticed that in the PS2 key, you just made a new tibble altogether, instead of joining the two previously made tibbles. So, does a case like this not classify as joining data?
+
 
 ## Tidyverse: joins
-
-> Joining with three tibbles is a little challenging can you help with how you would start this? 
 
 Always joining two tibbles/data.frames: `left_join(left_join(A, B), C)`
 
 What rows do you want to keep?
 
 - `left_join(x, y)`: includes all rows in x.
-- `right_join(x, y)`: includes all rows in y.
 - `inner_join(x, y)`: includes all rows in x *and* y.
 - `full_join(x, y)`: includes all rows in x *or* y.
 
@@ -445,20 +496,10 @@ left_join(penguins, island_data)
 ```{r}
 #| echo: true
 
-penguins <- penguins |> 
+penguins <- penguins |>
   mutate(log_bill_length = log10(bill_length_mm),
-         log_bill_depth = log10(bill_depth_mm))
-
-str(penguins)
-```
-
-
-## Making new variables
-
-```{r}
-#| echo: true
-
-penguins$log_body_mass <- log10(penguins$body_mass_g)
+         log_bill_depth = log10(bill_depth_mm),
+         log_body_mass = log10(body_mass_g))
 
 str(penguins)
 ```
@@ -480,8 +521,8 @@ str(penguins)
 ```{r}
 #| echo: true
 
-penguins |> 
-  group_by(species, sex, island) |> 
+penguins |>
+  group_by(species, sex, island) |>
   summarize(mean_log_mass = mean(log_body_mass),
             mean_log_bill_length = mean(log_bill_length),
             .groups = "drop")
@@ -491,13 +532,14 @@ penguins |>
 ## What happened? {.smaller}
 
 - Some `sex` coded as `NA`
+- `drop_na(sex)`
 
 ```{r}
 #| echo: true
 
-penguins |> 
-  drop_na(sex) |> 
-  group_by(species, sex, island) |> 
+penguins |>
+  drop_na(sex) |>
+  group_by(species, sex, island) |>
   summarize(mean_log_mass = mean(log_body_mass),
             mean_log_bill_length = mean(log_bill_length),
             .groups = "drop")
@@ -507,32 +549,34 @@ penguins |>
 
 ## Data visualization
 
-For the progress check I have a question about what the y~x means in this plot, I know it's the formula, but what is it saying and what other options are there to work with?
+> For the progress check I have a question about what the `y ~ x` means in this plot, I know it's the formula, but what is it saying and what other options are there to work with?
 
 ```{r}
 #| echo: true
 #| eval: false
+
 new |>
   ggplot(aes(x=EVI, y=Rs, color=Crop)) +
   geom_point(size = 3, alpha = 0.5) +
-  geom_smooth(formula = y~x, method = "lm", se=FALSE) +
+  geom_smooth(formula = y ~ x, method = "lm", se=FALSE) +
   facet_grid(Crop~.) +
-  labs(x = "Enhanced Vegative Index", y= "Soil Respiration")
+  labs(x = "Enhanced Vegative Index", y = "Soil Respiration")
 ```
+
 
 ## Data visualization
 
-I don't fully understand when to use variables and manipulations within the ggplot() function vs. within the geom() function. 
+> I don't fully understand when to use variables and manipulations within the `ggplot()` function vs. within the `geom_...()` function.
 
-One of the things that I continue to struggle with is ggplot and understanding the different layers and how they all interface. 
+> One of the things that I continue to struggle with is ggplot and understanding the different layers and how they all interface.
 
-Is there any rationale to picking a bin number when plotting, I have been trying different numbers but not sure if that introduces bias for representing data?
+> Is there any rationale to picking a bin number when plotting, I have been trying different numbers but not sure if that introduces bias for representing data?
 
 
 ## Working with aesthetics
 
 ```{r}
-penguins <- penguins |> 
+penguins <- penguins |>
   drop_na(body_mass_g)
 ```
 
@@ -540,7 +584,7 @@ penguins <- penguins |>
 #| echo: true
 
 ggplot(penguins, aes(body_mass_g, fill = species)) +
-  geom_density()
+  geom_histogram(bins = 30)
 ```
 
 
@@ -550,7 +594,7 @@ ggplot(penguins, aes(body_mass_g, fill = species)) +
 #| echo: true
 
 ggplot(penguins, aes(body_mass_g, fill = species)) +
-  geom_density(alpha = 0.5)
+  geom_histogram(bins = 10)
 ```
 
 
@@ -559,24 +603,8 @@ ggplot(penguins, aes(body_mass_g, fill = species)) +
 ```{r}
 #| echo: true
 
-penguins <- penguins |> 
-  mutate(species_alpha = case_when(
-    species == "Adelie" ~ 1,
-    species == "Chinstrap" ~ 0.5,
-    species == "Gentoo" ~ 0.25
-  ))
-penguins |> select(species, species_alpha) |> slice_sample(n = 10)
-```
-
-
-## Working with aesthetics
-
-```{r}
-#| echo: true
-
-ggplot(penguins, aes(body_mass_g, fill = species,
-                     alpha = species_alpha)) +
-  geom_density()
+ggplot(penguins, aes(body_mass_g, fill = species)) +
+  geom_histogram(binwidth = 250)
 ```
 
 
@@ -591,51 +619,15 @@ ggplot(penguins, aes(x = body_mass_g, y = species, fill = species)) +
 ```
 
 
-## Working with aesthetics
-
-> Is there any method to decide a "good number" of bins considering the number of observations we have?
-
-```{r}
-#| echo: true
-
-ggplot(penguins, aes(body_mass_g, color = species, fill = species)) +
-  geom_histogram(bins = 30, alpha = 0.5)
-```
-
-
-## Working with aesthetics
-
-```{r}
-#| echo: true
-
-ggplot(penguins, aes(log_bill_length, log_bill_depth, color = species,
-                     size = log_body_mass)) +
-  geom_point()
-```
-
-
-## Working with aesthetics
-
-- color
-- shape
-- size
-- linetype
-- fill
-- alpha
-- text parameters
-
-All are context-specific
-
-
 ## Probability
 
-Can you direct me to some resources for utilizing the equation for conditional probability? For example, with the parasitized wasp question, finding the probability of Male and probability of parasitized make sense, but finding P|M confuses me a bit still. 
+> Can you direct me to some resources for utilizing the equation for conditional probability? For example, with the parasitized wasp question, finding the probability of Male and probability of parasitized make sense, but finding P|M confuses me a bit still.
 
 
 ## Temperature dependent sex determination
 
 <center>
-<img src="https://i.imgur.com/GBXvrf9.jpg" width="70%" />
+<img src="https://i.imgur.com/GBXvrf9.jpg" width="70%" fig-alt="Photograph of a frilled lizard." />
 </center>
 
 
@@ -654,15 +646,19 @@ Below the critical temperature ($Below~T_c$)
 
 ## How to *preferentially* collect female eggs?
 
+. . .
+
 You want to collect an egg from a nest and estimate what the temperature was in that nest when sex was determined.
 
-- You want to preferentially collect from nests with large numbers of females
-- The temperature now is not necessarily what it was (so you can't use a thermometer)
+- You want to collect from nests with large numbers of females.
+- The temperature *now* is not necessarily what it was when sex was determined.
+
+. . .
 
 What is the probability that the nest was above $T_c$, given that you have collected a female egg?
 
 
-## Variables
+## Known probabilities
 
 - $Pr[Female | Above~T_c] = 0.8$
 - $Pr[Female | Below~T_c] = 0.5$
@@ -672,9 +668,11 @@ What is the probability that the nest was above $T_c$, given that you have colle
 
 $$Pr[A | B] = \frac{Pr[B | A] \cdot Pr[A]}{Pr[B]}$$
 
-We want: *probability of $T_c$ given that we have observed a $Female$*
+We want: *probability of $T_c$ given that we have observed a $Female$ egg*
 
 $$Pr[Above~T_c | Female]$$
+
+. . .
 
 So:
 
@@ -690,6 +688,8 @@ We have:
 
 - $Pr[F | Above~T_c] = 0.8$
 
+. . .
+
 We need:
 
 - $Pr[Above~T_c]$
@@ -697,6 +697,8 @@ We need:
 
 
 ## Estimating $Pr[Above~T_c]$?
+
+. . .
 
 Without any additional information about the distribution of $Above~T_c$ among nests:
 
@@ -833,6 +835,3 @@ ggflowchart(FC3,
             x_nudge = 0.25)
 ```
 $$\frac{40}{40 + 25} = \frac{40}{65} = 0.62$$
-
-
-
