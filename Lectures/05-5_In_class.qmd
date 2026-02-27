@@ -39,8 +39,92 @@ theme_set(theme_cowplot(font_size = 20))
 
 ## Unit 5 Goals
 
-- How do we learn about the world as scientists? What are our conclusions based on?
+> How do we learn about the world as scientists? What are our conclusions based on?
 
+
+## Bimodality
+
+> Is there certain types of biological data that highly skews means for example body size. Also How should one best deal with a few extremes skewing your data without just throwing them away as outliers. Which of mean, median, or mode is most optimal for bimodal distributions? 
+
+```{r}
+#| echo: true
+
+bmd <- tibble(x = c(rnorm(50, 0, 1), rnorm(50, 10, 1)))
+
+mean(bmd$x)
+median(bmd$x)
+```
+
+
+## Bimodality
+
+```{r}
+bmd |> ggplot(aes(x)) + geom_histogram(bins = 30) +
+  geom_vline(xintercept = mean(bmd$x), color = "darkred") +
+  geom_vline(xintercept = median(bmd$x), color = "steelblue")
+
+```
+
+
+## Mean, Median, and Mode
+
+> Are there circumstances where the mode is useful for continuous data? 
+
+- No built-in mode function in R.
+- We make our own.
+
+```{r}
+#| echo: true
+
+stat_mode <- function(x) {
+  dd <- density(x)
+  return(dd$x[which.max(dd$y)])
+}
+```
+
+
+## Mean, Median, and Mode
+
+```{r}
+set.seed(4638282)
+normal <- tibble(x = rnorm(20000, mean = 2, sd = 1))
+
+ss <- normal |> 
+  summarize(Mean = mean(x),
+            Median = median(x),
+            Mode = stat_mode(round(x, 1))) |> 
+  pivot_longer(cols = everything(), names_to = "Measure")
+
+ggplot() +
+  geom_density(data = normal, aes(x)) +
+  geom_vline(data = ss, aes(xintercept = value, color = Measure)) +
+  labs(y = "Density") +
+  ggsci::scale_color_tron()
+```
+
+
+## Mean, Median, and Mode
+
+```{r}
+set.seed(9457)
+lnorm <- tibble(x = rchisq(20000, df = 3))
+
+ss <- lnorm |> 
+  summarize(Mean = mean(x),
+            Median = median(x),
+            Mode = stat_mode(round(x, 1))) |> 
+  pivot_longer(cols = everything(), names_to = "Measure")
+
+ggplot() +
+  geom_density(data = lnorm, aes(x)) +
+  geom_vline(data = ss, aes(xintercept = value, color = Measure)) +
+  labs(y = "Density") +
+  ggsci::scale_color_tron()
+
+```
+
+
+# Old Slides
 
 ## Models
 
