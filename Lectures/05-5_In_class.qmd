@@ -33,18 +33,85 @@ theme_set(theme_cowplot(font_size = 20))
 
 - Progress check reminder
 - Big picture framework & questions
-- Practice with likelihood (which will answer some of your questions)
-- Return for likelihood examples and discussion
+- Problem set
+    - Practice with likelihood
+    - New programming skills
+- Return for questions and discussion
+
+
+
+## Models {.smaller}
+
+> I’m starting to think about what models I’d use for my project and I was curious what models outside of the ones mentioned in lecture (or more specific ones) are often utilized? **Is there one better for novel discovery vs data building upon previous research?**
+
+> When running statistical tests, what is the general idea behind knowing what test to use? In lecture 4 a T-test was used but there are other tests that can be used to show similar results, so I was just curious as to **how someone can look at a set of data and know what stat test to use**. 
+
+
+## Models {.smaller}
+
+> Like some others on this thread I am also curious about the different ways you can determine which models are most useful for your data
+
+> If I have two different biological explanations for change in phenotype (for example cell length), how do I decide which model is better (I just compare mutant vs wild type with p-value)? Should I look at log-likelihood instead of only significance?
+
+> I'm very interested in figuring out what kind of tests work best with what kinds of data and how best to combine those methods for a holistic analysis. For instance is there a preferred way to analyze both nominal data (like artifact types) and numerical data like artifact counts or measurements? Or is it best to keep these separated like conducting a chi squared and T test then interpreting how those results relate?
+
+
+## Models {.smaller}
+
+> At the very end of the same video, on slide 36, it was mentioned that the models we can fit with data to get to inference are the same... for **99% of the things that we encounter and we can use either frequentist/likelihood or Bayesian and the result will be largely similar**. Am I understanding that correctly? Is this because biological data tends to follow patterns (normal distribution, genotype probability, etc.)? If I am misunderstanding, could you please explain a bit what is meant by the majority of the things we would encounter?
+
+> Could we please go over comparing "better" models based on log-likelihoods?
+
+> Don't know how to determine which stats test I'm supposed to be using well
+
+> I am confused on the log likelihood and the accuracy of the model.
+
+
+## Models {.smaller}
+
+> Do you have a recommendation on how to effectively ideate a model? Or is that something that just comes with practice and familiarity with the material?
+
+> How can a researcher decide which statistical model to use for their study before collecting data, and what factors should they consider when designing the model?
+
+> My main difficulty is not choosing the best model, but **writing the model correctly, especially specifying the random effects so they truly reflect my experimental design and the correct experimental units**. How can I systematically translate an experimental design into the random-effects part of a mixed model to make sure nesting and experimental units are represented correctly?
 
 
 ## Unit 5 Goals
 
 > How do we learn about the world as scientists? What are our conclusions based on?
 
+Upcoming goals
+
+- Translating scientific questions into statistical models
+- Understanding "connections" between different tests
+- Comparing among different possible models for the same data
+
+
+## From data to inference via models
+
+- Many paths from data to inference
+- No one way is best or uniquely correct
+
+![](../images/Models_schematic.png){fig-align="center" fig-alt="Flow chart connecting data to inference through different pathways."}
+
+
+## Main Points
+
+- The answers to many of these questions will take the rest of the semester
+- Different frameworks will often give the same conclusion
+- Different named statistical tests are often mathematically equivalent
+
+
+## Outliers vs. Extreme Values {.smaller}
+
+> When a dataset contains outliers, one approach is to use algorithms to identify and remove outliers. When analyzing data, should these outliers be removed? If they are removed, how might that affect the validity of the results?
+
+> I second the question on outliers. With my chronic studies I often get wide error bars because of outliers/variability between mice. When I try to increase n, disease course can be unpredictable and I may end up with same situation. I wonder if they are truly outliers or if this is typical biological variability? Also, I have many samples from groups with an n of 2 that I don't process, but I wonder if I am losing conclusions, is there anything that can be inferred from this group? 
+
+> Is there certain types of biological data that highly skews means for example body size. Also How should one best deal with a few extremes skewing your data without just throwing them away as outliers. and what mean median or mode is most optimal for bimodal distributions?
+
 
 ## Bimodality
-
-> Is there certain types of biological data that highly skews means for example body size. Also How should one best deal with a few extremes skewing your data without just throwing them away as outliers. Which of mean, median, or mode is most optimal for bimodal distributions? 
 
 ```{r}
 #| echo: true
@@ -59,19 +126,27 @@ median(bmd$x)
 ## Bimodality
 
 ```{r}
+#| fig-alt: "Histogram of bimodal data."
+
 bmd |> ggplot(aes(x)) + geom_histogram(bins = 30) +
   geom_vline(xintercept = mean(bmd$x), color = "darkred") +
   geom_vline(xintercept = median(bmd$x), color = "steelblue")
 
 ```
 
-
 ## Mean, Median, and Mode
 
 > Are there circumstances where the mode is useful for continuous data? 
 
+> I am also curious about how to tell if a model is bimodal from limited data, like if that had been the answer in Quiz 5-2, how would that have been written?
+
+
+## Mean, Median, and Mode
+
+- Mode == Most frequent value
+- Challenging for continuous data
 - No built-in mode function in R.
-- We make our own.
+- We write our own.
 
 ```{r}
 #| echo: true
@@ -86,6 +161,8 @@ stat_mode <- function(x) {
 ## Mean, Median, and Mode
 
 ```{r}
+#| fig-alt: "Density plot of normally distributed data with lines marking the mean, median, and mode."
+
 set.seed(4638282)
 normal <- tibble(x = rnorm(20000, mean = 2, sd = 1))
 
@@ -106,6 +183,8 @@ ggplot() +
 ## Mean, Median, and Mode
 
 ```{r}
+#| fig-alt: "Density plot of right-skewed data with lines marking the mean, median, and mode."
+
 set.seed(9457)
 lnorm <- tibble(x = rchisq(20000, df = 3))
 
@@ -124,26 +203,34 @@ ggplot() +
 ```
 
 
-# Old Slides
+## Quizzes
 
-## Models
+- Quiz 5-2
+- Quiz 5-3
 
-> I still feel slightly foggy on what a "model" is. Is it the equation/calculation you do or is it a set of data you compare against?
+
+## Differences between groups
+
+> For lecture 5.1, why do we not consider standard deviation when asking about whether we would see this data if there were true differences between the groups? Secondly, why does absolute value not capture the variation in the sum of squares? Like I get that using the squares "punishes" more outlying values, but why is that necessary? Is that not arbitrary in some sense? Like, if we used absolute value, wouldn't we just end up understanding standard deviation differently?
 
 
-## From data to inference via models
+## Optimization vs. grid search
 
-- Many paths from data to inference
-- No one way is best or uniquely correct
+> Is there ever a time when you would want/need to find combinations of mu and theta manually (using which.max, etc.) rather than using the optimization test (optim)? Or is it always better to use the optim approach? Were we looking at the more manual method to understand the background that we are applying? 
 
-![](../images/Models_schematic.png){fig-align="center"}
+
+## Bayesian things
+
+> I mainly use Bayesian hierarchical modeling to estimate occupancy, but I was wondering how each framework handles imperfect detection and how the interpretation of probability differs between both approaches. 
+
+> For slide 34 in the 05-4 video, why does the prior place less probability on lower values? Is that an "observed data issue," in that more of the observed values were higher, or is the prior placing less probability on lower values always true?
 
 
 ## Hands-on Practice
 
-- Use lecture slides (& captions) & your notes
-- Focus on understanding each step & specific things you do not understand
-- Work for 30 minutes, then regroup
+- Use lecture slides (captions) and your notes
+- Focus on understanding each step and specific things you do not understand
+- Work until ~11:35, then regroup
 
 
 ## Maximizing through optimization
@@ -206,14 +293,6 @@ In addition to being a gateway to understanding likelihood in general...
 - Survival (e.g., tagged animals)
 
 
-## Uses of binomial likelihoods
-
-- Model comparison
-    - New technique has 80% success compared to old technique with 60% success. Is it really better?
-- Quantifying uncertainty with confidence intervals (coming soon)
-- Generalized linear models and logistic regression (Unit 12)
-
-
 ## Mark-Recapture Experiments
 
 1. Capture and mark a set of individuals
@@ -264,6 +343,7 @@ N_ML_est <- optim(par = M + n,
 ```{r}
 #| echo: true
 #| output-location: slide
+#| fig-alt: "Line plot showing the log-likelihood optimization of expected population size."
 
 Pred <- tibble(N = seq(M + 1, 300, by = 1),
                log_Lik = sapply(N, function(N) exp(-NLL(N))))
