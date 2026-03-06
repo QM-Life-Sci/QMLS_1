@@ -31,7 +31,7 @@ theme_set(theme_cowplot())
 
 ## Differences between group means
 
-Stalk-eyed flies are a clade of flies whose eyes are at the ends of long projections (stalks) on either side of their head. Shortly after emerging from a pupae, these flies ingest air through their mouth in order to pump it into these stalks to elongate them ([watch this amazing process here](https://www.youtube.com/watch?v=ZGdfIX5x8XM)). 
+Stalk-eyed flies are a clade of flies whose eyes are at the ends of long projections (stalks) on either side of their head. Shortly after emerging from a pupae, these flies ingest air through their mouth in order to pump it into these stalks to elongate them ([watch this amazing process here](https://www.youtube.com/watch?v=ZGdfIX5x8XM)).
 
 Females prefer males with wider eye spans. See the photo below:
 
@@ -66,8 +66,13 @@ ggplot(stalk, aes(x = food_source, y = eye_span)) +
 ggplot(stalk, aes(x = food_source, y = eye_span)) +
   geom_point(position = position_jitter(width = 0.05), alpha = 0.5) +
   stat_summary(fun = mean, geom = "point", size = 3, color = "red") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.05,
-               color = "red", linewidth = 0.7) +
+  stat_summary(
+    fun.data = mean_se,
+    geom = "errorbar",
+    width = 0.05,
+    color = "red",
+    linewidth = 0.7
+  ) +
   labs(x = "Food Source", y = "Eye Span")
 ```
 
@@ -80,11 +85,13 @@ Calculate the per-food source mean, standard deviation, and variance.
 ```{r}
 # FIXME
 
-stalk |> 
-  group_by(food_source) |> 
-  summarise(mean_eye_span = mean(eye_span),
-            sd_eye_span = sd(eye_span),
-            var_eye_span = var(eye_span))
+stalk |>
+  group_by(food_source) |>
+  summarize(
+    mean_eye_span = mean(eye_span),
+    sd_eye_span = sd(eye_span),
+    var_eye_span = var(eye_span)
+  )
 ```
 
 How do the mean, standard deviation, and variance compare? Do they match your intuition above?
@@ -176,7 +183,7 @@ summary(fm)
 
 If the data meet the assumptions, what do you expect from the Minimum, Maximum, 1st and 3rd quartiles, and median of the residuals?
 
-> The minimum and maximum should be roughly equal. The 1st and 3rd qartiles should be similar. And the median should be close to zero.
+> The minimum and maximum should be roughly equal. The 1st and 3rd quartiles should be similar. And the median should be close to zero.
 
 Inspect the printed summary. Particularly look at the Residuals lines. Does it appear that the model meets the assumptions of bivariate regression?
 
@@ -192,9 +199,8 @@ The `lm()` object you created above (`fm`) contains these elements in `$residual
 ```{r}
 # FIXME
 
-EW <- EW |> 
-  mutate(Residuals = fm$residuals,
-         `Fitted Values` = fm$fitted.values)
+EW <- EW |>
+  mutate(Residuals = fm$residuals, `Fitted Values` = fm$fitted.values)
 
 ggplot(EW, aes(y = Residuals, x = `Fitted Values`)) +
   geom_point(size = 3, color = "navy") +
@@ -289,21 +295,27 @@ This is all we need for the setup. At this point, you have the data, two vectors
 ```{r}
 # FIXME
 M <- read_excel("../data/mammals.xlsx", na = "NA") |>
-  mutate(log_Mass = log10(adult_body_mass_g),
-         log_BMR = log10(basal_met_rate_m_l_o2hr))
+  mutate(
+    log_Mass = log10(adult_body_mass_g),
+    log_BMR = log10(basal_met_rate_m_l_o2hr)
+  )
 
-cols_analyze <- c("ageat_eye_opening_d",
-                  "log_BMR",
-                  "gestation_len_d",
-                  "litter_size")
+cols_analyze <- c(
+  "ageat_eye_opening_d",
+  "log_BMR",
+  "gestation_len_d",
+  "litter_size"
+)
 
-axis_labels <- c("Age at Eye Opening",
-                 "log10 BMR",
-                 "Gestation Length",
-                 "Litter Size")
+axis_labels <- c(
+  "Age at Eye Opening",
+  "log10 BMR",
+  "Gestation Length",
+  "Litter Size"
+)
 
-M <- M |> 
-  select(log_Mass, all_of(cols_analyze)) |> 
+M <- M |>
+  select(log_Mass, all_of(cols_analyze)) |>
   drop_na(log_Mass)
 
 pp <- list()
@@ -323,12 +335,14 @@ No we can work on a loop to iterate through the columns, making a plot for each 
 for (ii in 1:length(cols_analyze)) {
   col <- cols_analyze[ii]
   lab <- axis_labels[ii]
-  
+
   p <- ggplot(M, aes(x = .data[["log_Mass"]], y = .data[[col]])) +
     geom_point(alpha = 0.5, size = 0.5) +
     labs(x = "log10 Body Mass (g)", y = lab) +
-    theme(axis.text = element_text(size = 10),
-          axis.title = element_text(size = 10))
+    theme(
+      axis.text = element_text(size = 10),
+      axis.title = element_text(size = 10)
+    )
   pp[[ii]] <- p
 }
 ```
@@ -339,9 +353,13 @@ Now you can make a 2x2 grid of plots. The `cowplot` function `plot_grid()` can t
 
 ```{r}
 # FIXME
-plot_grid(plotlist = pp, ncol = 2, nrow = 2,
-          labels = c("a", "b", "c", "d"),
-          label_size = 8)
+plot_grid(
+  plotlist = pp,
+  ncol = 2,
+  nrow = 2,
+  labels = c("a", "b", "c", "d"),
+  label_size = 8
+)
 ```
 
 Now you can fine tune the plots in the code chunk above:
