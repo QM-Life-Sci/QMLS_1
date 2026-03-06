@@ -30,11 +30,17 @@ theme_set(theme_cowplot(font_size = 20))
 ```
 
 
-## Quiz questions
+## Today
 
-- 6-3
-- 6-4
+- Reminder: look at the keys
+- QMLS2 is scheduled for Spring 2027
+- Coming up next units: more complex cases (more than 2 levels, multilevel, etc.)
+- Questions
+- Problem set
 
+## Diagnostics 
+
+- When is bad too bad?
 
 ## Assumptions of OLS
 
@@ -43,74 +49,40 @@ theme_set(theme_cowplot(font_size = 20))
 
 ![](https://i.imgur.com/F0Y5Fva.png){fig-align="center" width=50%}
 
-
-## Quiz 06-2
-
-> I'm still somewhat confused about how to calculate the values of Θ~0~ and Θ~1~ for bivariate regression and the impact that adding or removing data points might have on those Θ values. I understand that Θ~0~ represents the intercept and Θ~1~ the slope, but I'm a little unclear how these values would be calculated for a particular bivariate distribution if we've already graphed the bivariate distribution in R.
-
-
-## Quiz 06-3
-
-
-## Diagnostics {.smaller}
-
-> Are there any common drawbacks of bivariate regression to keep in mind when working with real-world biological data?
-
-> I'd really like if we could go over how unequal variance changes probability distributions and how probability is calculated (if it does at all - I don't really understand how they interact mathematically). 
-
-> When we talk about normality of residuals is that they distribute normally? And about the variance of the residuals  is it that the spread of probabilities for an observed value in y is similar for all data points? If it is that, does it mean that they are comparable or what are the implications? Is it valid to say that if a model fits part of the assumptions (let's say in the first half of the data), the model is predictable until that point?
-
-
-
-
-## Quiz 06-4
-
-
 ## Problematic residuals
 
 ![](https://openintro-ims.netlify.app/inf-model-slr_files/figure-html/fig-whatCanGoWrongWithLinearModel-1.png){fig-align="center" width=100%}
 
 From [Introduction to Modern Statistics](https://openintro-ims.netlify.app/) (Çetinkaya-Rundel and Hardin, 2021)
 
+## Quizzes
 
-## Categorical variables
+- 6-3
+- 6-4
 
-> I am interested in learning more about interpreting the model diagnostics for categorical variables. It looked like some of these tests  show two vertical lines at the 0 and 1 values. Is this what we would expect for all categorical variables in a bivariate model? Do we ignore that specific diagnostic test? What tests are important to focus on for categorical variables?
-
-> I'm wondering if you can use performance to check normality/homogeneity for models with categorical predictors?
-
-
-## Extreme Values {.smaller}
-
-> Could you be more specific about what criteria you look for when deciding if outliers are considered influential data? I know it can vary based on the type of data and understanding the biological processes at work, however I was curious what your labs do to make those decisions. 
-
-> I'd really like to go over plotting residuals with really small data sets and what that looks like in terms of identifying influential data. My preliminary data set has control n = 40 and experimental n = 17; the experimental group has one majorly influential outlier, but it influences the difference in groups to be drastically more significant, not less. I'm struggling with deciding if I should exclude it, keep it, or wait to decide until I finish collecting more data on the experimental group (and what to do with it in the meantime). 
+> Can you explain quiz question 6.3 question 2? How does the difference of means work to determine if something is greater than the other? I am assuming you are subtracting the two from each other, but how do you infer what it means beyond that?
 
 
-## Extreme Values 
+## Influential points
 
-> I'd like to hear more on the decision-making process of when and when not to include outliers. Are there instances where we might want to exclude specific outliers, rather than all of them?
+> I would like to know more about when to exclude extreme values. When looking at influential observations (lecture 06-4, slide 16), I wonder what to do if there are points outside of the contour lines? Could this tell you that a point is too extreme and shouldn't be considered? Or do you need to make your own judgement call? 
 
-> I would like to know how to make decisions on when to include "outliers", for example, if I am sure they are not a mistake but they are probably influencing my results. 
-
-
-## Extreme Values 
-
-> Are there any conditions when we can include the outliers?
-
-> How do we decide if the outliers are distorting the model and they need to be excluded? Will it not affect the variability of the data and the overall result?
-
-
-
-## Approaches to Extreme Values
+## Approaches to Influential Points/Extreme Values
 
 - Figure out what is going on
+    - I don't know what is going on is an ok conclusion
 - Detecting (be wary of arbitrary decision thresholds)
     - Leverage
     - Cook's Distance
 - Determine the impact on parameter estimates
     - Leave out and compare
 
+## Transformations
+
+- When to transform or not?
+    - To satisfy the assumptions of your model
+
+> ... And when is it ethical to modify the data to fit a model and when does a different model need to be used? 
 
 ## Alternate statistical approaches
 
@@ -121,72 +93,33 @@ From [Introduction to Modern Statistics](https://openintro-ims.netlify.app/) (Ç
 
 We do not recommend non-parametric statistics.
 
+## Diagnostics 
 
-## What is "linear" in linear models?
-
-> Can you all expand more on why 'linear' does not always mean straight-line?
-
-> I am wondering about when linearity does not necessarily mean straight-line. How would the diagnostics be interpreted in such cases?
-
-
-## Can this be a linear model?
-
-```{r}
-#| echo: true
-#| fig-align: center
-
-set.seed(347347)
-
-ED <- tibble(x = runif(50, -10, 10),
-             y = 2 * x^2 + 3 * x + 4 + rnorm(50, 0, 10))
-ggplot(ED, aes(x, y)) +
-  geom_point(size = 3)
-```
+- When is bad too bad?
+- Reject black & white thinking
+- Experiment to learn
 
 
-## Can this be a linear model?
+## Priors and Posteriors {.smaller}
 
-```{r}
-#| echo: true
-#| fig-align: center
+> I understand that you can use priors when modeling with the Bayesian framework. On slide slide 43 in video 06-2, it is mentioned that sigma is half-normal, from 0 to 1. Whole normal would be -1 to 1? But since we have prior information, negatives are unnecessary (i.e., not logical)? 
 
-set.seed(347347)
-
-ED <- tibble(x = runif(50, -10, 10),
-             x_sq = x^2,
-             y = 2 * x_sq + 3 * x + 4 + rnorm(50, 0, 10))
-ggplot(ED, aes(x, y)) +
-  geom_point(size = 3)
-```
+> I am a bit confused on how to check if our observed means are similar to the expected means based on our data. Is that the post hoc tests? Is this taking the information from our data set to create this or is it based off of the parameters we set to begin with. Since if it uses the data you are already plotting, wouldn't you just get a positive feedback loop of "oh yes here is my data and I'm going to use this to confirm what I see is there"
 
 
-## Polynomial regression
+## Categorical vs continuous {.smaller}
 
-```{r}
-#| echo: true
-#| output-location: slide
+> Is it ever beneficial to create multiple models where for instance in one you read "color" as categorical data and in another you read it as continuous (using a munsell color chart for example)? Is this just purely dependent on the research question or would reading certain "interchangeable" data types as categorical rather than continuous cause other issues I maybe haven't thought of?
 
-fm <- lm(y ~ x_sq + x + 1, data = ED)
-summary(fm)
-```
+> I'm curious about when to model Year as a categorical vs continous predictor. In the data I work with (calf weaning weight), I use it as a categorical because individuals are not repeated across years, and there is a different main predictor of interest in the model. The goal of year is to encompass one time events like a drought, sickness, etc. and not a progressive change. I'd be curious if you have thoughts or a rule of thumb, or if it's largely field specific. 
 
+## Understanding model output: today!
 
-## Model check
-
-```{r}
-#| echo: true
-#| output-location: slide
-
-check_model(fm)
-```
+> When we run a linear model on comparing two means, what exactly does the output give us? For instance, the process of using maximum likelihood and how that leads to the linear function model was very clear for the bivariate regression. However, for comparing two means, I don't understand. What does the output tell us here? What mean is most likely to give us the observations we got given the number of observations and our estimated mean?
 
 
-## What does "linear" mean?
 
-- Linear combinations (`+`) of predictors:
-    - `y ~ x1 + x2`
-- Multiplicative effects create new variables (coming soon)
-    - `y ~ x1 + x2 + x1*x2`
-- Exponents, square roots, logs, etc. are transformations
-    - `y ~ sqrt(x1) + x2^2 + log(x3)`
+
+
+
 
