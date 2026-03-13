@@ -20,7 +20,6 @@ format:
 #   Stalkies.csv
 #   BrookTrout1.csv
 #   BrookTrout2.csv
-#   mammals.xlsx
 
 ```
 
@@ -63,14 +62,14 @@ Make a tibble and plot the results. Then add a differently colored horizontal li
 ```
 
 
-Now, calculate an *exact* ~95% confidence interval for each mean (cotton & corn groups), using the formula discussed in lecture $\mu$ +/- $t_{crit}$ * SEM.
+Now, calculate an *exact* 95% confidence interval for each mean (cotton & corn groups), using the formula discussed in lecture $\mu$ +/- $t_{crit}$ * SEM.
 
 Among the steps that you will need to accomplish are:
 
 - For each group in the separate data.frames you created above
     - Calculate the mean
     - Calculate the standard error of the mean
-    - Find the critical *t*-statistic for 
+    - Find the critical *t*-statistic for the P-value and degrees of freedom
 - Use those values to find the *exact* 95% confidence interval
 
 ```{r}
