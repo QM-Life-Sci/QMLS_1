@@ -38,8 +38,7 @@ theme_set(theme_cowplot(font_size = 20))
 
 > I would appreciate going over quiz 1 - I got a little tripped up on some of the questions
 
-> I wanted to ask about confidence intervals and the null hypothesis (based on Q4 on 07-1 Quiz); if this was using Bayesian statistics and we have some a priori data, then we could discuss the probability of the true mean value, as opposed to just the confidence that we have in that value being the true mean value (frequentist)?
-
+And several others...
 
 
 ## Questions confidence intervals can't answer
@@ -71,6 +70,9 @@ Quiz 7-3
 
 > If a hypothesized value falls outside a 95% confidence interval, does that always mean we would reject the null hypothesis?
 
+- Usually but not always
+- CIs are not hypothesis tests
+
 
 ## Understanding decision criteria
 
@@ -81,10 +83,15 @@ Quiz 7-3
 
 > I'm still a little confused as to when we should choose a One Sided Test versus a Two Sided Test.
 
+- Two-sided unless you have a good, *a priori* reason to do a one-sided test.
+- If one-sided vs. two-sided changes your conclusion, then be wary
+
 
 ## What is Nuzzo talking about?
 
-> When reading through the P value article following lecture 7-3, the authors said, "According to one widely used calculation to an external site., a P value of 0.01 corresponds to a false-alarm probability of at least 11%, depending on the underlying probability that there is a true effect; a P value of 0.05 raises that chance to at least 29%." What calculation is this? Can we talk about this more in depth because this went right over my head.
+> When reading through the P value article following lecture 7-3, the authors said, "According to one widely used calculation,^[Goodman, S. N. 2001. Of P-values and Bayes: a modest proposal. Epidemiology 12:295–297.] a P value of 0.01 corresponds to a false-alarm probability of at least 11%, depending on the underlying probability that there is a true effect; a P value of 0.05 raises that chance to at least 29%." What calculation is this? Can we talk about this more in depth because this went right over my head.
+
+
 
 
 ## What is Nuzzo talking about?
@@ -96,17 +103,20 @@ Quiz 7-3
 
 > If something initially not part of an experiment becomes of interest through observations during data collection, is there a non biased way to begin collecting and working with data on that trait? Also what can be done to make data more replicable?
 
-
-## MCMC
-
-> Can you go over the MCMC sampling/ method in a little more detail?
+- "Researcher degrees of freedom"
+- Replicability and reproducibility
 
 
-## Frameworks
+## CI vs. CI
+
+> I don't fully understand Bayesian credible intervals and MCMC, and I am also confused about the difference between Bayesian credible intervals and CI.
+
+
+## Frameworks {.smaller}
 
 > Until now, I always thought the frequentist model made just as much sense as the Bayesian model. However, confidence intervals have me rethinking that. Is there an advantage of thinking of true parameters as probabilistic (under Bayesian conception)? Because frequentist CIs, to me, feel like: there is a true mean: you capture it 95% of the time with the CI. But Bayesian feels like: there is a 95% probability this CI captures the mean. Is that correct?
 
-> I don't fully understand Bayesian credible intervals and MCMC, and I am also confused about the difference between Bayesian credible intervals and CI.
+> I wanted to ask about confidence intervals and the null hypothesis (based on Q4 on 07-1 Quiz); if this was using Bayesian statistics and we have some a priori data, then we could discuss the probability of the true mean value, as opposed to just the confidence that we have in that value being the true mean value (frequentist)?
 
 
 ## Planning `for` loops
