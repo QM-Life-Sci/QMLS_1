@@ -29,9 +29,17 @@ theme_set(theme_cowplot(font_size = 20))
 ```
 
 
+## Practicing
+
+> I would like more practice with graphing, I’ve encountered different issues each problem set. Also, is it good practice to perform diagnostic checks with every dataset?
+
+
 ## What are confidence intervals really?
 
 > I would appreciate going over quiz 1 - I got a little tripped up on some of the questions
+
+> I wanted to ask about confidence intervals and the null hypothesis (based on Q4 on 07-1 Quiz); if this was using Bayesian statistics and we have some a priori data, then we could discuss the probability of the true mean value, as opposed to just the confidence that we have in that value being the true mean value (frequentist)?
+
 
 
 ## Questions confidence intervals can't answer
@@ -50,6 +58,18 @@ theme_set(theme_cowplot(font_size = 20))
 ## Calculating confidence intervals
 
 Quiz 7-3
+
+
+## Mysterious Degrees of Freedom
+
+> What exactly is a degree of freedom? How does it affect our outcomes, and is it always n-1? Currently, I am just plugging in this number, but I don't understand what it represents.
+
+> If you can describe what the degree of freedom really means, it would be helpful.
+
+
+## Relationship between CI and hypothesis tests
+
+> If a hypothesized value falls outside a 95% confidence interval, does that always mean we would reject the null hypothesis?
 
 
 ## Understanding decision criteria
@@ -75,6 +95,23 @@ Quiz 7-3
 ## Unexpected research questions
 
 > If something initially not part of an experiment becomes of interest through observations during data collection, is there a non biased way to begin collecting and working with data on that trait? Also what can be done to make data more replicable?
+
+
+## MCMC
+
+> Can you go over the MCMC sampling/ method in a little more detail?
+
+
+## Frameworks
+
+> Until now, I always thought the frequentist model made just as much sense as the Bayesian model. However, confidence intervals have me rethinking that. Is there an advantage of thinking of true parameters as probabilistic (under Bayesian conception)? Because frequentist CIs, to me, feel like: there is a true mean: you capture it 95% of the time with the CI. But Bayesian feels like: there is a 95% probability this CI captures the mean. Is that correct?
+
+> I don't fully understand Bayesian credible intervals and MCMC, and I am also confused about the difference between Bayesian credible intervals and CI.
+
+
+## Planning `for` loops
+
+> I have a question about for loops-- what size data set is it best to use these? I have seen examples now with small sets and iterations through a column, but could this get convoluted? It seems you have anticipate what you'll be doing with your data set, but what might indicate a for loop should be used in advance?
 
 
 ## Reviewing `for` loops
