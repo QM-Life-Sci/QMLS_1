@@ -34,14 +34,16 @@ theme_set(theme_cowplot())
 
 In this activity, we will explore the relationship between variances and the *F*-value using simulation and learn a new programming skill, `apply()`, as well as some `apply` relatives in the `tidyverse` that take some of the difficulty from apply functions across R structures.
 
-Let's start with `apply()`. `apply()` is part of a family of base R functions that all "apply"^[It's not just a clever name.] some function to sets of your data. These sets can be each row, each column, or the elements in a list (in the list case, the function is `lapply()`). `apply()` takes three arguments: the `data.frame`/`tibble` or `matrix`, the margin to apply over (`1` = rows, `2` = columns), and the function to apply to each margin. 
+Let's start with `apply()`. `apply()` is part of a family of base R functions that all "apply"^[It's not just a clever name.] some function to sets of your data. These sets can be each row, each column, or the elements in a list (in the list case, the function is `lapply()`). `apply()` takes three arguments: the `data.frame`/`tibble` or `matrix`, the margin to apply over (`1` = rows, `2` = columns), and the function to apply to each margin.
 
 You can use built in functions, a custom written one, or one you write within the apply call (these are called "anonymous" functions). We'll show you the syntax here. Run the following and make sure you understand what is happening. Read and execute the code line by line.
 
 ```{r}
-ap_test <- tibble(x1 = seq(1, 10),
-                  x2 = rep(5, 10),
-                  x3 = seq(20, 65, length.out = 10))
+ap_test <- tibble(
+  x1 = seq(1, 10),
+  x2 = rep(5, 10),
+  x3 = seq(20, 65, length.out = 10)
+)
 
 # Built in R functions
 (max_ap_row <- apply(ap_test, MARGIN = 1, max))
@@ -65,7 +67,7 @@ The `tidyverse` has a family of `map` and `pmap` functions that alleviate some o
 We will use our example `ap_test` from above.
 
 ```{r}
-# Convert anonymous function into a standalone function 
+# Convert anonymous function into a standalone function
 myfun <- function(x1, x2, x3) (x1 * x2) / x3
 
 pmap_dbl(ap_test, myfun) # Note that this result is the same as above
@@ -84,7 +86,7 @@ Another nice feature of `pmap()` is that it offers some protection from passing 
 #| eval: false
 
 # Rename columns
-ap_test_rename <- ap_test |> 
+ap_test_rename <- ap_test |>
   rename(y1 = x1, y2 = x2, y3 = x3)
 
 pmap_dbl(ap_test_rename, myfun) # Fails with an error
@@ -195,7 +197,7 @@ sims <- data.frame(
   nobs = rep(100, length = length(sds))
 )
 
-sims <- sims |> 
+sims <- sims |>
   mutate(Fs = pmap_dbl(sims, getF2))
 
 fcrit <- qf(0.05, 1, 98, lower.tail = FALSE)
@@ -251,10 +253,12 @@ Make two plots, one for left limb length vs. height and one for right limb lengt
 
 ```{r echo=FALSE}
 # FIXME
-p1 <- ggplot(M, aes(left_limb, height)) + geom_point() +
+p1 <- ggplot(M, aes(left_limb, height)) +
+  geom_point() +
   labs(x = "Limb Length (cm)", y = "Height (cm)") +
   ggtitle("Left Limb")
-p2 <- ggplot(M, aes(right_limb, height)) + geom_point() +
+p2 <- ggplot(M, aes(right_limb, height)) +
+  geom_point() +
   labs(x = "Limb Length (cm)", y = "Height (cm)") +
   ggtitle("Right Limb")
 plot_grid(p1, p2, ncol = 2)
@@ -326,17 +330,25 @@ There are only 39 observations total, so we may as well plot the raw data. Modif
 ```{r}
 #FIXME
 ggplot(M, aes(x = Mismatch_Degree, y = Survival_Days)) +
-  geom_point(position = position_jitter(width = 0.05, seed = 384729),
-             size = 3, alpha = 0.5) +
+  geom_point(
+    position = position_jitter(width = 0.05, seed = 384729),
+    size = 3,
+    alpha = 0.5
+  ) +
   stat_summary(fun = mean, geom = "point", size = 3, color = "firebrick") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.1,
-               color = "firebrick", linewidth = 0.7) +
+  stat_summary(
+    fun.data = mean_se,
+    geom = "errorbar",
+    width = 0.1,
+    color = "firebrick",
+    linewidth = 0.7
+  ) +
   labs(x = "Mismatch Degree", y = "Survival (days)")
 ```
 
 Describe what you see in the plots. You would like to be able to use a linear model (ANOVA) to compare the mean survival days between groups. In what way does the data not appear to satisfy the assumptions of ANOVA?
 
-> The good and medium quality match groups are strongly right skewed. One of the assumptions of ANOVA is equal variance across the groups. We could explicitly thest this assuption, but there isn't any reason to. The test will be significant for inequality. So we should just transform and go from there.
+> The good and medium quality match groups are strongly right skewed. One of the assumptions of ANOVA is equal variance across the groups. We could explicitly test this assumption, but there isn't any reason to. The test will be significant for inequality. So we should just transform and go from there.
 
 Find a transformation of `Survival_Days` that corrects the problems observed above. Plot your data each time with the transform. Briefly explain why you chose what you chose.
 
@@ -372,7 +384,8 @@ fm2 <- lm(log_Survival ~ Mismatch_Degree - 1, data = M)
 anova(fm2)
 summary(fm2)
 
-M |> group_by(Mismatch_Degree) |>
+M |>
+  group_by(Mismatch_Degree) |>
   summarize(mean_survival = mean(log_Survival))
 ```
 
@@ -412,7 +425,8 @@ plot_grid(
   ggplot(M, aes(x = Elevation)) + geom_histogram(bins = 30),
   ggplot(M, aes(x = Dist_to_Ecuador)) + geom_histogram(bins = 30),
   ggplot(M, aes(x = Dist_to_Island)) + geom_histogram(bins = 30),
-  ncol = 3)
+  ncol = 3
+)
 
 ```
 
@@ -439,8 +453,10 @@ Fit a linear model wherein species abundance is predicted by the other four vari
 
 ```{r}
 # FIXME
-fm <- lm(N_Species ~ Dist_to_Island + Elevation + Area + Dist_to_Ecuador,
-         data = M)
+fm <- lm(
+  N_Species ~ Dist_to_Island + Elevation + Area + Dist_to_Ecuador,
+  data = M
+)
 ```
 
 Use `summary()` to get information about the model fit.
