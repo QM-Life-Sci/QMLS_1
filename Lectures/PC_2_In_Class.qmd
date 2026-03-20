@@ -38,14 +38,14 @@ Coming soon: Random effects
 
 > Could go over converting dbls to factors again. I keep getting error codes when I try to convert the IDs, but if I don't convert, the rest of my code seems to run okay. I can see why it's important to convert characters, but why dbls if they're already numbers?
 
-> What is the base level of a factor and how do we code what the base level is? Why do we need to convert columns into factors (versus simply as numeric) to run a linear model? 
+> What is the base level of a factor and how do we code what the base level is? Why do we need to convert columns into factors (versus simply as numeric) to run a linear model?
 
 See Example in PS8 & `forcats` package
 
 
 ## Linear model interpretations
 
-> Could we have a quick review on how to interpret the results for linear models? 
+> Could we have a quick review on how to interpret the results for linear models?
 
 > Could we summarize again what the estimates in a table output from lm() mean in the different situations? It seemed that there were so many different meanings depending on what you were attempting to do. Sometimes it was the intercept, sometimes the first group's mean, sometimes the difference in mean to group 2 from group 2, sometimes it is the slope like in the case of mixed predictors.
 
@@ -76,12 +76,12 @@ See Example in PS8 & `forcats` package
 
 ## Dropping the intercept
 
-> When do we drop the intercept in a lm? what implications has it? Is it just to compare each group to 0? 
+> When do we drop the intercept in a lm? what implications has it? Is it just to compare each group to 0?
 
 
 ## Diagnostics
 
-> I've been having a bit of trouble with assumptions and regression diagnostics, particularly for instances where the bivariate diagnostics don't exactly fit the observed data line. 
+> I've been having a bit of trouble with assumptions and regression diagnostics, particularly for instances where the bivariate diagnostics don't exactly fit the observed data line.
 
 > I'd be interested in a quick review of the diagnostic tests used to assess a linear model (i.e. posterior predictive check, homogeneity of variance, normality of residuals, etc.), how they are used/read, and how we can tell when a particular linear model and/or its results violate the assumptions that those tests would predict.
 
@@ -90,7 +90,7 @@ See Example in PS8 & `forcats` package
 
 > I would also like to know other ways to transform data, or fit it in a normal distribution, rather than log transformation
 
-> How can we tell what is the "best" transformation or at least some clues of what to try first. 
+> How can we tell what is the "best" transformation or at least some clues of what to try first.
 
 
 ## Transformations for normality
@@ -118,14 +118,16 @@ ggplot(DD, aes(y)) +
 ## Transformations for normality
 
 ```{r}
-DD |> 
-  mutate(`sqrt(y)` = sqrt(y),
-         `ln(y)` = log(y),
-         `1 / y` = 1/(y^1),
-         `1 / y^2` = 1/(y^2)) |> 
-  select(-x) |> 
-  pivot_longer(cols = everything()) |> 
-  mutate(name = fct_inorder(name)) |> 
+DD |>
+  mutate(
+    `sqrt(y)` = sqrt(y),
+    `ln(y)` = log(y),
+    `1 / y` = 1 / (y^1),
+    `1 / y^2` = 1 / (y^2)
+  ) |>
+  select(-x) |>
+  pivot_longer(cols = everything()) |>
+  mutate(name = fct_inorder(name)) |>
   ggplot(aes(value)) +
   geom_histogram(bins = 30, fill = "navy") +
   facet_grid(name ~ .) +
@@ -139,5 +141,4 @@ DD |>
 
 > I am confused about whether the final two activities ask us to create three different loops for each scenario or one loop that goes through all three scenarios.
 
-> I would like to work through another loop/pseudo code example. Specifically how to know when to code in the variables and if they should be inside or outside the loop. Working through the loop in PS 8 was helpful, but I do not feel confident to recreate that code on my own. 
-
+> I would like to work through another loop/pseudo code example. Specifically how to know when to code in the variables and if they should be inside or outside the loop. Working through the loop in PS 8 was helpful, but I do not feel confident to recreate that code on my own.
