@@ -35,48 +35,32 @@ theme_set(theme_cowplot())
 - PC 2 available Monday
 - Review (start working on) Progress Check 2 before class
 
-![](../images/schedule.png){fig-align="center"}
-
-
-## Problem set 7
-
-- In PS-7, do we have to set seed before plotting the graph because when I don't set seed, the points shift but the error bars look the same.
-
-
-## Visualizing multiple predictors
-
-- I'm pretty confused about the multiple continuous predictors scatterplots. What are we learning from a plot that shows strong relationships between the variables versus one that doesn't, if both could end up showing strong relationships when all three variables are fitted together?
-
-
-## Coefficients
-
-- When you use the lm function in R, what is the meaning of the top most p value given in the output table. In the case of for example our multiple regression, is this comparing the control to itself?
-- What does it mean if a predictor’s coefficient is negative? 
-- I am a bit confused about how to determine what the estimates mean, particularly for the mixed predictor example attached. Is there something that the estimates always correlate to, so we always know what they mean? Or does it vary based on the data?
+![](../images/schedule_pc2.jpg){fig-align="center"}
 
 
 ## Quiz 8-3
 
 
-## Multiple predictors
+## What are linear models with categorical variables
 
-- Could we go over masking in more detail?
-- On how p-value changes when we get results from multiple regression vs when we get results by specifying a predictor, how can p-hacking be really avoided since one might be tempted to check both methods? Since an individual predictor has a p-value, of what real significance is the overall p-value?
-
-
-## Multiple predictors
-
-- Do I understand this correctly? Can we just keep adding an infinite amount of predictors in a linear model? I know we shouldn't, but the linear model can technically handle multiple predictors.
-- How can you decide if you have over-fit a statistical model?
+- Running a linear model on a categorical "x-axis" doesn't make much sense to me. Am I missing something there? The quiz with the haplotypes does exactly that, correct? Is it looping through each category individually?
 
 
-## Multicollinearity
+## Dropping the intercept
 
-- I was wondering if we could go over more examples in recognizing multicollinearity besides using the check model graph. If we do conclude we are uncertain about the model because of multicollinearity, what are the next steps? I'm confused how to proceed with the data analysis.
-- I was interested in knowing a little bit more about the correlation numbers, and why there might be some discussion about what correlation values are too much. You mentioned 0.25, 0.5, and 0.8 as different guidelines, but this seems like such a huge jump between those. I'm not sure how one decides when it is good to use one over the other.
+> In what instance would you not want to include the +1 intercept in a model?
+
+
+## Interaction models coming soon
+
+> Is there a way to fit different slopes for a mixed predictor linear model, or will the resulting lines always share slopes but differ in intercept? Like in lecture 8.4, where the model Energy ~ Mass + Caste was fit, the slope of energy ~ mass for both castes was equal and lines just shifted depending on caste. What would be better in the case that the slope of energy ~ mass differs between caste, e.g. workers expend more energy per unit increase in body mass compared to non-workers?
 
 
 ## Multicollinearity
 
-- I have read that some authors use a threshold (vif 5 or 10) to discard variables that co-variate strongly, can we remove variables of the model by just using the correlation matrix (by eye ?) or do you suggest a more non-subjective method to do this process?
+- If two predictors have high collinearity, does that mean that you should just look at their ability to predict Y separately?
 
+
+## Fitting multiple models
+
+> As you are going through all these tests and fitting the data to "the best model" how do you do keep track of this workflow and communicate the steps you took to reach the final model when publishing a paper? Because sometimes the process is feeling a bit messy and all over the place as you go through the steps of modeling and re-evaluating things to finally reach the right analysis for the data.
