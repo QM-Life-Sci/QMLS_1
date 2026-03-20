@@ -31,19 +31,39 @@ theme_set(theme_cowplot())
 
 ## After Spring Break
 
-- Quiz due **Wednesday**
+- Questions for discussion due **Wednesday**
 - PC 2 available Monday
 - Review (start working on) Progress Check 2 before class
 
 ![](../images/schedule_pc2.jpg){fig-align="center"}
 
 
-## Quiz 8-3
+## Quizzes
+
+- 8-2
+- 8-3
+
+
+## Degrees of Freedom
+
+> I don't fully understand the Denominator: N-K in the F distribution. I can understand the Numerator: K groups - 1, but I don't  fully understand the relationship between the sample size (N) and the number of groups (K).
+
+> In addition,  I am not really sure about the difference between Shift ~ Treatment +1 and Shift ~Treatment -1. (*This problem set*)
+
+
+## Data communication
+
+> I've been thinking a lot about science communication lately, and it feels like the deeper into quantitative science you get, the more complex the visuals and datasets get. Is there a way you think visualizing data is best done for a wide range of audience? For example, I like the scatmat plots, but I think they could be very confusing to many people (like Quiz 08-3).
+
+- QMLS 2: Data Visualization in Spring 2027
 
 
 ## What are linear models with categorical variables
 
-- Running a linear model on a categorical "x-axis" doesn't make much sense to me. Am I missing something there? The quiz with the haplotypes does exactly that, correct? Is it looping through each category individually?
+> Running a linear model on a categorical "x-axis" doesn't make much sense to me. Am I missing something there? The quiz with the haplotypes does exactly that, correct? Is it looping through each category individually?
+
+- See if this problem set helps
+- More discussion in the PC 2 review
 
 
 ## Dropping the intercept
@@ -51,16 +71,29 @@ theme_set(theme_cowplot())
 > In what instance would you not want to include the +1 intercept in a model?
 
 
-## Interaction models coming soon
+## Planned comparisons and post-hoc tests {.smaller}
+
+> In the context of planned comparisons, why might we avoid performing all pairwise comparisons among treatments? Under what conditions would testing all pairwise contrasts be inappropriate or less desirable, and under what conditions would it be appropriate or even preferable to perform all pairwise comparisons? (Lecture 08-2, slide 32).
+
+> For a Randomized Complete Block Design with a mixed model structure (e.g., yield data in a defoliation experiment), is it appropriate to use a Tukey–Kramer test for post hoc comparisons? If so, in which situations would it be valid, and when would alternative approaches (e.g., planned contrasts or emmeans) be more appropriate?
+
+
+## Differing slopes (and intercepts)
 
 > Is there a way to fit different slopes for a mixed predictor linear model, or will the resulting lines always share slopes but differ in intercept? Like in lecture 8.4, where the model Energy ~ Mass + Caste was fit, the slope of energy ~ mass for both castes was equal and lines just shifted depending on caste. What would be better in the case that the slope of energy ~ mass differs between caste, e.g. workers expend more energy per unit increase in body mass compared to non-workers?
+
+- Unit 9 coming soon
 
 
 ## Multicollinearity
 
-- If two predictors have high collinearity, does that mean that you should just look at their ability to predict Y separately?
+> If two predictors have high collinearity, does that mean that you should just look at their ability to predict Y separately?
+
+- Yes, or, dimensionality reduction coming soon
 
 
 ## Fitting multiple models
 
 > As you are going through all these tests and fitting the data to "the best model" how do you do keep track of this workflow and communicate the steps you took to reach the final model when publishing a paper? Because sometimes the process is feeling a bit messy and all over the place as you go through the steps of modeling and re-evaluating things to finally reach the right analysis for the data.
+
+- Model comparison coming soon
