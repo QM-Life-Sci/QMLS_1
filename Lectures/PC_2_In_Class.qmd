@@ -16,38 +16,47 @@ bibliography: QMLS_Bibliography.bib
 csl: evolution.csl
 ---
 
-## Topics for Today
-
 ```{r}
-library(mvtnorm)
+library(readxl)
 library(tidyverse)
+library(patchwork)
 library(cowplot)
-theme_set(theme_cowplot())
+library(performance)
+library(see)
 
+theme_set(theme_cowplot(font_size = 18))
 ```
 
-1. Data wrangling: factors
-1. Linear model interpretations
-1. Transformations & Diagnostics
-1. Loops & Functions - final activity
+## Topics for Today
 
-Coming soon: Random effects
+- PC 2 clarifications
+- Linear model interpretations
+- Transformations
+- PS 8, Loops
 
 
-## Data Wrangling: Factors
+## PC 2 Clarifications
 
-> Could go over converting dbls to factors again. I keep getting error codes when I try to convert the IDs, but if I don't convert, the rest of my code seems to run okay. I can see why it's important to convert characters, but why dbls if they're already numbers?
+> On the t-test assumption check, I assume we were supposed to use vars.equal = T for the first example? The second example asks us to use Welch's, but the instructions don't say to assume equal variance on the first example.
 
-> What is the base level of a factor and how do we code what the base level is? Why do we need to convert columns into factors (versus simply as numeric) to run a linear model?
+Yes.
 
-See Example in PS8 & `forcats` package
+
+## PC 2 Clarifications
+
+> How are we supposed to run the linear model on hypothesis 3 of the mice example? I know that we can use y ~ a + b, but the thing is, there are two completely different relationships, and I don't feel like the logic of that make sense. I want to run different linear models on them, and now I'm realizing that might make more sense? If I find a different effect of body mass on two separate groups, would that be fine?
+
+See Unit 8 naked mole-rats example.
+
+
+## Reproducible research
+
+> I would like suggestions on how to keep track of which statistical tests you have done and the logical flow that can help you move along in the process.
 
 
 ## Linear model interpretations
 
-> Could we have a quick review on how to interpret the results for linear models?
-
-> Could we summarize again what the estimates in a table output from lm() mean in the different situations? It seemed that there were so many different meanings depending on what you were attempting to do. Sometimes it was the intercept, sometimes the first group's mean, sometimes the difference in mean to group 2 from group 2, sometimes it is the slope like in the case of mixed predictors.
+> I could use a refresher on stat summary tables and interpretation of outputs with the data (like R^2 vs p-value, F vs T, etc.), or any more examples could be helpful.
 
 
 ## Parts of a linear model summary
@@ -65,46 +74,99 @@ See Example in PS8 & `forcats` package
 ![](https://i.imgur.com/oIqWNJg.jpg){fig-align="center" width=90%}
 
 
-## CIs on effect estimates
-
-> How do we calculate the CI of the effect size to report it together with a P-value?
-
-- Effects sizes are coming soon
-    - CIs for effect sizes are complicated
-- CIs for parameter estimates are not
-
-
-## Dropping the intercept
-
-> When do we drop the intercept in a lm? what implications has it? Is it just to compare each group to 0?
-
-
-## Diagnostics
-
-> I've been having a bit of trouble with assumptions and regression diagnostics, particularly for instances where the bivariate diagnostics don't exactly fit the observed data line.
-
-> I'd be interested in a quick review of the diagnostic tests used to assess a linear model (i.e. posterior predictive check, homogeneity of variance, normality of residuals, etc.), how they are used/read, and how we can tell when a particular linear model and/or its results violate the assumptions that those tests would predict.
-
-
 ## Transformations
 
-> I would also like to know other ways to transform data, or fit it in a normal distribution, rather than log transformation
+> Since there are a variety of transformations that can be used, is there a "gold standard" per se? Does it depend on the data, and is it recommended to test out a few?
 
-> How can we tell what is the "best" transformation or at least some clues of what to try first.
+> One thing that tripped me up during problem set 8 was the heart transplantation activity, where we had to transform survival_days to correct for unequal variances before running an ANOVA. I ended up using a log transformation because that is the main transformation we have practiced, but I do not fully understand how transforming the data helps satisfy the assumptions of a linear model. I may be overthinking it, but I am still confused about why this works and how to decide which transformation is most appropriate.
 
 
 ## Transformations for normality
 
 ```{r}
-set.seed(3623468)
-DD <- tibble(
-  x = runif(300, 0, 10),
-  y = rlnorm(300, meanlog = 1)
-)
+Tri <- read_excel("../data/NHANES_Triglycerides.xlsx") |>
+  filter(Sex == "Female")
 
-ggplot(DD, aes(y)) +
-  geom_histogram(fill = "navy") +
-  labs(y = "Count")
+p1 <- ggplot(Tri, aes(Waist)) +
+  geom_histogram(bins = 50, fill = "steelblue") +
+  labs(x = "Waist Circumference (cm)", y = "Count")
+
+p2 <- ggplot(Tri, aes(Triglycerides)) +
+  geom_histogram(bins = 50, fill = "steelblue") +
+  labs(x = "Serum Triglycerides (mg/dL)", y = "Count")
+
+p1 + p2
+```
+
+
+## Transformations for normality
+
+```{r}
+ggplot(Tri, aes(x = Waist, y = Triglycerides)) +
+  geom_point(color = "steelblue", size = 2) +
+  geom_smooth(
+    formula = y ~ x,
+    method = "lm",
+    se = FALSE,
+    color = "firebrick4"
+  ) +
+  labs(x = "Waist Circumference (cm)", y = "Serum Triglycerides (mg/dL)")
+```
+
+
+## Diagnostics
+
+```{r}
+fm1 <- lm(Triglycerides ~ Waist, data = Tri)
+PP <- plot(check_model(fm1, panel = FALSE))
+PP[[1]]
+```
+
+
+## Linearity
+
+```{r}
+PP[[2]]
+```
+
+
+## Homogeneity of variance
+
+```{r}
+PP[[3]]
+```
+
+
+## Influential observations
+
+```{r}
+PP[[4]]
+```
+
+
+## Normality of residuals
+
+```{r}
+PP[[5]]
+```
+
+
+## Model diagnostics
+
+> Besides the traditional visual evaluation through diagnostic plots, are there any formal statistical tests that you would recommend for checking model assumptions in an lm?
+
+- Treat diagnostics as information.
+- You are in charge of your analysis.
+
+
+## Additional checks
+
+```{r}
+#| echo: true
+
+check_heteroskedasticity(fm1)
+check_normality(fm1)
+check_outliers(fm1)
 ```
 
 
@@ -115,30 +177,134 @@ ggplot(DD, aes(y)) +
 [The rule of the bulge](https://zief0002.github.io/bespectacled-antelope/notes/09-rule-of-the-bulge.html)
 
 
+## Original data
+
+```{r}
+p2
+```
+
+
 ## Transformations for normality
 
 ```{r}
-DD |>
+Tri |>
   mutate(
-    `sqrt(y)` = sqrt(y),
-    `ln(y)` = log(y),
-    `1 / y` = 1 / (y^1),
-    `1 / y^2` = 1 / (y^2)
+    `sqrt(x)` = sqrt(Triglycerides),
+    `ln(x)` = log(Triglycerides),
+    `1 / x` = 1 / (Triglycerides^1),
+    `1 / x^2` = 1 / (Triglycerides^2)
   ) |>
-  select(-x) |>
+  select(7:10) |>
   pivot_longer(cols = everything()) |>
   mutate(name = fct_inorder(name)) |>
   ggplot(aes(value)) +
-  geom_histogram(bins = 30, fill = "navy") +
+  geom_histogram(bins = 50, fill = "steelblue") +
   facet_grid(name ~ .) +
   labs(y = "Count")
 ```
 
 
-## Loops & Functions
+## Transformed Triglycerides
 
-> Review PS8
+```{r}
+Tri <- Tri |> mutate(log_Tri = log(Triglycerides))
 
-> I am confused about whether the final two activities ask us to create three different loops for each scenario or one loop that goes through all three scenarios.
+ggplot(Tri, aes(x = Waist, y = log_Tri)) +
+  geom_point(color = "steelblue") +
+  labs(x = "Waist Circumference (cm)", y = "ln Serum Triglycerides (mg/dL)")
 
-> I would like to work through another loop/pseudo code example. Specifically how to know when to code in the variables and if they should be inside or outside the loop. Working through the loop in PS 8 was helpful, but I do not feel confident to recreate that code on my own.
+```
+
+
+## Diagnostics
+
+```{r}
+fm1 <- lm(log_Tri ~ Waist, data = Tri)
+PP <- plot(check_model(fm1, panel = FALSE))
+PP[[1]]
+```
+
+
+## Linearity
+
+```{r}
+PP[[2]]
+```
+
+
+## Homogeneity of variance
+
+```{r}
+PP[[3]]
+```
+
+
+## Influential observations
+
+```{r}
+PP[[4]]
+```
+
+
+## Normality of residuals
+
+```{r}
+PP[[5]]
+```
+
+
+## Additional checks
+
+```{r}
+#| echo: true
+
+check_heteroskedasticity(fm1)
+check_normality(fm1)
+check_outliers(fm1)
+```
+
+
+## Factor levels
+
+> I am having difficulty with setting the base level of the factor in the first part of the problem set. Should I use fct_relevel()? Could we please go over an example of how to tackle this?
+
+
+## Factor levels
+
+```{r}
+Tri <- read_excel("../data/NHANES_Triglycerides.xlsx") |>
+  mutate(Sex = factor(Sex))
+levels(Tri$Sex)
+```
+
+
+## `fct_relevel()`
+
+```{r}
+Tri <- Tri |> mutate(Sex = fct_relevel(Sex, "Male"))
+levels(Tri$Sex)
+```
+
+
+## Factor levels
+
+```{r}
+Tri <- read_excel("../data/NHANES_Triglycerides.xlsx") |>
+  mutate(Sex = factor(Sex, levels = c("Male", "Female")))
+levels(Tri$Sex)
+```
+
+
+## `fct_....` functions
+
+- `fct_relevel()`: Rearrange
+- `fct_collapse()`: Combine levels
+- `fct_drop()`: Drop unused levels
+- `fct_infreq()`: Order by frequency
+- `fct_inorder()`: Order by appearance
+- `fct_rev()`: Reverse the existing order of levels
+
+
+## PS 8
+
+> I am not sure I understand the purpose/application of pmap_dbl function, would mutate accomplish the same thing?
