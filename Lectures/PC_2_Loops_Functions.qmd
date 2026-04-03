@@ -19,23 +19,42 @@ A simple example:
 
 ```{r}
 
-#cc <- function(cp, t1p, t2p)
-#{
+cc <- function(ii)
+{
+  cp <- rnorm(100,10,1)
+  t1p <- rnorm(100,10,1)
+  t2p <- rnorm(100,10,1)
+  r1 <- t1p/cp
+  r2 <- t2p/cp
   
-#}
+  cor.out <- tibble(cp_t1p = cor(cp,t1p),
+                    cp_t2p = cor(cp, t2p),
+                    t1p_t2p = cor(t1p, t2p),
+                    r1_r2 = cor(r1,r2))
+  return(cor.out)
+  
+}
 
-cp <- rnorm(100,10,1)
-t1p <- rnorm(100,10,1)
-t2p<- rnorm(100,10,1)
+cors <- map(.x = 1:1000,
+            .f = cc) |> 
+  list_rbind()
 
-r1 <- t1p/cp
-r2 <- t2p/cp
+cors |> 
+  pivot_longer(cols = everything()) |> 
+  ggplot(aes(value)) +
+  geom_histogram() +
+  facet_grid(name ~ .)
 
-cor.out <- tibble(cp_t1p = cor(cp,t1p),
-                  cp_t2p = cor(cp, t2p),
-                  t1p_t2p = cor(t1p, t2p),
-                  r1_r2 = cor(r1,r2))
-cor.out
+
+
+
+
+
+
+
+
+
+
 
 
 ```
@@ -51,8 +70,23 @@ Is the expected correlation between two ratios with the same denominator zero?
 
 
 ```{r}
+iters <- 1000
 
+cors <- numeric(length = iters)
+  
+for(yy in 1:iters)
+{
+  cp <- rnorm(100,10,1)
+  t1p <- rnorm(100,10,1)
+  t2p <- rnorm(100,10,1)
+  r1 <- t1p/cp
+  r2 <- t2p/cp
+  cors[yy] <- cor(r1, r2)
+  cat(yy,"\t", cor(r1, r2), "\n")
+}
 
+ggplot(tibble(cors), aes(cors)) +
+  geom_histogram()
 
 ```
 
