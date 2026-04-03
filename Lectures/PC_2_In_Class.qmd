@@ -263,6 +263,12 @@ check_normality(fm1)
 check_outliers(fm1)
 ```
 
+## Multicollinearity
+
+> I feel like I know that it's bad when predictors are correlated with one another and what the model out put looks like, but I don't know what to do to fix it should I encounter it. Do I just drop a predictor, or do seperate analysis?
+
+> In general I think I am still struggling with being able to read the stat summaries and draw conclusions from them. More specifically, I am confused about to multiple variable correlations. Can we go over them again?
+
 
 ## Factor levels
 
@@ -272,6 +278,8 @@ check_outliers(fm1)
 ## Factor levels
 
 ```{r}
+#| echo: true
+
 Tri <- read_excel("../data/NHANES_Triglycerides.xlsx") |>
   mutate(Sex = factor(Sex))
 levels(Tri$Sex)
@@ -281,6 +289,8 @@ levels(Tri$Sex)
 ## `fct_relevel()`
 
 ```{r}
+#| echo: true
+
 Tri <- Tri |> mutate(Sex = fct_relevel(Sex, "Male"))
 levels(Tri$Sex)
 ```
@@ -289,6 +299,8 @@ levels(Tri$Sex)
 ## Factor levels
 
 ```{r}
+#| echo: true
+
 Tri <- read_excel("../data/NHANES_Triglycerides.xlsx") |>
   mutate(Sex = factor(Sex, levels = c("Male", "Female")))
 levels(Tri$Sex)
@@ -308,3 +320,16 @@ levels(Tri$Sex)
 ## PS 8
 
 > I am not sure I understand the purpose/application of pmap_dbl function, would mutate accomplish the same thing?
+
+## Loops
+
+> I think for loops make sense in theory, but in coding I still get stuck with the brackets and placement of lines inside the loop.
+
+> When to use a loop, apply, or pmap?
+
+> I understand loops, but functions are still a headache, especially when we have a loop within a function. Can we go over function syntax? 
+
+
+
+
+
