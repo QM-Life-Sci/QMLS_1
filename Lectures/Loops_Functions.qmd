@@ -1,0 +1,59 @@
+---
+title: "Loops_Functions"
+format: html
+---
+
+## Functions
+
+If you need to do the same thing more than once, consider writing a function.
+
+- Pass some inputs to the function
+- Do some stuff within the function
+- Get an output
+
+A simple example:
+
+- Inputs: control phenotype, treatment 1 phenotype, treatment 2 phenotype
+- Compute the ratio of each treatment to control and calculate the correlation between these
+- Return the values of the correlation between all pairs of phenotypes and between the ratios
+
+```{r}
+
+#cc <- function(cp, t1p, t2p)
+#{
+  
+#}
+
+cp <- rnorm(100,10,1)
+t1p <- rnorm(100,10,1)
+t2p<- rnorm(100,10,1)
+
+r1 <- t1p/cp
+r2 <- t2p/cp
+
+cor.out <- tibble(cp_t1p = cor(cp,t1p),
+                  cp_t2p = cor(cp, t2p),
+                  t1p_t2p = cor(t1p, t2p),
+                  r1_r2 = cor(r1,r2))
+cor.out
+
+
+```
+
+
+## Loops
+
+If you need to iterate through different values or to repeat something many times.
+
+A simple example:
+
+Is the expected correlation between two ratios with the same denominator zero?
+
+
+```{r}
+
+
+
+```
+
+
