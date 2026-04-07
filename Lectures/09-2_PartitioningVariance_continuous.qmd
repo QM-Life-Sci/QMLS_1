@@ -17,7 +17,7 @@ bibliography: QMLS_Bibliography.bib
 csl: evolution.csl
 ---
 
-## Linear Models and Variance 
+## Linear Models and Variance
 
 ```{r}
 #| label: setup
@@ -68,17 +68,17 @@ Adapted from Tabachnick and Fidell [-@Tabachnick2018-tl]
 
 - Linear combination of predictor variables that is maximally correlated with outcome variable
 - How well can you predict the outcome by the set of predictor variables?
-    - correlation of $y$ with $\hat{y}$ 
-    - $R^{2}$ = squared correlation coefficient of $y$ with $\hat{y}$ 
+    - correlation of $y$ with $\hat{y}$
+    - $R^{2}$ = squared correlation coefficient of $y$ with $\hat{y}$
 
-    
+
 ## Milk Energy
 
 ```{r}
 #| echo: true
-Milk <- read_excel("../data/Milk.xlsx", na = "NA") |> 
-  select(Species, Milk_Energy, Fat, Lactose) |>
-  drop_na()
+Milk <- read_excel("../data/Milk.xlsx", na = "NA") |>
+    select(Species, Milk_Energy, Fat, Lactose) |>
+    drop_na()
 
 Milk
 ```
@@ -88,16 +88,22 @@ Milk
 
 ```{r fig.height=6}
 fig <- plot_ly() |>
-  add_markers(data = Milk,
-              y = ~ Lactose,
-              x = ~ Fat,
-              z = ~ Milk_Energy, 
-              marker = list(size = 5),
-              showlegend = FALSE) |>
-  hide_colorbar() |>
-  layout(scene = list(xaxis = list(title = 'Lactose'),
-                      yaxis = list(title = 'Fat'),
-                      zaxis = list(title = 'Milk Energy')))
+    add_markers(
+        data = Milk,
+        y = ~Lactose,
+        x = ~Fat,
+        z = ~Milk_Energy,
+        marker = list(size = 5),
+        showlegend = FALSE
+    ) |>
+    hide_colorbar() |>
+    layout(
+        scene = list(
+            xaxis = list(title = 'Lactose'),
+            yaxis = list(title = 'Fat'),
+            zaxis = list(title = 'Milk Energy')
+        )
+    )
 
 fig
 ```
@@ -126,23 +132,29 @@ axis_x <- seq(min(Milk$Fat), max(Milk$Fat), by = graph_reso)
 axis_y <- seq(min(Milk$Lactose), max(Milk$Lactose), by = graph_reso)
 
 # Sample points
-fm_surface <- expand.grid(Fat = axis_x,
-                          Lactose = axis_y,
-                          KEEP.OUT.ATTRS = FALSE)
+fm_surface <- expand.grid(
+    Fat = axis_x,
+    Lactose = axis_y,
+    KEEP.OUT.ATTRS = FALSE
+)
 fm_surface$Milk_Energy <- predict.lm(fm_Multi, newdata = fm_surface)
-fm_surface <- reshape2::acast(fm_surface,
-                              Lactose ~ Fat,
-                              value.var = "Milk_Energy")
+fm_surface <- reshape2::acast(
+    fm_surface,
+    Lactose ~ Fat,
+    value.var = "Milk_Energy"
+)
 
-fig2 <- add_trace(p = fig,
-                  z = fm_surface,
-                  x = axis_x,
-                  y = axis_y,
-                  opacity = 0.25,
-                  colorscale = list(c(0, 1), c("black", "black")),
-                  type = "surface",
-                  showlegend = FALSE) |>
-  hide_colorbar()
+fig2 <- add_trace(
+    p = fig,
+    z = fm_surface,
+    x = axis_x,
+    y = axis_y,
+    opacity = 0.25,
+    colorscale = list(c(0, 1), c("black", "black")),
+    type = "surface",
+    showlegend = FALSE
+) |>
+    hide_colorbar()
 
 fig2
 ```
@@ -161,7 +173,7 @@ coef(fm_Multi)
 
 CC <- coef(fm_Multi)
 
-cat(CC[1] + CC[2]*Milk$Fat[1] + CC[3]*Milk$Lactose[1])
+cat(CC[1] + CC[2] * Milk$Fat[1] + CC[3] * Milk$Lactose[1])
 
 y_hat <- fm_Multi$fitted.values
 ```
@@ -172,14 +184,18 @@ y_hat <- fm_Multi$fitted.values
 ```{r}
 
 ggplot(Milk, aes(x = y_hat, y = Milk_Energy)) +
-  geom_abline(slope = 1, intercept = 0, color = "blue") +
-  geom_point(size = 3) +
-  geom_point(data = Milk[1,], aes(x = y_hat[1], y = Milk_Energy),
-             color = "coral", size = 3) +
-  labs(y = 'Milk Energy', x = 'Predicted Milk Energy') +
-  xlim(c(0.3, 1)) +
-  ylim(c(0.3, 1)) +
-  coord_equal()
+    geom_abline(slope = 1, intercept = 0, color = "blue") +
+    geom_point(size = 3) +
+    geom_point(
+        data = Milk[1, ],
+        aes(x = y_hat[1], y = Milk_Energy),
+        color = "coral",
+        size = 3
+    ) +
+    labs(y = 'Milk Energy', x = 'Predicted Milk Energy') +
+    xlim(c(0.3, 1)) +
+    ylim(c(0.3, 1)) +
+    coord_equal()
 ```
 
 
@@ -218,7 +234,7 @@ $$Multiple~R^{2} = \frac{(a + b + c)}{(a + b + c + d)}$$
 - For x1:
 
 $$\frac{a}{(a + b + c + d)}$$
-    
+
 :::
 
 ::: {.column width="50%"}
@@ -243,7 +259,7 @@ sum_Fat <- summary(fm_Fat)
 fm_Lactose <- lm(Milk_Energy ~ Lactose, data = Milk)
 sum_Lactose <- summary(fm_Lactose)
 
-cat(sum_Multi$r.squared, "\t", sum_Fat$r.squared,"\t", sum_Lactose$r.squared)
+cat(sum_Multi$r.squared, "\t", sum_Fat$r.squared, "\t", sum_Lactose$r.squared)
 
 sum_Multi$r.squared - sum_Fat$r.squared
 sum_Multi$r.squared - sum_Lactose$r.squared
@@ -273,14 +289,14 @@ nn <- 100
 v1 <- rnorm(nn)
 v2 <- rnorm(nn)
 
-y <- 1.2*v1 + 2*v2 + rnorm(nn, 0,1)
+y <- 1.2 * v1 + 2 * v2 + rnorm(nn, 0, 1)
 
 dd <- tibble(y = y, v1 = v1, v2 = v2)
 
 ggscatmat(dd, columns = 1:3)
 
 ```
-    
+
 :::
 
 ::: {.column width="50%"}
@@ -317,4 +333,3 @@ sum_Multi$r.squared - sum_v2$r.squared
 
 ::: {#refs}
 :::
-
