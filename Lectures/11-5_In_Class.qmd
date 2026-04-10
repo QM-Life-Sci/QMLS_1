@@ -27,6 +27,9 @@ library(cowplot)
 theme_set(theme_cowplot())
 ```
 
+Fix quizzes 12 - see notes
+Edit ps 12 - more help in heart transplant
+
 
 ## Course Evaluations
 

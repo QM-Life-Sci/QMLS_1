@@ -29,6 +29,9 @@ theme_set(theme_classic())
 ```
 
 
+From past selves - explain multi level models with zooplankton - see notes
+Alter PS 11 - see notes
+
 ## PS 09
 
 - In PS9, There are Multiple R-squared: 0.829 and Adjusted R-squared: 0.797. What is the difference between these two? How to interpret the data from this? 
