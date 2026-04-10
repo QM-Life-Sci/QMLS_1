@@ -73,20 +73,45 @@ $$Y = \theta_0 + \theta_1 X_1 + \theta_2 X_2 + \theta_3 (X_1 X_2) + \epsilon$$
 ## Under the Hood
 
 ```{r}
-
-library(tidyverse)
+#| echo: true
+set.seed(48732)
 x1 <- rep(0:1, each = 20)
 x2 <- c(rep(0:1, each = 10), rep(0:1, each = 10))
-
 yy <- -5 + 10 * x1 + 10 * x2 + -20 * x1 * x2 + rnorm(40)
 
 tt <- tibble(x1 = x1, x2 = x2, yy = yy)
 tt |> print(n = 40)
+```
+
+## Under the Hood
+
+```{r}
 
 tt |>
   ggplot(aes(x1, yy, color = factor(x2))) +
   geom_point()
 
+```
+
+## Under the Hood
+
+```{r}
+#| echo: true
+
+fm1 <- lm(yy ~ x1*x2, data = tt)
+summary(fm1)
+
+```
+
+## Under the Hood
+
+```{r}
+#| echo: true
+
+tt$F4 <- paste0(x1,x2)
+
+fm2 <- lm(yy ~ F4, data = tt)
+summary(fm2)
 
 ```
 
