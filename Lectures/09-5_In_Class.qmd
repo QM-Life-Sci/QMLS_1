@@ -30,7 +30,7 @@ theme_set(theme_cowplot())
 
 #Quiz 9-1, 9-4
 #Answer Ruth directly
-#Pull up 9-4 slides & 9-2 slides
+#Pull up 9-4 slides & 9-2 9-3 slides
 
 ```
 
@@ -60,7 +60,38 @@ theme_set(theme_cowplot())
 
 ## Under the Hood
 
-EGK will work on
+$$Y = \theta_0 + \theta_1 X_1 + \theta_2 X_2 + \theta_3 (X_1 X_2) + \epsilon$$
+
+  - x1 = 0, x2 = 0 ($\theta_0$)
+  - x1 = 0, x2 = 1 ($\theta_0 + \theta_2$)
+  - x1 = 1, x2 = 0 ($\theta_0 + \theta_1$)
+  - x1 = 1, x2 = 1 ($\theta_0 + \theta_1 + \theta_2 + \theta_3$)
+
+## Under the Hood
+
+```{r}
+
+library(tidyverse)
+x1 <- rep(0:1,each = 20)
+x2 <- c(rep(0:1,each=10), rep(0:1,each=10))
+
+yy <- -5 + 10*x1 + 10*x2 + -20*x1*x2 + rnorm(40)
+
+tt <- tibble(x1 = x1,
+             x2 = x2, 
+             yy = yy)
+tt |> print(n=40)
+
+tt |>
+  ggplot(aes(x1, yy, color = factor(x2))) +
+  geom_point()
+
+
+
+
+```
+
+
 
 
 ## Multilevel models
@@ -94,111 +125,6 @@ EGK will work on
 > One thing I found confusing during this unit was the different types of sums of squares. Specifically, when to use Type II vs Type III sums of squares, and what each approach is actually doing in the analysis.
 
 
-```{r}
-library(tidyverse)
-x1 <- rep(0:1,each = 20)
-x2 <- c(rep(0:1,each=10), rep(0:1,each=10))
-
-yy <- 5*x1 + 5*x2 + -5*x1*x2 + rnorm(40)
-
-tt <- tibble(x1 = x1,
-             x2 = x2, 
-             yy = yy)
-tt |> print(n=40)
-
-tt |>
-  ggplot(aes(x1, yy, color = factor(x2))) +
-  geom_point()
-
-
-
-
-```
-
-
-
-## Upcoming Events
-
-- Course Evaluations
-- Last Review Session: Reading Day
-  - Change time?
-
-
-## General questions
-
-- PC 2: next week
-
-> In the progress check, why was "cost of transport" lower for animals with higher body mass? Did I misunderstand what this measures? My intuition would be that with larger body mass comes a larger amount of work (as in W=Fs) required to move, and therefore higher energy expenditure and more O2 consumed.
-
-
-## Cost of Transport
-
-$$
-COT \propto Mass^{-0.3}
-$$
-
-![](../images/COT.png){fig-align="center"}
-
-:::{.right}
-Taylor et al., 1982
-:::
-
-
-## Quizzes
-
-
-## Model summary
-
-> When looking at a summary and results for a model, should you always trust the level of significance given with p values? When should you change the p-value threshold for your analysis?
-
-Coming soon: Multiple comparisons
-
-
-## Shared variation
-
-> I would like you to explain the figure of Collinearity = High Shared variation, I find it very difficult to understand the graphs where three variables interact in the same plot.
-
-
-## Model formulas
-
-> What is the difference between the intercept from a linear model and an interaction?
-
-> Will you please further explain the difference between using * and + for interacting variables/when would you use each?
-
-```
-lm(Biomass ~ Phosphorous + Nitrogen, data = BM)
-
-lm(Biomass ~ Phosphorous * Nitrogen, data = BM)
-
-```
-
-. . .
-
-```
-lm(Biomass ~ Phosphorous + Nitrogen + Phosphorous:Nitrogen, data = BM)
-```
-
-
-## Model formulas
-
-> In slide 27 of 09-1 according to the table, I could think that whenever there are two factors present the interaction will show as one, so how is the model working because as it looks like, it seems that always you will get a relationship when two factors exist.
-
-
-## Multilevel/Hierarchical/Mixed models
-
-> Could you further explain the use of the 1's in the children's cranial size model from the lecture slides? The model shared is `Distance ~ 1 + Sex + Age + (1 | Subject)`. I understand the `(1| Subject)` tells the model to calculate different means by subject. Would you ever use additional values such as 0 or 2?
-
-> My other question is can you model by multiple "nested groups" for example from my research a plant is a certain bed in a certain plot.
-
-
-## Multilevel/Hierarchical/Mixed models
-
-> If using explicitly correlated data, can you break down the data into groups where it no longer violates independence? example: I’m looking at acute vs chronic vs sham but multiple ganglia in each group and multiple drug concentrations, if I run linear model on only one ganglia (same one) for each group (sham, chronic, acute) but at only one drug concentration, does this solve the independence issue? Or would it be dividing up data too much and miss possible interactions and correlations?
-
-
-## Multilevel/Hierarchical/Mixed models
-
-> Also, does the different “cohorts” of animals count as a grouping effect? If you receive animals throughout the year rather than all at once, is this now a group you need to account for with a multilevel model? How does uneven sampling from these cohorts (even with even sampling in your experimental groups) change the interpretations of your data or strength of a model?
 
 
 ## Visualization of Hierarchical Modeling
@@ -418,3 +344,4 @@ p +
     linewidth = 1.5
   )
 ```
+
