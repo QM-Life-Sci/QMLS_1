@@ -98,7 +98,7 @@ tt |>
 ```{r}
 #| echo: true
 
-fm1 <- lm(yy ~ x1*x2, data = tt)
+fm1 <- lm(yy ~ x1 * x2, data = tt)
 summary(fm1)
 
 ```
@@ -108,7 +108,7 @@ summary(fm1)
 ```{r}
 #| echo: true
 
-tt$F4 <- paste0(x1,x2)
+tt$F4 <- paste0(x1, x2)
 
 fm2 <- lm(yy ~ F4, data = tt)
 summary(fm2)
