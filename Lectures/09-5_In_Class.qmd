@@ -26,7 +26,7 @@ library(cowplot)
 library(wesanderson)
 library(lme4)
 
-theme_set(theme_cowplot())
+theme_set(theme_cowplot(font_size = 18))
 
 #Quiz 9-1, 9-4
 #Answer Ruth directly
@@ -40,23 +40,26 @@ theme_set(theme_cowplot())
   - Optional & Recorded
   - We'll bring breakfast
 
+
 ## Today
 
 - Interactions
 - Partitioning Variance
 - Multilevel Models
 
-## Interactions
+
+# Interactions
+
 
 ## Quiz 9-1
 
 > I had a hard time with 9-1, especially figuring out which parameter estimates would actually be significant from the interaction plots. Some of the plots show slight separation or non-parallel lines, but the spread of the data within groups is large enough that those differences might not be statistically significant. I’d really like to go over what we should be prioritizing when interpreting these, like how much weight to give the overall pattern of the lines versus the variability of the points.
 
+
 ## Interactions {.smaller}
 
-> For the very end of lecture 9.1, could you clarify how the interaction term works in the equation? I completely understand how categorical variables act like switches in the equation, but this makes me struggle to see how the + Theta3(X1 * X2) really does anything... since X1 and X2 will just be 1 like in X1*Theta1 and X2*Theta2. It almost seems easier for me to understand how the interaction term would work with continuous predictors. 
+> For the very end of lecture 9.1, could you clarify how the interaction term works in the equation? I completely understand how categorical variables act like switches in the equation, but this makes me struggle to see how the + Theta3(X1 * X2) really does anything... since X1 and X2 will just be 1 like in X1*Theta1 and X2*Theta2. It almost seems easier for me to understand how the interaction term would work with continuous predictors.
 
-> I was thinking that if we use 0 and 1 to represent a three-way interaction, then only the N+P+K+ combination can have a value of 1, while all the others would be 0. In this case, how can we distinguish the N+P+ group?
 
 ## Under the Hood
 
@@ -72,59 +75,99 @@ $$Y = \theta_0 + \theta_1 X_1 + \theta_2 X_2 + \theta_3 (X_1 X_2) + \epsilon$$
 ```{r}
 
 library(tidyverse)
-x1 <- rep(0:1,each = 20)
-x2 <- c(rep(0:1,each=10), rep(0:1,each=10))
+x1 <- rep(0:1, each = 20)
+x2 <- c(rep(0:1, each = 10), rep(0:1, each = 10))
 
-yy <- -5 + 10*x1 + 10*x2 + -20*x1*x2 + rnorm(40)
+yy <- -5 + 10 * x1 + 10 * x2 + -20 * x1 * x2 + rnorm(40)
 
-tt <- tibble(x1 = x1,
-             x2 = x2, 
-             yy = yy)
-tt |> print(n=40)
+tt <- tibble(x1 = x1, x2 = x2, yy = yy)
+tt |> print(n = 40)
 
 tt |>
   ggplot(aes(x1, yy, color = factor(x2))) +
   geom_point()
 
 
-
-
 ```
 
 
+## Multi-way interactions
+
+> I was thinking that if we use 0 and 1 to represent a three-way interaction, then only the N+P+K+ combination can have a value of 1, while all the others would be 0. In this case, how can we distinguish the N+P+ group?
+
+```{r}
+set.seed(328479)
+OHE <- tibble(
+  y = rnorm(100),
+  N = sample(c("N-", "N+"), size = 100, replace = TRUE) |> factor(),
+  P = sample(c("P-", "P+"), size = 100, replace = TRUE) |> factor(),
+  K = sample(c("K-", "K+"), size = 100, replace = TRUE |> factor())
+) |>
+  arrange(N, P, K)
+
+print(OHE, n = 100)
+```
 
 
-## Multilevel models
+## "One-hot Encoding"
+
+```{r}
+#| echo: true
+
+model.matrix(y ~ N * P * K, data = OHE)
+```
+
+
+# Multilevel models
+
 
 ## Quiz 9-4
 
-## Multilevel models {.smaller}
 
-> I understand the need to multilevels modeling to account for "random" variables and non-independence. Referring to the jaw measurements by sex example in lecture 9-04, how are these results reported and discussed in papers? If you wanted to just look at differences between age 12 and compare by sex, would you then just compare the means of measurements between the groups?
-
-> When more than one observation comes from the same individual over time can you elaborate why we cannot plot the means of individuals or group means? Is it misleading visualization? Also if there is a study subject lost at a certain time point how/would you continue the data for that subject since you have data points from the others? If you use 0 then how would you distinguish that from a true 0? 
+## Non-independence
 
 > In studies with repeated measures (for example, pest monitoring across soybean growth stages), observations from the same experimental unit (plot) are usually not independent. In this case, is the independence assumption always violated? If so, what are the main consequences of "ignoring" this non-independence?
 
-## Partitioning Variance {.smaller}
 
-> When is multiple R2 vs adjusted R2 useful? In the past I used adjusted because I had interaction terms in my models with categorical variables, but I'm not really sure why. My qualitative understanding was that we want the R2 that is associated with each group independently, not the overall combination of all of the groups. Is that somewhat correct or did I get lucky? Example formula: SOC ~ Treatment * Depth
+## Predictions from multilevel models {.smaller}
 
-> is there a less is more approach sometimes when it comes to sampling data. for example not taking certain data points like leaf width and leaf length because they would be so correlated or is taking multiple data points and then correcting for the relationship more beneficial?
+> I understand the need to multilevels modeling to account for "random" variables and non-independence. Referring to the jaw measurements by sex example in lecture 9-04, how are these results reported and discussed in papers? If you wanted to just look at differences between age 12 and compare by sex, would you then just compare the means of measurements between the groups?
 
-## Y hat
+> When more than one observation comes from the same individual over time can you elaborate why we cannot plot the means of individuals or group means? Is it misleading visualization? Also if there is a study subject lost at a certain time point how/would you continue the data for that subject since you have data points from the others? If you use 0 then how would you distinguish that from a true 0?
 
-> Also, in lecture 9.2, why was the calculated y-hat not on the prediction slope?
+
+# Partitioning Variance
+
+
+## $R^2$ {.smaller}
+
+> When is multiple R^2^ vs adjusted R^2^ useful? In the past I used adjusted because I had interaction terms in my models with categorical variables, but I'm not really sure why. My qualitative understanding was that we want the R^2^ that is associated with each group independently, not the overall combination of all of the groups. Is that somewhat correct or did I get lucky? Example formula: SOC ~ Treatment * Depth
+
+- Multiple $R^2$: proportion of variance in the response explained by the model
+- Adjusted $R^2$: proportion of variance in the response explained by the model *penalized by the number of "uninformative" predictors*
+
+Multiple $R^2$ is what people will expect. Use other methods (e.g., AIC; coming soon) to adjust for additional predictors.
+
+
+## $\hat{y}$
+
+> In lecture 9.2, why was the calculated y-hat not on the prediction slope?
+
 
 ## Unbalanced Data {.smaller}
 
 > Is sample size difference the main way that a one would determine if a dataset is unbalanced or are other issues (like factors in the wrong order) that would cause the same problem? Additionally, I'm still a bit confused as to when we want type 1, 2, or 3 sums of squares when using unbalanced datasets.
 
-> In addition, I don’t really understand that, in an unbalanced design, variables can share variance.
-
 > One thing I found confusing during this unit was the different types of sums of squares. Specifically, when to use Type II vs Type III sums of squares, and what each approach is actually doing in the analysis.
 
+> In addition, I don’t really understand that, in an unbalanced design, variables can share variance.
 
+
+## Sampling
+
+> Is there a less is more approach sometimes when it comes to sampling data. For example not taking certain data points like leaf width and leaf length because they would be so correlated or is taking multiple data points and then correcting for the relationship more beneficial?
+
+- Dimensionality reduction coming soon
 
 
 ## Visualization of Hierarchical Modeling
@@ -344,4 +387,3 @@ p +
     linewidth = 1.5
   )
 ```
-
