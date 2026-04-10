@@ -27,12 +27,13 @@ library(see)
 theme_set(theme_cowplot(font_size = 18))
 ```
 
+
 ## Topics for Today
 
 - PC 2 clarifications
 - Linear model interpretations
 - Transformations
-- PS 8, Loops
+- Loops
 
 
 ## PC 2 Clarifications
@@ -61,12 +62,12 @@ See Unit 8 naked mole-rats example.
 
 ## Parts of a linear model summary
 
-![](https://i.imgur.com/P8034XE.jpg){fig-align="center" width=90%}
+![](../images/P8034XE.png){fig-align="center" width=90%}
 
 
 ## Parts of a linear model summary
 
-![](https://i.imgur.com/38J8BwL.jpg){fig-align="center" width=90%}
+![](../images/38J8BwL.png){fig-align="center" width=90%}
 
 
 ## Parts of a linear model summary
@@ -74,11 +75,11 @@ See Unit 8 naked mole-rats example.
 ![](https://i.imgur.com/oIqWNJg.jpg){fig-align="center" width=90%}
 
 
-## Transformations
+## Transformations {.smaller}
 
 > Since there are a variety of transformations that can be used, is there a "gold standard" per se? Does it depend on the data, and is it recommended to test out a few?
 
-> One thing that tripped me up during problem set 8 was the heart transplantation activity, where we had to transform survival_days to correct for unequal variances before running an ANOVA. I ended up using a log transformation because that is the main transformation we have practiced, but I do not fully understand how transforming the data helps satisfy the assumptions of a linear model. I may be overthinking it, but I am still confused about why this works and how to decide which transformation is most appropriate.
+> One thing that tripped me up during problem set 8 was the heart transplantation activity, where we had to transform survival_days to correct for unequal variances before running an ANOVA. I ended up using a log transformation ..., but I do not fully understand how transforming the data helps satisfy the assumptions of a linear model. I may be overthinking it, but I am still confused about why this works and how to decide which transformation is most appropriate.
 
 
 ## Transformations for normality
@@ -199,7 +200,7 @@ Tri |>
   mutate(name = fct_inorder(name)) |>
   ggplot(aes(value)) +
   geom_histogram(bins = 50, fill = "steelblue") +
-  facet_grid(name ~ .) +
+  facet_wrap("name", nrow = 2, ncol = 2, scales = "free") +
   labs(y = "Count")
 ```
 
@@ -211,6 +212,12 @@ Tri <- Tri |> mutate(log_Tri = log(Triglycerides))
 
 ggplot(Tri, aes(x = Waist, y = log_Tri)) +
   geom_point(color = "steelblue") +
+    geom_smooth(
+    formula = y ~ x,
+    method = "lm",
+    se = FALSE,
+    color = "firebrick4"
+  ) +
   labs(x = "Waist Circumference (cm)", y = "ln Serum Triglycerides (mg/dL)")
 
 ```
@@ -263,6 +270,7 @@ check_normality(fm1)
 check_outliers(fm1)
 ```
 
+
 ## Multicollinearity
 
 > I feel like I know that it's bad when predictors are correlated with one another and what the model out put looks like, but I don't know what to do to fix it should I encounter it. Do I just drop a predictor, or do seperate analysis?
@@ -273,9 +281,6 @@ check_outliers(fm1)
 ## Factor levels
 
 > I am having difficulty with setting the base level of the factor in the first part of the problem set. Should I use fct_relevel()? Could we please go over an example of how to tackle this?
-
-
-## Factor levels
 
 ```{r}
 #| echo: true
@@ -295,8 +300,9 @@ Tri <- Tri |> mutate(Sex = fct_relevel(Sex, "Male"))
 levels(Tri$Sex)
 ```
 
+. . .
 
-## Factor levels
+Set levels when the factor is created:
 
 ```{r}
 #| echo: true
@@ -310,7 +316,7 @@ levels(Tri$Sex)
 ## `fct_....` functions
 
 - `fct_relevel()`: Rearrange
-- `fct_collapse()`: Combine levels
+- `fct_collapse()`: Combine levels into a single level
 - `fct_drop()`: Drop unused levels
 - `fct_infreq()`: Order by frequency
 - `fct_inorder()`: Order by appearance
@@ -320,6 +326,7 @@ levels(Tri$Sex)
 ## PS 8
 
 > I am not sure I understand the purpose/application of pmap_dbl function, would mutate accomplish the same thing?
+
 
 ## Loops
 
