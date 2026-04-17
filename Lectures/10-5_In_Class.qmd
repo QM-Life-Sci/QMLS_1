@@ -28,18 +28,20 @@ library(wesanderson)
 theme_set(theme_classic())
 ```
 
-Today
+## Today
 
-  - Course Evaluations
-  - Multilevel Models
-  - General Model Comparison
-  - AIC
-  - Cross Validation
+- Course Evaluations coming soon online at [evaluation.missouri.edu](evaluation.missouri.edu)
+    - Separate evaluations for each of us (sorry, thank you).
+- Multilevel Models
+- General Model Comparison
+- AIC
+- Cross Validation
 
 
 ## Multilevel Models
 
 > I want to know more about using a multilevel model. If a block has more correlation than a treatment should you use a multilevel model?
+
 
 ## What do multilevel models do?
 
@@ -64,20 +66,46 @@ ZP <- read_csv("../data/Zooplankton.csv", col_types = "cdd") |>
 ZP |>
   ggplot(aes(x = Block, y = Zooplankton, color = Treatment)) +
   geom_point(size = 5) +
+  # scale_y_continuous(limits = c(0, 16)) +
   scale_color_bmj()
 ```
 
-## Model Comparison {.smaller}
+
+## What do multilevel models do?
+
+```{r}
+ZP <- read_csv("../data/Zooplankton2.csv", col_types = "cdd") |>
+  mutate(Treatment = factor(Treatment),
+         Block = factor(Block))
+
+ZP |>
+  ggplot(aes(x = Block, y = Zooplankton, color = Treatment)) +
+  geom_point(size = 5) +
+  # scale_y_continuous(limits = c(0, 16)) +
+  scale_color_bmj()
+```
+
+
+## Multilevel models for different sample size
+
+> If we were modeling positive cancerous lymph nodes and included different variables as predictors like the number of dissected nodes, is this considered nested, making the likelihood test appropriate? also if model fit is improved with the addition of number of dissected nodes for example can a causal relationship be interpreted? 
+
+
+## Model Comparison
 
 > Is there a limit to how different models can be that are being compared? Or does the complexity of the different models weigh in on the comparison method?
+
+
+## Model Comparison {.smaller}
+
+For example...
 
 > What are the circumstances where something like a likelihood ratio test or AIC suggests one model is optimal, but it would be better to use another in the comparison instead? 
 
 > Do model comparisons always give you a clear preference between models? What if you get all non-significant p-values in a likelihood ration tests or very close AIC values when doing AIC comparisons? 
 
-> could we go over more examples of large models and judgment calls around how many points to include. choosing which to build and when to even include interaction models. 
+> Could we go over more examples of large models and judgment calls around how many points to include? choosing which to build and when to even include interaction models. 
 
-> If we were modeling positive cancerous lymph nodes and included different variables as predictors like the number of dissected nodes, is this considered nested, making the likelihood test appropriate? also if model fit is improved with the addition of number of dissected nodes for example can a causal relationship be interpreted? 
 
 ## Why model comparison?
 
@@ -85,18 +113,22 @@ ZP |>
     - *Hypotheses* of relationships among predictors
 - Balance underfitting (poor prediction) and overfitting (poor prediction)
 
+
 ## General Wonderings
 
 - When to use each tool?
 - What to do when the choice between models is not clear cut?
 
+
 ## Quiz 10-1
 
 > Can we go over the answers to quiz 10-1?
 
+
 ## Quiz 10-2
 
-> For the models about species richness that were in the quizzes, was there a reason that models with just Area or distance to ecuador weren't included? Shouldn't those also be compared to the model with both of them to ensure that you aren't overfitting?
+> For the models about species richness that were in the quizzes, was there a reason that models with just Area or distance to Ecuador weren't included? Shouldn't those also be compared to the model with both of them to ensure that you aren't overfitting?
+
 
 ## AIC {.smaller}
 
@@ -108,13 +140,16 @@ ZP |>
 
 > Would AIC work the same when comparing non-similar model methods? For example if I'm trying to decide whether a gam or an lm is a better model.
 
+
 ## Cross Validation
 
 > I'm also struggling with Cross validation. I found the last video challenging. I'm also having trouble creating simulations using R. 
 
 > Generally I am struggling with cross validation. If one model is better for some observations but worse overall, how do we decide which model to choose? I guess what factors become most important in this analysis of model of best fit
 
+
 ## Quiz 10-4
+
 
 ## Problem Set!
 
@@ -167,3 +202,115 @@ cvFit(mod3, data = M, y = M$Energy, K = 5, R = 100)
 
 ```
 
+
+# Extra slides
+
+## What do multilevel models do?
+
+```{r}
+ZP <- read_csv("../data/Zooplankton.csv", col_types = "cdd") |>
+  mutate(Treatment = factor(Treatment),
+         Block = factor(Block))
+
+p1 <- ZP |>
+  ggplot(aes(x = Block, y = Zooplankton, color = Treatment)) +
+  geom_point(size = 5) +
+  # scale_y_continuous(limits = c(0, 16)) +
+  scale_color_bmj()
+p1
+```
+
+
+## Two models
+
+"Flat" model with `lm()`:
+
+```{r}
+#| echo: true
+
+fm1 <- lm(Zooplankton ~ Treatment, data = ZP)
+```
+
+Multilevel model with `lme()`:
+
+```{r}
+#| echo: true
+#| message: false
+
+library(nlme)
+fm2 <- lme(Zooplankton ~ Treatment, random = ~ 1 | Block, data = ZP)
+```
+
+
+## Model 1
+
+```{r}
+#| echo: true
+
+summary(fm1)
+car::Anova(fm1, type = "III")
+```
+
+
+## What is model 1 really doing?
+
+```{r}
+ggplot(ZP, aes(x = Treatment, y = Zooplankton, color = Treatment)) +
+  geom_point(size = 5, position = position_jitter(width = 0.15, seed = 34667)) +
+  # scale_y_continuous(limits = c(0, 16)) +
+  scale_color_bmj()
+```
+
+## Model 2
+
+```{r}
+#| echo: true
+
+summary(fm2)
+car::Anova(fm2, type = "III")
+```
+
+
+## Predictions
+
+```{r}
+#| echo: true
+
+grid <- crossing(Treatment = levels(ZP$Treatment),
+                 Block = levels(ZP$Block))
+
+fm1_pred <- grid |> 
+  mutate(Pred_Zoo = predict(fm1, newdata = grid),
+         Model = "lm Model")
+
+fm2_pred <- grid |> 
+  mutate(Pred_Zoo = predict(fm2, newdata = grid),
+         Model = "lme Model")
+
+Preds <- bind_rows(fm1_pred, fm2_pred)
+```
+
+
+## Predictions
+
+```{r}
+p1 +
+  geom_point(data = Preds, aes(x = Block, y = Pred_Zoo,
+                        color = Treatment, shape = Model)) +
+  scale_shape_manual(values = c(2, 3))
+```
+
+
+## What do multilevel models do?
+
+```{r}
+ZP <- read_csv("../data/Zooplankton2.csv", col_types = "cdd") |>
+  mutate(Treatment = factor(Treatment),
+         Block = factor(Block))
+
+ZP |>
+  ggplot(aes(x = Block, y = Zooplankton, color = Treatment)) +
+  geom_point(size = 5) +
+  # scale_y_continuous(limits = c(0, 16)) +
+  scale_color_bmj()
+```
