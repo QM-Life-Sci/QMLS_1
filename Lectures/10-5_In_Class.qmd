@@ -28,16 +28,18 @@ library(wesanderson)
 theme_set(theme_classic())
 ```
 
+Today
 
-From past selves - explain multi level models with zooplankton - see notes
-Alter PS 11 - see notes
+  - Course Evaluations
+  - Multilevel Models
+  - General Model Comparison
+  - AIC
+  - Cross Validation
 
-## PS 09
 
-- In PS9, There are Multiple R-squared: 0.829 and Adjusted R-squared: 0.797. What is the difference between these two? How to interpret the data from this? 
-- For PS09, why do we sometimes do an anova on our models but other times just look at the summary of the model? When do you know which to use or look at for analysis?
-- The last part of PC09, specifically the difference between `lm()` and `glmmTMB()`.
+## Multilevel Models
 
+> I want to know more about using a multilevel model. If a block has more correlation than a treatment should you use a multilevel model?
 
 ## What do multilevel models do?
 
@@ -65,14 +67,17 @@ ZP |>
   scale_color_bmj()
 ```
 
+## Model Comparison {.smaller}
 
-## Sums of Squares
+> Is there a limit to how different models can be that are being compared? Or does the complexity of the different models weigh in on the comparison method?
 
-- Could you reiterate the difference between the different types of sums of squares?
+> What are the circumstances where something like a likelihood ratio test or AIC suggests one model is optimal, but it would be better to use another in the comparison instead? 
 
-- Lecture 9-3
-- Course resources
+> Do model comparisons always give you a clear preference between models? What if you get all non-significant p-values in a likelihood ration tests or very close AIC values when doing AIC comparisons? 
 
+> could we go over more examples of large models and judgment calls around how many points to include. choosing which to build and when to even include interaction models. 
+
+> If we were modeling positive cancerous lymph nodes and included different variables as predictors like the number of dissected nodes, is this considered nested, making the likelihood test appropriate? also if model fit is improved with the addition of number of dissected nodes for example can a causal relationship be interpreted? 
 
 ## Why model comparison?
 
@@ -80,86 +85,38 @@ ZP |>
     - *Hypotheses* of relationships among predictors
 - Balance underfitting (poor prediction) and overfitting (poor prediction)
 
+## General Wonderings
 
-## Model Comparison
+- When to use each tool?
+- What to do when the choice between models is not clear cut?
 
-- I understand that the determination of a preferred model from a likelihood ratio test is based on finding a model that is not improved by increased complexity, but I would like to go over how to identify from the model summary results which models are not being impacted by a complexity increase like what we did in Quiz 10-2. Is it just a matter of comparing the extent of changes in the estimated coefficient values to see when they stop changing significantly, or is there another process we would use to identify which model should be considered preferred under these testing conditions?
+## Quiz 10-1
 
+> Can we go over the answers to quiz 10-1?
 
-## Likelihood Ratio Test
+## Quiz 10-2
 
-```
-Model 1: Energy ~ 1
-Model 2: Energy ~ Mass
-Model 3: Energy ~ Mass + Caste
-Model 4: Energy ~ Mass * Caste
-Model 5: Energy ~ Mass * Caste + Noise
+> For the models about species richness that were in the quizzes, was there a reason that models with just Area or distance to ecuador weren't included? Shouldn't those also be compared to the model with both of them to ensure that you aren't overfitting?
 
-  #Df   LogLik Df   Chisq Pr(>Chisq)    
-1   2 -14.7581                          
-2   3  -9.1258  1 11.2646   0.000790 ***
-3   4  -5.5530  1  7.1456   0.007515 ** 
-4   5  -4.9871  1  1.1318   0.287392    
-5   6  -4.7276  1  0.5190   0.471270    
-```
+## AIC {.smaller}
 
+> I am still confused about AICc weights. When should we mainly look at Delta_AICc, and when should we look at  AICc weights?
 
-## Model comparison vs. Variable selection
+> So if AIC and cross validation choose different models what strategies can we use to trust one more. I know you touch this in 10-3 but still seems confusing.
 
-> I understand how our choice of predictors in a model will impact its performance, but what strategies can we use to select the most effective predictors?
+> Can we please go over AIC weights and change in AIC, and AIC table interpretation? (slide 11 and 18, 10-3)
 
-- Compare among a set of models based on *hypotheses*
-- *Think* about your predictors
-
-Avoid variable selection
-
-- Stepwise AIC, etc.
-
-
-## Model Comparison
-
-- Are there instances where you might choose the simpler (potentially more generalizable) over the model with the absolute best fit? If I did the last Quiz (4) correctly, both models were very close in predicting the number of species on the island. So, *could you default to the model with fewer predictors, even if the one with greater complexity is just a bit better? Are there any "rules" around this type of decision*?
-- I'd love to revisit the cross validation approach for deciding what predictors are good fits for a model. *How do I differentiate a real effect or a scenario where the predictor is just adding noise?*
-
-
-## Model Comparison
-
-- When to use each model comparison method, which is the best?
-
-
-## Likelihood Ratio Tests
-
-- Why is the $\chi^2$ distribution used for likelihood model comparison instead of normal distribution? Is the difference between the likelihoods the value that will be used in the distribution?
-
-
-## AIC
-
-- Can you explain again about the weight in AICc? I got a bit confused with that one. Is delta AICc the difference between the two models compared?
-- I am confused about some of the details on delta AIC values. Why are the delta AIC values not negative numbers? If the lowest AIC is best, and the delta AIC is the lowest AIC minus the AIC of another model that would be higher, it seems that the value would be negative. Additionally, is the model that has the value of 0 for delta AICc always the best model? 
-
-
-## AIC
-
-- AICc == AIC adjusted for the number of *observations*
-
-```
-Model selection based on AICc:
-
-    K   AICc Delta_AICc AICcWt Cum.Wt     LL
-fm2 4 100.21       0.00   0.91   0.91 -43.88
-fm3 5 105.21       5.01   0.07   0.99 -43.86
-fm0 2 110.25      10.04   0.01   0.99 -52.58
-fm4 6 110.82      10.61   0.00   1.00 -43.41
-fm1 3 113.30      13.09   0.00   1.00 -52.45
-fm5 7 119.48      19.27   0.00   1.00 -43.40
-```
-
+> Would AIC work the same when comparing non-similar model methods? For example if I'm trying to decide whether a gam or an lm is a better model.
 
 ## Cross Validation
 
-- For cross validation, I understand we need training and test sets to some from the same population, but do they also need to come from the same group? Ex. if I have one group of injured and one group of sham, do I need to perform cross validation on models per group or for all the data?
-- How would you choose what subsets of your population to use for each model?
-- Quiz 4
+> I'm also struggling with Cross validation. I found the last video challenging. I'm also having trouble creating simulations using R. 
+
+> Generally I am struggling with cross validation. If one model is better for some observations but worse overall, how do we decide which model to choose? I guess what factors become most important in this analysis of model of best fit
+
+## Quiz 10-4
+
+## Problem Set!
 
 
 ## Energy expenditure in naked mole rats
