@@ -261,6 +261,7 @@ ggplot(ZP, aes(x = Treatment, y = Zooplankton, color = Treatment)) +
   scale_color_bmj()
 ```
 
+
 ## Model 2
 
 ```{r}
@@ -300,17 +301,3 @@ p1 +
   scale_shape_manual(values = c(2, 3))
 ```
 
-
-## What do multilevel models do?
-
-```{r}
-ZP <- read_csv("../data/Zooplankton2.csv", col_types = "cdd") |>
-  mutate(Treatment = factor(Treatment),
-         Block = factor(Block))
-
-ZP |>
-  ggplot(aes(x = Block, y = Zooplankton, color = Treatment)) +
-  geom_point(size = 5) +
-  # scale_y_continuous(limits = c(0, 16)) +
-  scale_color_bmj()
-```
