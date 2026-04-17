@@ -42,7 +42,7 @@ Try adding `scale_color_d3()`, `scale_color_aaas()`, and others to your plots.
 
 ## Nested Sites in Streams
 
-Snyder et al. (2015)^[Snyder CD, Hitt NP, Young JA (2015) Accounting for groundwater in stream fish thermal habitat responses to climate change. *Ecological Applications* 25(5): 1397-1419. http://datadryad.org/resource/doi:10.5061/dryad.th6g8] collected data on the response of water temperature to air temperature to better understand the time scale of how changing air temperature affects water temperature (e.g., as a result of global climate change). The data they collected are in the file `Streams.xlsx`, the raw data file provided by the authors on Dryad.
+Snyder et al. (2015)^[Snyder CD, Hitt NP, Young JA (2015) Accounting for groundwater in stream fish thermal habitat responses to climate change. *Ecological Applications* 25(5): 1397-1419. [Data](http://datadryad.org/resource/doi:10.5061/dryad.th6g8)] collected data on the response of water temperature to air temperature to better understand the time scale of how changing air temperature affects water temperature (e.g., as a result of global climate change). The data they collected are in the file `Streams.xlsx`, the raw data file provided by the authors on Dryad.
 
 One goal is to be able to predict water temperature only using air temperature (since air temperature is more efficiently measured at large scale).
 
@@ -53,8 +53,7 @@ Load the `TemperatureData` sheet from the `Streams.xlsx` file. Look at the struc
 
 ```{r}
 # FIXME
-Temp_Data <- read_excel("../data/Streams.xlsx",
-                        sheet = "TemperatureData")
+Temp_Data <- read_excel("../data/Streams.xlsx", sheet = "TemperatureData")
 ```
 
 Now load the `SiteData` sheet from the Excel file. It has four columns, including the mapping from `Stream_Name` to `Site`. We need to merge the two tibbles together. Because they share a column `Site`, we can match rows, yielding a single tibble.
@@ -86,18 +85,19 @@ We then need to do one more thing: make a new variable that converts `Date` into
 ```{r}
 # FIXME
 M <- M |>
-  mutate(Site = factor(Site),
-         Date = factor(Date),
-         Stream_Name = factor(Stream_Name),
-         Day = as.numeric(Date))
+  mutate(
+    Site = factor(Site),
+    Date = factor(Date),
+    Stream_Name = factor(Stream_Name),
+    Day = as.numeric(Date)
+  )
 ```
 
 Because not all observations have observed air temperature, first we should check for correlation between observed and predicted air temperatures. Calculate the correlation between the two. We could filter out missing data, but instead just provide the argument `use = "pairwise.complete.obs"` to `cor()`, which will tell the function to use only complete pairs for the calculation. If you find that the correlation is `NA`, that means R is using incomplete cases. Any correlation between data with `NA`s is `NA`.
 
 ```{r}
 # FIXME
-cor(M$AirTemp_observed, M$AirTempPredicted,
-    use = "pairwise.complete.obs")
+cor(M$AirTemp_observed, M$AirTempPredicted, use = "pairwise.complete.obs")
 ```
 
 The correlation should be pretty high (*r* = 0.95). So this means that we can safely use predicted air temperature (data which is complete) as a proxy for actual air temperature (data which is incomplete).
@@ -129,7 +129,7 @@ What general patterns do you see, comparing the two plots?
 
 We want to fit two models to these data. In both models we want to model water temperature by predicted air temperature. The difference between the models will be in the random effects.
 
-We have an added wrinkle with these data that we have not yet encountered: nesting. Each site is only associated with one stream, so we need to tell R to only expect sites in some stream names. In an R formula, you can designate nesting using `/`. If B is nested in A, this would be coded as `A/B`.^[http://conjugateprior.org/2013/01/formulae-in-r-anova/ has a good overview of R's model formula, especially for more complicated relationships than just additive or multiplicative models.]
+We have an added wrinkle with these data that we have not yet encountered: nesting. Each site is only associated with one stream, so we need to tell R to only expect sites in some stream names. In an R formula, you can designate nesting using `/`. If B is nested in A, this would be coded as `A/B`. [Formulae in R](http://conjugateprior.org/2013/01/formulae-in-r-anova/) has a good overview of R's model formula, especially for more complicated relationships than just additive or multiplicative models.
 
 1. Fit a multilevel model where the intercept for site nested in stream is random (`~ 1 | ...`). This model allows each `Site` to have it's own intercept, which is nested within `Stream_Name`. But this value does not change over time.
 2. Fit a multilevel model where the intercept for site nested in stream is random and day is also included as a continuous random predictor (`~ Day | ...`).
@@ -140,20 +140,24 @@ We will use the `lme()` function from the `nlme` packages. This is an older pack
 
 This is the zooplankton data from PS 09. This model has a main effect of `Treatment` and a random intercept effect for `Block`.
 
-When you fit the model using `lme()`, include the option `method = "ML"` to use maximum likelihood instead of the default of restricted maximum likelihood^[We need to use ML instead of REML so that the resulting likelihoods are comparable]. Save both models to objects and take a look at the summaries to make sure that you are getting output that makes sense. 
+When you fit the model using `lme()`, include the option `method = "ML"` to use maximum likelihood instead of the default of restricted maximum likelihood^[We need to use ML instead of REML so that the resulting likelihoods are comparable]. Save both models to objects and take a look at the summaries to make sure that you are getting output that makes sense.
 
 ```{r}
 # FIXME
-fm1 <- lme(WaterTemp ~ AirTempPredicted,
-           random = ~ 1 | Stream_Name/Site,
-           data = M,
-           method = "ML")
+fm1 <- lme(
+  WaterTemp ~ AirTempPredicted,
+  random = ~ 1 | Stream_Name / Site,
+  data = M,
+  method = "ML"
+)
 summary(fm1)
 
-fm2 <- lme(WaterTemp ~ AirTempPredicted,
-           random = ~ Day | Stream_Name/Site,
-           data = M,
-           method = "ML")
+fm2 <- lme(
+  WaterTemp ~ AirTempPredicted,
+  random = ~ Day | Stream_Name / Site,
+  data = M,
+  method = "ML"
+)
 summary(fm2)
 ```
 
@@ -179,15 +183,18 @@ Fit a third model that is the same as model 2, but with the addition of `Day` as
 
 ```{r}
 # FIXME
-fm3 <- lme(WaterTemp ~ AirTempPredicted + Day,
-           random = ~ Day | Stream_Name/Site,
-           data = M, method = "ML")
+fm3 <- lme(
+  WaterTemp ~ AirTempPredicted + Day,
+  random = ~ Day | Stream_Name / Site,
+  data = M,
+  method = "ML"
+)
 aictab(list(fm1, fm2, fm3))
 ```
 
 What do you learn? Remember that AIC can only compare models that you fit.
 
-> This model is much preferred ($\Delta$AIC = 40) over the first two, with 100% of the Akaike model weight. So there appears to be a strong pattern of increasing water temperature with day (slope = 0.05, but with a very small standard error, and $P$ is < 0.001). Modeling this relationship as a global slope with deviations by site is prefered over modeling each site separately, which makes sense from a biological standpoint: it's likely that there is an overall pattern of increasing temperature with variations from site to site.
+> This model is much preferred ($\Delta$AIC = 40) over the first two, with 100% of the Akaike model weight. So there appears to be a strong pattern of increasing water temperature with day (slope = 0.05, but with a very small standard error, and $P$ is < 0.001). Modeling this relationship as a global slope with deviations by site is preferred over modeling each site separately, which makes sense from a biological standpoint: it's likely that there is an overall pattern of increasing temperature with variations from site to site.
 
 
 ## Neandertal Brains
@@ -200,7 +207,7 @@ The file `NeandertalBrainSize.csv` contains data on estimated log body mass, log
 
 ```{r}
 # FIXME
-NBS <- read_csv("../data/NeandertalBrainSize.csv", col_types = "ddc") |> 
+NBS <- read_csv("../data/NeandertalBrainSize.csv", col_types = "ddc") |>
   mutate(Species = fct_relevel(Species, "Recent"))
 ```
 
@@ -208,15 +215,20 @@ Make a scatterplot of brain size vs. body mass, with points colored by species. 
 
 ```{r}
 # FIXME
-P <- NBS |> ggplot(aes(ln_Mass, ln_Brain, color = Species)) +
+P <- NBS |>
+  ggplot(aes(ln_Mass, ln_Brain, color = Species)) +
   geom_point(size = 3) +
   scale_color_d3() +
   guides(color = guide_legend(position = "inside")) +
-  theme(legend.position = c(0.75, 0.12),
-        legend.background = element_rect(linewidth = 0.5,
-                                         color = "black",
-                                         linetype = "solid"),
-        legend.margin=margin(c(2, 2, 2, 2))) +
+  theme(
+    legend.position = c(0.75, 0.12),
+    legend.background = element_rect(
+      linewidth = 0.5,
+      color = "black",
+      linetype = "solid"
+    ),
+    legend.margin = margin(c(2, 2, 2, 2))
+  ) +
   labs(x = "ln Body Mass", y = "ln Brain Size")
 P
 ```
@@ -256,7 +268,7 @@ aictab(list(fm1, fm2, fm3))
 
 What is your interpretation of the results?
 
-> The additive and interaction models are both well supported. 61% of the Akaike weight is on the additive model, and 30% on the interaction model. They both deserve discussion. 
+> The additive and interaction models are both well supported. 61% of the Akaike weight is on the additive model, and 30% on the interaction model. They both deserve discussion.
 
 In lecture, we wrote out own code to do cross-validation. In practice, you would use code from others to automate this process, which is more general than any specific code you would write. A good package for cross-validation is `cvTools`. Install this package.
 
@@ -280,7 +292,7 @@ What do the results indicate? Which model has the lowest error?
 
 > The additive model has the lowest root mean squared error (RMSE = 0.071) relative to the other models (0.073 and 0.73). Your results might differ slightly due to sampling variation resulting from the random splits of the data.
 
-Try comparing the models with leave-one-out cross-validating, by setting `K` to the number of rows of data. 
+Try comparing the models with leave-one-out cross-validating, by setting `K` to the number of rows of data.
 
 ```{r}
 # FIXME
@@ -297,7 +309,7 @@ Compare the results of the likelihood ratio test, the AICc comparison, and cross
 
 > They all agree in the model comparison results and interpretation, while providing different information. LRT gives you a yes/no *P*-value comparison among models (and not much else). AICc and Akaike model weights give a little more nuance: most of the model weight is on the additive model, but ~30% is on the interaction model, so it deserves discussion as well. Finally, cross-validation gives a comparison of out of sample prediction error for the models. This final comparison shows that the root mean squared error is actually pretty small across all models.
 
-Finally, let's add predicted lines for the additive model. To do this, you need to predict brain size across a range of body masses for each species. The code below does this. Change `eval: false` to `eval: true` to have R run the code when you knit. 
+Finally, let's add predicted lines for the additive model. To do this, you need to predict brain size across a range of body masses for each species. The code below does this. Change `eval: false` to `eval: true` to have R run the code when you knit.
 
 Study the code and see if you can figure out what it is doing. Note that we have called the data `NBS`, so you might need to change that below to get this code to run.
 
@@ -305,17 +317,20 @@ Study the code and see if you can figure out what it is doing. Note that we have
 #| eval: true
 ## FIXME set above to eval: false
 
-pred <- crossing(ln_Mass = seq(3.9, 4.5, length.out = 100),
-                 Species = levels(NBS$Species))
-pred <- pred |> 
+pred <- crossing(
+  ln_Mass = seq(3.9, 4.5, length.out = 100),
+  Species = levels(NBS$Species)
+)
+pred <- pred |>
   mutate(ln_Brain_pred = predict(fm2, newdata = pred))
 
 ggplot() +
-  geom_point(data = NBS, aes(ln_Mass, ln_Brain, color = Species),
-             size = 3) +
-  geom_line(data = pred, aes(ln_Mass, ln_Brain_pred, color = Species),
-            linewidth = 1.5) +
+  geom_point(data = NBS, aes(ln_Mass, ln_Brain, color = Species), size = 3) +
+  geom_line(
+    data = pred,
+    aes(ln_Mass, ln_Brain_pred, color = Species),
+    linewidth = 1.5
+  ) +
   labs(x = "ln Body Mass", y = "ln Brain Size")
 
 ```
-

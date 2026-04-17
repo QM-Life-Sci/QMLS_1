@@ -15,7 +15,6 @@ format:
 #| message: false
 #| warning: false
 
-
 # Data
 #   - Streams.xlsx
 #   - NeandertalBrainSize.csv
@@ -29,7 +28,7 @@ Try adding `scale_color_d3()`, `scale_color_aaas()`, and others to your plots.
 
 ## Nested Sites in Streams
 
-Snyder et al. (2015)^[Snyder CD, Hitt NP, Young JA (2015) Accounting for groundwater in stream fish thermal habitat responses to climate change. *Ecological Applications* 25(5): 1397-1419. http://datadryad.org/resource/doi:10.5061/dryad.th6g8] collected data on the response of water temperature to air temperature to better understand the time scale of how changing air temperature affects water temperature (e.g., as a result of global climate change). The data they collected are in the file `Streams.xlsx`, the raw data file provided by the authors on Dryad.
+Snyder et al. (2015)^[Snyder CD, Hitt NP, Young JA (2015) Accounting for groundwater in stream fish thermal habitat responses to climate change. *Ecological Applications* 25(5): 1397-1419. [Data](http://datadryad.org/resource/doi:10.5061/dryad.th6g8)] collected data on the response of water temperature to air temperature to better understand the time scale of how changing air temperature affects water temperature (e.g., as a result of global climate change). The data they collected are in the file `Streams.xlsx`, the raw data file provided by the authors on Dryad.
 
 One goal is to be able to predict water temperature only using air temperature (since air temperature is more efficiently measured at large scale).
 
@@ -86,12 +85,12 @@ Once you get your plot working, make the same plot for water temperature (copy t
 
 What general patterns do you see, comparing the two plots?
 
-> 
+>
 
 
 We want to fit two models to these data. In both models we want to model water temperature by predicted air temperature. The difference between the models will be in the random effects.
 
-We have an added wrinkle with these data that we have not yet encountered: nesting. Each site is only associated with one stream, so we need to tell R to only expect sites in some stream names. In an R formula, you can designate nesting using `/`. If B is nested in A, this would be coded as `A/B`.^[http://conjugateprior.org/2013/01/formulae-in-r-anova/ has a good overview of R's model formula, especially for more complicated relationships than just additive or multiplicative models.]
+We have an added wrinkle with these data that we have not yet encountered: nesting. Each site is only associated with one stream, so we need to tell R to only expect sites in some stream names. In an R formula, you can designate nesting using `/`. If B is nested in A, this would be coded as `A/B`. [Formulae in R](http://conjugateprior.org/2013/01/formulae-in-r-anova/) has a good overview of R's model formula, especially for more complicated relationships than just additive or multiplicative models.
 
 1. Fit a multilevel model where the intercept for site nested in stream is random (`~ 1 | ...`). This model allows each `Site` to have it's own intercept, which is nested within `Stream_Name`. But this value does not change over time.
 2. Fit a multilevel model where the intercept for site nested in stream is random and day is also included as a continuous random predictor (`~ Day | ...`).
@@ -102,7 +101,7 @@ We will use the `lme()` function from the `nlme` packages. This is an older pack
 
 This is the zooplankton data from PS 09. This model has a main effect of `Treatment` and a random intercept effect for `Block`.
 
-When you fit the model using `lme()`, include the option `method = "ML"` to use maximum likelihood instead of the default of restricted maximum likelihood^[We need to use ML instead of REML so that the resulting likelihoods are comparable]. Save both models to objects and take a look at the summaries to make sure that you are getting output that makes sense. 
+When you fit the model using `lme()`, include the option `method = "ML"` to use maximum likelihood instead of the default of restricted maximum likelihood^[We need to use ML instead of REML so that the resulting likelihoods are comparable]. Save both models to objects and take a look at the summaries to make sure that you are getting output that makes sense.
 
 ```{r}
 
@@ -112,7 +111,7 @@ Looking at the `summary()` of each, you should see sections in the random effect
 
 Explain in non-mathematical terms what the addition of `Day` in the random effects part of the formula accomplishes.
 
-> 
+>
 
 
 Load the `AICcmodavg` package and use the `aictab()` function to compare the two models you fit above.
@@ -123,7 +122,7 @@ Load the `AICcmodavg` package and use the `aictab()` function to compare the two
 
 Interpret the difference in AICc values and Akaike weights (`AICcWt`). Does the model comparison make sense in light of your understanding of the difference between the two models?
 
-> 
+>
 
 
 Fit a third model that is the same as model 2, but with the addition of `Day` as an additive, main effect. This model fits an overall slope to `Day` that is shared across all streams, with the random effects slope now an offset from the overall slope. Then use `aictab()` to compare all three models.
@@ -134,12 +133,13 @@ Fit a third model that is the same as model 2, but with the addition of `Day` as
 
 What do you learn? Remember that AIC can only compare models that you fit.
 
-> 
+>
 
 
 ## Neandertal Brains
 
 There are well-known differences in both body size between modern humans and Neanderthals. But are there differences in brain size as well, adjusted for body size. Ruff and colleagues (1997) tried to answer just that question.^[Ruff, C.B., E. Trinkaus, and T.W. Holliday. 1997. Body mass and encephalization in Pleistocene *Homo*. *Nature* 387: 173-176.]
+
 
 ### Activity
 
@@ -173,7 +173,7 @@ Use the `lrtest()` function from the `lmtest` package to perform a likelihood ra
 
 What is your interpretation of the likelihood ratio test?
 
-> 
+>
 
 
 Now use the `aictab()` function from the `AICcmodavg` package to compare AICc for the three models.
@@ -184,7 +184,7 @@ Now use the `aictab()` function from the `AICcmodavg` package to compare AICc fo
 
 What is your interpretation of the results?
 
-> 
+>
 
 
 In lecture, we wrote out own code to do cross-validation. In practice, you would use code from others to automate this process, which is more general than any specific code you would write. A good package for cross-validation is `cvTools`. Install this package.
@@ -203,10 +203,10 @@ Run 10-fold cross-validation on the three models with 100 replicates of each.
 
 What do the results indicate? Which model has the lowest error?
 
-> 
+>
 
 
-Try comparing the models with leave-one-out cross-validating, by setting `K` to the number of rows of data. 
+Try comparing the models with leave-one-out cross-validating, by setting `K` to the number of rows of data.
 
 ```{r}
 
@@ -214,30 +214,35 @@ Try comparing the models with leave-one-out cross-validating, by setting `K` to 
 
 How do these results compare to 10-fold CV?
 
-> 
+>
 
 
 Compare the results of the likelihood ratio test, the AICc comparison, and cross-validation. What information does each provide you?
 
-> 
+>
 
 
-Finally, let's add predicted lines for the additive model. To do this, you need to predict brain size across a range of body masses for each species. The code below does this. Change `eval: false` to `eval: true` to have R run the code when you knit. 
+Finally, let's add predicted lines for the additive model. To do this, you need to predict brain size across a range of body masses for each species. The code below does this. Change `eval: false` to `eval: true` to have R run the code when you knit.
 
 Study the code and see if you can figure out what it is doing. Note that we have called the data `NBS`, so you might need to change that below to get this code to run.
 
 ```{r}
 #| eval: false
 
-pred <- crossing(ln_Mass = seq(3.9, 4.5, length.out = 100),
-                 Species = levels(M$Species))
-pred <- pred |> 
+pred <- crossing(
+  ln_Mass = seq(3.9, 4.5, length.out = 100),
+  Species = levels(M$Species)
+)
+pred <- pred |>
   mutate(ln_Brain_pred = predict(fm2, newdata = pred))
 
 ggplot(aes(ln_Mass, ln_Brain, color = Species)) +
   geom_point(size = 3) +
-  geom_line(data = pred, aes(ln_Mass, ln_Brain_pred, color = Species),
-          linewidth = 1.5) +
+  geom_line(
+    data = pred,
+    aes(ln_Mass, ln_Brain_pred, color = Species),
+    linewidth = 1.5
+  ) +
   labs(x = "ln Body Mass", y = "ln Brain Size")
 
 ```
