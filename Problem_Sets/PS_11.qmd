@@ -31,11 +31,11 @@ We will fit this model in two ways: using `aov()` and using the `ICC` package.
 
 The data we will be working with includes repeated measurements of the femur of Walking Sticks:
 
-![](https://i.imgur.com/CVTtMkJ.png){fig-width=50%}
+![](https://i.imgur.com/CVTtMkJ.png){fig-width=50%, fig-alt="Photograph of a walking stick."}
 
-Because the measurements are small (~ 0.25 cm), you are concerned that they will not be very repeatable. Before collecting all the data, you want to estimate the intraclass correlation coefficient of these measurements.
+Because the measurements are small (~ 0.25 cm), there should be concern that they will not be very repeatable. Before collecting all the data, you would want to estimate the intraclass correlation coefficient of these measurements.
 
-You take 2 measurements each on 25 different walking stick femurs, which are included in the files `WalkingStickFemurs.csv`.
+There are 2 measurements each on 25 different walking stick femurs, which are included in the files `WalkingStickFemurs.csv`.
 
 
 ### Activity
@@ -81,7 +81,7 @@ Plot the pairs of observations as a scatterplot.
 
 ```
 
-Based on your plot, do you expect repeatability to be high or low? Give an estimate?
+Based on your plot, do you expect repeatability to be high or low? Give an estimate of what you think the repeatability is.
 
 >
 
@@ -216,7 +216,7 @@ Based on this visualization, do you think there are *true positives* in this dat
 
 >
 
-Use R's built-in `p.adjust()` function to adjust the P-values using the sequential Bonferroni correction (Holm procedure). You don't have to sort the P-values first, but it can make it easier to pick out ones that remain significant. Print a `tibble` with the observed P-value and sequential Bonferroni corrected P-value. Finally, count the number of P-values that are less than 0.05.
+Use R's built-in `p.adjust()` function to adjust the P-values using the sequential Bonferroni correction ("Holm" procedure). You don't have to sort the P-values first, but it can make it easier to pick out ones that remain significant. Print a `tibble` with the observed P-value and sequential Bonferroni corrected P-value. Finally, count the number of P-values that are less than 0.05.
 
 Look at the help for `p.adjust()` for the appropriate syntax.
 

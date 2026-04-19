@@ -33,17 +33,18 @@ theme_set(theme_cowplot())
 
 The model you use to calculate the intraclass correlation coefficient *is* a multilevel model. You have repeated measurements for a single specimen. Those measurements are obviously not independent from one another (that is the point of repeated measurements -- to estimate the consistency of measurements as compared to the differences between individuals).
 
-The major question you want to ask is: What is the relative between *measurement* vs. between *specimen* variation?
+The major question you want to ask is: What is the relative variation between *measurement* vs. between *specimen*?
 
 We will fit this model in two ways: using `aov()` and using the `ICC` package.
 
 The data we will be working with includes repeated measurements of the femur of Walking Sticks:
 
-![](https://i.imgur.com/CVTtMkJ.png){fig-width=50%}
+![](https://i.imgur.com/CVTtMkJ.png){fig-width=50%, fig-alt="Photograph of a walking stick."}
 
-Because the measurements are small (~ 0.25 cm), you are concerned that they will not be very repeatable. Before collecting all the data, you want to estimate the intraclass correlation coefficient of these measurements.
+Because the measurements are small (~ 0.25 cm), there should be concern that they will not be very repeatable. Before collecting all the data, you would want to estimate the intraclass correlation coefficient of these measurements.
 
-You take 2 measurements each on 25 different walking stick femurs, which are included in the files `WalkingStickFemurs.csv`.
+There are 2 measurements each on 25 different walking stick femurs, which are included in the files `WalkingStickFemurs.csv`.
+
 
 ### Activity
 
@@ -104,9 +105,9 @@ ggplot(WSF_wide, aes(Measurement_1, Measurement_2)) +
   coord_equal()
 ```
 
-Based on your plot, do you expect repeatability to be high or low? Give an estimate?
+Based on your plot, do you expect repeatability to be high or low? Give an estimate of what you think the repeatability is.
 
-> The points are fairly close to the line, so repeatability should be ok.
+> The points are fairly close to the line, so repeatability should be ok. 0.6 to 0.8 is a reasonable guess.
 
 Follow the example from lecture to calculate repeatability of the femur length  measurement using `aov()`. As in the lecture, you can just manually copy the values from the `aov()` summary rather than trying to extract them programmatically. You will use the original "long" format data here, rather than the wide format you just created (we only needed that format for plotting).
 
@@ -137,7 +138,7 @@ Compare the results
 
 Would you be comfortable going forward with data collection given this value for ICC?
 
-> Maybe or maybe not. If we expect fairly large differences between groups, then it's probably fine. But if the differences are small, then there may be so much variation associated with taking measurements that it will swamp out the variation between groups. It's probably fine.
+> Maybe or maybe not. If we expect fairly large differences between groups, then it's probably fine. But if the differences are small, then there may be so much variation associated with taking measurements that it will swamp out the variation between groups.
 
 
 ## Planning experiments
@@ -306,7 +307,7 @@ Based on this visualization, do you think there are *true positives* in this dat
 
 > Probably. The P-values deviate pretty strongly from the expected line.
 
-Use R's built-in `p.adjust()` function to adjust the P-values using the sequential Bonferroni correction (Holm procedure). You don't have to sort the P-values first, but it can make it easier to pick out ones that remain significant. Print a `tibble` with the observed P-value and sequential Bonferroni corrected P-value. Finally, count the number of P-values that are less than 0.05.
+Use R's built-in `p.adjust()` function to adjust the P-values using the sequential Bonferroni correction ("Holm" procedure). You don't have to sort the P-values first, but it can make it easier to pick out ones that remain significant. Print a `tibble` with the observed P-value and sequential Bonferroni corrected P-value. Finally, count the number of P-values that are less than 0.05.
 
 Look at the help for `p.adjust()` for the appropriate syntax.
 
