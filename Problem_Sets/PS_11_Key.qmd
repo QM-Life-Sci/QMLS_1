@@ -12,7 +12,7 @@ format:
 
 ```{r}
 #| label: setup
-#| message: false
+#| #| message: false
 #| warning: false
 
 library(tidyverse)
@@ -31,11 +31,11 @@ theme_set(theme_cowplot())
 
 ## Repeatability: Intraclass correlation coefficient
 
-The model you use to calculate the intraclass correlation coefficient *is* a multilevel model. You have repeated measurements for a single specimen. Those measurements are obviously not independent from one another (that is the point of repeated measurements -- to estimate the consistency of measurements as compared to the differences between individuals). 
+The model you use to calculate the intraclass correlation coefficient *is* a multilevel model. You have repeated measurements for a single specimen. Those measurements are obviously not independent from one another (that is the point of repeated measurements -- to estimate the consistency of measurements as compared to the differences between individuals).
 
 The major question you want to ask is: What is the relative between *measurement* vs. between *specimen* variation?
 
-We will fit this model in two ways: using `aov()` and using the `ICC` package. 
+We will fit this model in two ways: using `aov()` and using the `ICC` package.
 
 The data we will be working with includes repeated measurements of the femur of Walking Sticks:
 
@@ -52,7 +52,7 @@ Load the data in `WalkingStickFemurs.csv`. Convert `Specimen` to a factor so tha
 ```{r}
 # FIXME
 
-WSF <- read_csv("../data/WalkingStickFemurs.csv", col_types = "ddd") |> 
+WSF <- read_csv("../data/WalkingStickFemurs.csv", col_types = "ddd") |>
   mutate(Specimen = factor(Specimen))
 ```
 
@@ -69,11 +69,13 @@ Pivot the data to wide format:
 # FIXME
 glimpse(WSF)
 
-WSF_wide <- WSF |> 
-  pivot_wider(id_cols = Specimen,
-              values_from = Femur_length,
-              names_from = Measurement,
-              names_prefix = "Measurement_")
+WSF_wide <- WSF |>
+  pivot_wider(
+    id_cols = Specimen,
+    values_from = Femur_length,
+    names_from = Measurement,
+    names_prefix = "Measurement_"
+  )
 ```
 
 The top of the resulting tibble should look like:
@@ -131,7 +133,7 @@ ICCest(x = WSF$Specimen, y = WSF$Femur_length)
 
 Compare the results
 
-> The numbers are very similar. This is probably just due to rounding error introduced by manually copying the values from the first model. Overally, the measurements are pretty repeatable.
+> The numbers are very similar. This is probably just due to rounding error introduced by manually copying the values from the first model. Overall, the measurements are pretty repeatable.
 
 Would you be comfortable going forward with data collection given this value for ICC?
 
@@ -190,12 +192,12 @@ pwr.r.test(r = 0.4, n = 15)
 ## FIXME
 # Data preparation
 # set.seed(28462)
-# 
+#
 # quant.norm <- function(y) {
 #   nn <- qqnorm(y, plot.it = FALSE)
 #   return(nn$x)
 # }
-# 
+#
 # sid <- read_csv("../data/Butteryfly_IDs.csv",
 #                 col_names = c("ID", "Treatment", "Sex", "Population"))
 # sid <- sid |>
@@ -207,7 +209,7 @@ pwr.r.test(r = 0.4, n = 15)
 #          ID = str_replace_all(ID, "-", "_")) |>
 #   filter(ID2 == 450) |>
 #   dplyr::select(-ID2)
-# 
+#
 # gg <- read_delim("../data/Butterfly_NormalizedCountsGenes.txt",
 #                  delim = "\t")
 # samp.names <- colnames(gg)[-1]
@@ -220,13 +222,13 @@ pwr.r.test(r = 0.4, n = 15)
 # gg <- bind_cols(
 #   tibble(ID = str_replace_all(row.names(gg), "-", "_")),
 #   as.data.frame(gg))
-# 
+#
 # ngenes <- 100
 # gg_samp <- gg[, c(1, sample(size = ngenes, x = 2:ncol(gg)))]
-# 
+#
 # M <- left_join(sid, gg_samp)
 # M <- M[,-c(2,4)]
-# 
+#
 # write_csv(M, file = "../data/Butterfly_Gene_Expression.csv")
 
 ```
@@ -240,7 +242,7 @@ Glanville Fritillary butterflies are a model organism for studying dispersal and
 
 Load in the Butterfly Gene Expression data (`Butterfly_Gene_Expression.csv`). This is a `tibble` of sample id, sex, and 100 normalized gene expression measures (this is trimmed down from an original over 8,000 expression measures). We will perform 100 regressions using `lm()`, predicting each gene expression measure from the sex variable. The `lm()` function can fit multiple Y's at once. See the code below to see how this works for this dataset.
 
-Note this method produces a list of `lm()` results. We have written a function (`getP()` see above) to extract the relevant P-value from a list of this type. We will do this for this set of models and assign the p-values to an object, `obsP`. 
+Note this method produces a list of `lm()` results. We have written a function (`getP()` see above) to extract the relevant P-value from a list of this type. We will do this for this set of models and assign the p-values to an object, `obsP`.
 
 Change `eval: false` to `eval: true` and run the chunk below. You might need to change the path to `Butterfly_Gene_Expression.csv`.
 
@@ -254,8 +256,7 @@ getP <- function(fm) {
   return(unlist(p.set))
 }
 
-M <- read_csv("../data/Butterfly_Gene_Expression.csv",
-              show_col_types = FALSE)
+M <- read_csv("../data/Butterfly_Gene_Expression.csv", show_col_types = FALSE)
 Ys <- as.matrix(M[, 3:ncol(M)])
 fm <- lm(Ys ~ Sex, data = M)
 
@@ -267,7 +268,7 @@ We will visualize the *P*-values by plotting a histogram and a q-q plot.
 First plot a histogram with 20 `bins`. This will conveniently make bins that are 0.05 wide.
 
 ```{r}
-# FIXME 
+# FIXME
 
 ggplot(obsP, aes(P)) +
   geom_histogram(bins = 20)
@@ -280,7 +281,7 @@ Does it look like there is a signal in the data? I.e., are there more observatio
 
 For the q-q plot:
 
-- Transform your observed *P*-values to -log10(*P*-values) and sort them from smallest to largest. 
+- Transform your observed *P*-values to -log10(*P*-values) and sort them from smallest to largest.
 - Then, generate expected values from the uniform distribution using `runif(length(obsP$P), 0, 1)` and again transform and sort them.
 - Put both values into a tibble with `observed` and `expected` columns. These vectors will be the same length. We have just manually created the data for a q-q plot.
 
@@ -290,8 +291,10 @@ Finally, plot observed versus expected values and add a 1:1 line (intercept = 0,
 # FIXME
 set.seed(273645)
 
-qqP <- tibble('observed' = sort(-log10(obsP$P)),
-              'expected' = sort(-log10(runif(length(obsP$P), 0, 1))))
+qqP <- tibble(
+  'observed' = sort(-log10(obsP$P)),
+  'expected' = sort(-log10(runif(length(obsP$P), 0, 1)))
+)
 
 ggplot(qqP, aes(x = expected, y = observed)) +
   geom_point() +
@@ -310,8 +313,7 @@ Look at the help for `p.adjust()` for the appropriate syntax.
 ```{r}
 # FIXME
 seq_bonf <- p.adjust(obsP$P, method = "holm")
-tibble(P = obsP$P,
-       seq_bonf) |>
+tibble(P = obsP$P, seq_bonf) |>
   arrange(P) |>
   filter(seq_bonf <= 0.05)
 sum(seq_bonf < 0.05)
@@ -322,8 +324,7 @@ Repeat the procedure above, but now use the false discovery rate procedure of Be
 ```{r}
 # FIXME
 fdr <- p.adjust(obsP$P, method = "fdr")
-tibble(P = obsP$P,
-       fdr) |>
+tibble(P = obsP$P, fdr) |>
   arrange(P) |>
   filter(fdr <= 0.05)
 sum(fdr < 0.05)
@@ -360,9 +361,9 @@ max(qobj$pvalues[qobj$qvalues <= 0.05])
 The code below shows a randomization that we can use to estimate the number of expected false positives for this experiment.
 
 1. We want to keep the correlation structure of the gene expression measures. An easy way to do this is to shuffle the sex labels and leave the expression measures the same.
-2. We performed our set of 100 tests in the same way that we did above. 
-3. We collected the associated *P*-values using the `getP` function. 
-4. These were put into a 100 x 1000 matrix with each column as one iteration. 
+2. We performed our set of 100 tests in the same way that we did above.
+3. We collected the associated *P*-values using the `getP` function.
+4. These were put into a 100 x 1000 matrix with each column as one iteration.
 
 Change `eval: false` to `eval: true` before you run. `cache: true` tells RStudio to save the results of the simulation locally and only rerun the code block if it changes.
 
@@ -386,7 +387,7 @@ for (kk in 1:niter) {
 }
 
 # Change path to where you want to save the file
-saveRDS(allP, file="../data/Shuffle_Expression.rds")
+saveRDS(allP, file = "../data/Shuffle_Expression.rds")
 
 ```
 
@@ -394,7 +395,7 @@ Load the matrix we generated above and saved to `Shuffle_Expression.rds` using t
 
 ```{r}
 # FIXME
-allP <- readRDS(file="../data/Shuffle_Expression.rds")
+allP <- readRDS(file = "../data/Shuffle_Expression.rds")
 ```
 
 Visualize the *P*-values from one or a few of these iterations as you did above with a histogram and a q-q plot.
@@ -405,8 +406,10 @@ it1 <- tibble('P' = allP[, 5])
 ggplot(it1, aes(P)) +
   geom_histogram(bins = 20)
 
-qqP <- tibble('observed' = sort(-log10(it1$P)),
-              'expected' = sort(-log10(runif(100, 0, 1))))
+qqP <- tibble(
+  'observed' = sort(-log10(it1$P)),
+  'expected' = sort(-log10(runif(100, 0, 1)))
+)
 
 ggplot(qqP, aes(x = expected, y = observed)) +
   geom_point() +
@@ -425,7 +428,8 @@ For each iteration, get a count of the number of positives at a threshold of 0.0
 th <- 0.05
 
 pos.counts <- tibble(
-  'counts' = apply(allP, 2, function(x) sum(x < th)))
+  'counts' = apply(allP, 2, function(x) sum(x < th))
+)
 
 ggplot(pos.counts, aes(counts)) +
   geom_histogram(bins = 20)
@@ -443,21 +447,24 @@ Now use this same procedure to calculate the false positive rate, FWER, and fals
 
 ```{r}
 # FIXME
-thresholds <- seq(0.0005, 0.05 , length = 200)
+thresholds <- seq(0.0005, 0.05, length = 200)
 
 #FIXME
-output <- tibble(threshold = thresholds,
-                 FP = numeric(length(thresholds)),
-                 FWER = numeric(length(thresholds)),
-                 FDR = numeric(length(thresholds)))
+output <- tibble(
+  threshold = thresholds,
+  FP = numeric(length(thresholds)),
+  FWER = numeric(length(thresholds)),
+  FDR = numeric(length(thresholds))
+)
 
 for (tt in 1:length(thresholds)) {
   th <- thresholds[tt]
   pos.counts <- tibble(
-    'counts' = apply(allP, 2, function(x) sum(x < th)))
-  output[tt,'FP'] <- mean(pos.counts$counts) / 100
-  output[tt,'FWER'] <- sum(pos.counts >= 1) / 1000
-  output[tt,'FDR'] <- mean(pos.counts$counts) / sum(obsP$P < th)
+    'counts' = apply(allP, 2, function(x) sum(x < th))
+  )
+  output[tt, 'FP'] <- mean(pos.counts$counts) / 100
+  output[tt, 'FWER'] <- sum(pos.counts >= 1) / 1000
+  output[tt, 'FDR'] <- mean(pos.counts$counts) / sum(obsP$P < th)
 }
 
 output
@@ -487,7 +494,7 @@ plot_grid(P1, P2, P3)
 
 Inspecting the data you made above, what P-value threshold should you use if you want a false discovery rate of 5%?
 
-> It looks like a threshold around 0.008 would give an FDR of 0.05. 
+> It looks like a threshold around 0.008 would give an FDR of 0.05.
 
 Calculate the FWER corresponding to an alpha of 5% by calculating the lowest P-value for each iteration. Then, use the `quantile()` function to calculate the 5% quantile. hint: you will want to use `apply()` here.
 
