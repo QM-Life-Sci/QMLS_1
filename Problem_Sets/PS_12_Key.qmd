@@ -66,17 +66,24 @@ library(tictoc)
 stalk <- read_csv("../data/Stalkies.csv", col_types = "cd")
 
 # Check standard deviations
-stalk |> 
-  group_by(food_source) |> 
-  summarize(st_dev = sd(eye_span),
-            .groups = "drop")
+stalk |>
+  group_by(food_source) |>
+  summarize(st_dev = sd(eye_span), .groups = "drop")
 
 # Some thoughtful plotting
 ggplot(stalk, aes(x = food_source, y = eye_span)) +
-  geom_point(position = position_jitter(width = 0.05, seed = 4588), alpha = 0.5) +
+  geom_point(
+    position = position_jitter(width = 0.05, seed = 4588),
+    alpha = 0.5
+  ) +
   stat_summary(fun = mean, geom = "point", size = 3, color = "firebrick4") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.05,
-               color = "firebrick4", linewidth = 1) +
+  stat_summary(
+    fun.data = mean_se,
+    geom = "errorbar",
+    width = 0.05,
+    color = "firebrick4",
+    linewidth = 1
+  ) +
   labs(x = "Food Source", y = "Eye Span")
 
 set.seed(8987324)
@@ -86,7 +93,10 @@ t_stats[1] <- t.test(eye_span ~ food_source, data = stalk)$statistic
 
 tic() # Start timer
 for (ii in 2:nreps) {
-  t_stats[ii] <- t.test(sample(eye_span) ~ food_source, data = stalk)$statistic
+  t_stats[ii] <- t.test(
+    sample(eye_span) ~ food_source,
+    data = stalk
+  )$statistic
 }
 toc() # Stop timer
 
@@ -97,7 +107,7 @@ tibble(t_stats) |>
   labs(x = "t statistics", y = "Count")
 
 # Calculate the empirical P-value as the mean of the inequality
-# Because t is positive, we want the number of times that the 
+# Because t is positive, we want the number of times that the
 # randomized data was more extreme (larger) than the observed value.
 # This is converted to 0 (false) and 1 (true), and the mean is the
 # proportion of trues. The value is doubled for a 2-tailed test.
@@ -138,7 +148,8 @@ message("Using ", n_cores, " cores.")
 plan(multisession, workers = n_cores)
 
 # Function to do the randomized t-test and return the t-statistic only.
-t_rand <- function(.x, stalk) { # the 1st parameter is the iterator .x
+t_rand <- function(.x, stalk) {
+  # the 1st parameter is the iterator .x
   rnd_t <- t.test(sample(eye_span) ~ food_source, data = stalk)
   return(as.numeric(rnd_t$statistic))
 }
@@ -146,10 +157,12 @@ t_rand <- function(.x, stalk) { # the 1st parameter is the iterator .x
 # Parallel randomization execute t_rand(), and combine the output into
 # t_stats (numeric vector).
 tic()
-rand_ts <- future_map_dbl(.x = 1:nreps,
-                          .f = t_rand,
-                          stalk = stalk,
-                          .options = furrr_options(seed = TRUE))
+rand_ts <- future_map_dbl(
+  .x = 1:nreps,
+  .f = t_rand,
+  stalk = stalk,
+  .options = furrr_options(seed = TRUE)
+)
 toc()
 
 # Stop cluster
@@ -188,10 +201,18 @@ HT <- read_excel("../data/Heart_Transplants.xlsx") |>
   mutate(Mismatch_Degree = fct_inorder(Mismatch_Degree))
 
 ggplot(HT, aes(x = Mismatch_Degree, y = Survival_Days)) +
-  geom_point(position = position_jitter(width = 0.05, seed = 3648), alpha = 0.5) +
+  geom_point(
+    position = position_jitter(width = 0.05, seed = 3648),
+    alpha = 0.5
+  ) +
   stat_summary(fun.y = mean, geom = "point", size = 3, color = "firebrick4") +
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.05,
-               color = "firebrick4", linewidth = 1) +
+  stat_summary(
+    fun.data = mean_se,
+    geom = "errorbar",
+    width = 0.05,
+    color = "firebrick4",
+    linewidth = 1
+  ) +
   labs(x = "Mismatch Degree", y = "Survival (days)")
 
 fm <- lm(Survival_Days ~ Mismatch_Degree, data = HT)
@@ -203,8 +224,7 @@ F_stats <- numeric(nreps)
 F_stats[1] <- obs$fstatistic["value"]
 
 for (ii in 2:nreps) {
-  fm_rand <- lm(sample(Survival_Days) ~ Mismatch_Degree,
-                    data = HT)
+  fm_rand <- lm(sample(Survival_Days) ~ Mismatch_Degree, data = HT)
   F_stats[ii] <- summary(fm_rand)$fstatistic["value"]
 }
 
@@ -224,7 +244,7 @@ Based on this randomization analysis, is there a significant difference in survi
 
 ## Return of the Sole
 
-In lecture, we looked at presence/absence data for the common sole ([*Solea solea*](https://en.wikipedia.org/wiki/Common_sole)) predicted by the salinity of the water. Here we will focus on the composition of the substrate.  
+In lecture, we looked at presence/absence data for the common sole ([*Solea solea*](https://en.wikipedia.org/wiki/Common_sole)) predicted by the salinity of the water. Here we will focus on the composition of the substrate.
 
 ### Activity
 
@@ -234,10 +254,12 @@ Load the sole data from the file `Sole.xlsx`. Several of the variables are categ
 # FIXME
 
 Sole <- read_excel("../data/Sole.xlsx") |>
-  mutate(season = factor(season),
-         month = factor(month),
-         area = factor(area),
-         Solea_solea = factor(Solea_solea)) |> 
+  mutate(
+    season = factor(season),
+    month = factor(month),
+    area = factor(area),
+    Solea_solea = factor(Solea_solea)
+  ) |>
   as.data.frame()
 str(Sole)
 ```
@@ -247,10 +269,12 @@ The columns `gravel`, `large_sand`, `med_fine_sand`, and `mud` represent their p
 ```{r}
 # FIXME
 
-z <- prcomp(~ gravel + large_sand + med_fine_sand + mud,
-              data = Sole,
-              scale. = TRUE,
-              center = TRUE)
+z <- prcomp(
+  ~ gravel + large_sand + med_fine_sand + mud,
+  data = Sole,
+  scale. = TRUE,
+  center = TRUE
+)
 ```
 
 Use the `summary()` and `print()` methods to determine the percent of variance accounted for by each PC and the relative loadings of each variable.
@@ -294,17 +318,18 @@ The code below plots the outcome. Change `eval: false` to `eval: false` to run t
 
 Sole$PC1 <- z$x[, 1]
 
-ggplot(Sole, aes(x = PC1,
-              y = as.numeric(Solea_solea) - 1)) +
+ggplot(Sole, aes(x = PC1, y = as.numeric(Solea_solea) - 1)) +
   geom_hline(yintercept = 0.5, linetype = "dotted", linewidth = 0.5) +
-  geom_smooth(method = "glm",
-              formula = y ~ x,
-              method.args = list(family = "binomial"),
-              se = FALSE, linewidth = 2) +
+  geom_smooth(
+    method = "glm",
+    formula = y ~ x,
+    method.args = list(family = "binomial"),
+    se = FALSE,
+    linewidth = 2
+  ) +
   geom_point(size = 3) +
   labs(y = "Probability of Presence", x = "PC1") +
   scale_y_continuous(breaks = seq(0, 1, by = 0.1)) +
   annotate("text", x = -3, y = -0.2, label = "Sandy") +
   annotate("text", x = 3, y = -0.2, label = "Muddy")
 ```
-
