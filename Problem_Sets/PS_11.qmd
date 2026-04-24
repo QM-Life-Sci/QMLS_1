@@ -21,141 +21,6 @@ format:
 ```
 
 
-## Repeatability: Intraclass correlation coefficient
-
-The model you use to calculate the intraclass correlation coefficient *is* a multilevel model. You have repeated measurements for a single specimen. Those measurements are obviously not independent from one another (that is the point of repeated measurements -- to estimate the consistency of measurements as compared to the differences between individuals).
-
-The major question you want to ask is: What is the relative between *measurement* vs. between *specimen* variation?
-
-We will fit this model in two ways: using `aov()` and using the `ICC` package.
-
-The data we will be working with includes repeated measurements of the femur of Walking Sticks:
-
-![](https://i.imgur.com/CVTtMkJ.png){fig-width=50%, fig-alt="Photograph of a walking stick."}
-
-Because the measurements are small (~ 0.25 cm), there should be concern that they will not be very repeatable. Before collecting all the data, you would want to estimate the intraclass correlation coefficient of these measurements.
-
-There are 2 measurements each on 25 different walking stick femurs, which are included in the files `WalkingStickFemurs.csv`.
-
-
-### Activity
-
-Load the data in `WalkingStickFemurs.csv`. Convert `Specimen` to a factor so that R will treat it as categorical rather than as numeric.
-
-```{r}
-
-```
-
-Look at the structure of the data. The data are in long format, with one measurement per row. We want to be able to plot Measurement 1 vs. Measurement 2 to visualize the paired relationship. To do so, we need to convert the data into wide format, with 2 columns per Specimen: Measurement 1 and Measurement 2.
-
-Pivot the data to wide format:
-
-- Use `Specimen` as the `id_cols`
-- Take values from `Femur_length`
-- Take column names from `Measurement`
-- Use the `names_prefix =` option to place the string "Measurement_" before the column name
-
-```{r}
-
-```
-
-The top of the resulting tibble should look like:
-
-```
-# A tibble: 25 × 3
-   Specimen Measurement_1 Measurement_2
-   <fct>            <dbl>         <dbl>
- 1 1                 0.26          0.26
- 2 2                 0.23          0.19
- 3 3                 0.25          0.23
- ```
-
-There will be 25 rows total.
-
-Plot the pairs of observations as a scatterplot.
-
-- Add a line with a slope of 1 and intercept of 0 using `geom_abline()`
-- Set the axis coordinates to equal scaling with `coord_equal()`
-
-```{r}
-
-```
-
-Based on your plot, do you expect repeatability to be high or low? Give an estimate of what you think the repeatability is.
-
->
-
-
-Follow the example from lecture to calculate repeatability of the femur length  measurement using `aov()`. As in the lecture, you can just manually copy the values from the `aov()` summary rather than trying to extract them programmatically. You will use the original "long" format data here, rather than the wide format you just created (we only needed that format for plotting).
-
-```{r}
-
-```
-
-What value of repeatability (intraclass correlation) to you find?
-
->
-
-
-Calculate repeatability of the femur length (`Femur_length`) measurement using `ICCest()` from the `ICC` package (you might need to install the package first).
-
-```{r}
-
-```
-
-Compare the results
-
->
-
-
-Would you be comfortable going forward with data collection given this value for ICC?
-
->
-
-
-
-## Planning experiments
-
-Consider that you are planning some experiments, use the `pwr` package to calculate the unknown quantity for each of the following situations. Assume that $\alpha$ = 0.05 for all tests.
-
-### Activity
-
-Use `cohen.ES()` to look up the effect size for a "small" effect for a *t*-test.
-
-```{r}
-
-```
-
-Before we do the calculation. Take a guess how many individuals you would need in each independent group (a "two-sample t-test") to detect a small effect size with alpha = 0.05 and power = 0.80.
-
->
-
-
-Calculate the sample size (*n*) needed in each group of a two-sample *t*-test with power = 0.80 to detect a small effect (use the effect size from above).
-
-```{r}
-
-```
-
-Repeat the test above but for a paired *t*-test.
-
-```{r}
-
-```
-
-Calculate the number of observations for a correlation test where you estimate a correlation coefficient of 0.6. Power should be 0.80.
-
-```{r}
-
-```
-
-Calculate the power for a correlation test where you estimate the correlation coefficient to be 0.4, for a sample size of 15.
-
-```{r}
-
-```
-
-
 ## Gene expression (RNAseq) on males and females of the Glanville Fritillary
 
 Glanville Fritillary butterflies are a model organism for studying dispersal and metapopulation dynamics, because they live in isolated meadows.
@@ -331,6 +196,141 @@ Calculate the FWER corresponding to an alpha of 5% by calculating the lowest P-v
 ```{r}
 
 ```
+
+## Repeatability: Intraclass correlation coefficient
+
+The model you use to calculate the intraclass correlation coefficient *is* a multilevel model. You have repeated measurements for a single specimen. Those measurements are obviously not independent from one another (that is the point of repeated measurements -- to estimate the consistency of measurements as compared to the differences between individuals).
+
+The major question you want to ask is: What is the relative between *measurement* vs. between *specimen* variation?
+
+We will fit this model in two ways: using `aov()` and using the `ICC` package.
+
+The data we will be working with includes repeated measurements of the femur of Walking Sticks:
+
+![](https://i.imgur.com/CVTtMkJ.png){fig-width=50%, fig-alt="Photograph of a walking stick."}
+
+Because the measurements are small (~ 0.25 cm), there should be concern that they will not be very repeatable. Before collecting all the data, you would want to estimate the intraclass correlation coefficient of these measurements.
+
+There are 2 measurements each on 25 different walking stick femurs, which are included in the files `WalkingStickFemurs.csv`.
+
+
+### Activity
+
+Load the data in `WalkingStickFemurs.csv`. Convert `Specimen` to a factor so that R will treat it as categorical rather than as numeric.
+
+```{r}
+
+```
+
+Look at the structure of the data. The data are in long format, with one measurement per row. We want to be able to plot Measurement 1 vs. Measurement 2 to visualize the paired relationship. To do so, we need to convert the data into wide format, with 2 columns per Specimen: Measurement 1 and Measurement 2.
+
+Pivot the data to wide format:
+
+- Use `Specimen` as the `id_cols`
+- Take values from `Femur_length`
+- Take column names from `Measurement`
+- Use the `names_prefix =` option to place the string "Measurement_" before the column name
+
+```{r}
+
+```
+
+The top of the resulting tibble should look like:
+
+```
+# A tibble: 25 × 3
+   Specimen Measurement_1 Measurement_2
+   <fct>            <dbl>         <dbl>
+ 1 1                 0.26          0.26
+ 2 2                 0.23          0.19
+ 3 3                 0.25          0.23
+ ```
+
+There will be 25 rows total.
+
+Plot the pairs of observations as a scatterplot.
+
+- Add a line with a slope of 1 and intercept of 0 using `geom_abline()`
+- Set the axis coordinates to equal scaling with `coord_equal()`
+
+```{r}
+
+```
+
+Based on your plot, do you expect repeatability to be high or low? Give an estimate of what you think the repeatability is.
+
+>
+
+
+Follow the example from lecture to calculate repeatability of the femur length  measurement using `aov()`. As in the lecture, you can just manually copy the values from the `aov()` summary rather than trying to extract them programmatically. You will use the original "long" format data here, rather than the wide format you just created (we only needed that format for plotting).
+
+```{r}
+
+```
+
+What value of repeatability (intraclass correlation) to you find?
+
+>
+
+
+Calculate repeatability of the femur length (`Femur_length`) measurement using `ICCest()` from the `ICC` package (you might need to install the package first).
+
+```{r}
+
+```
+
+Compare the results
+
+>
+
+
+Would you be comfortable going forward with data collection given this value for ICC?
+
+>
+
+
+
+## Planning experiments
+
+Consider that you are planning some experiments, use the `pwr` package to calculate the unknown quantity for each of the following situations. Assume that $\alpha$ = 0.05 for all tests.
+
+### Activity
+
+Use `cohen.ES()` to look up the effect size for a "small" effect for a *t*-test.
+
+```{r}
+
+```
+
+Before we do the calculation. Take a guess how many individuals you would need in each independent group (a "two-sample t-test") to detect a small effect size with alpha = 0.05 and power = 0.80.
+
+>
+
+
+Calculate the sample size (*n*) needed in each group of a two-sample *t*-test with power = 0.80 to detect a small effect (use the effect size from above).
+
+```{r}
+
+```
+
+Repeat the test above but for a paired *t*-test.
+
+```{r}
+
+```
+
+Calculate the number of observations for a correlation test where you estimate a correlation coefficient of 0.6. Power should be 0.80.
+
+```{r}
+
+```
+
+Calculate the power for a correlation test where you estimate the correlation coefficient to be 0.4, for a sample size of 15.
+
+```{r}
+
+```
+
 
 
 Please indicate whether you used any generative AI tools to help you with this problem set and explain how you used these. An example of how to structure this statement is below. If you did not use generative AI, you can simply state: "I did not use AI for this problem set."
