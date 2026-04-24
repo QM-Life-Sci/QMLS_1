@@ -14,6 +14,7 @@ format:
 code-annotations: hover
 bibliography: QMLS_Bibliography.bib
 csl: evolution.csl
+server: shiny
 ---
 
 ```{r}
@@ -42,12 +43,10 @@ theme_set(theme_cowplot(font_size = 18))
     - Middleton
 - [https://evaluation.missouri.edu/](https://evaluation.missouri.edu/)
 
-## Quizzes
 
-- 11-3
-- 11-4
+## Causal inference
 
-> I may have missed this in the lecture, but when looking at questions 2 and 3 on 11-4 quiz, how can you determine if there are false positives in a histogram or datasets when not knowing the FDR?
+> If I see a phenotype after a protein depletion, how should I think more carefully about causation and confounding? I mean depletion itself may also cause other stress in the cell (and it does so!), so I am not sure how to tell if the phenotype is a direct effect of that gene or an indirect downstream effect. Also, if two proteins look functionally connected because loss of one gives similar phenotype as loss of the other, what kind of experiment would help us say this is more likely causation and not just correlation?
 
 
 ## Random Effects Syntax
@@ -80,84 +79,306 @@ Wilkinson, G. N. and C. E. Rogers. 1973. Symbolic description of factorial model
 
 ## Pseudoreplication
 
+> If there is a level of pseudoreplication in your experiment, is it ok to address the effects you have observed as long as you address the potential issues? Or is this an absolute no-no?
 
-## Repeatability
+
+## Quiz 11.3
+
+> The question on the relationship between type 1 and 2 errors/power tripped me up on 11.3. Could we verbally walk through it?
 
 
 ## Power Analysis
 
 > I'd like to know more about when a power analysis should not be done or isn't ideal for a certain project, for instance if all or some data has already been gathered or if sample size ever plays a role in using or not using power analysis?
 
-> I'd like to go over power analyses more, specifically for a linear model instead of a t test
-
 > Can we go a bit more over when you have to do this analysis and what the consequences are for not doing so? this is not to try and not do anything but to know when this step is ignored in the literature.
 
 
-## Power
+## Power {.smaller}
 
 > In a low powered study, how are we supposed to interpret non significant results? How do we know if there’s actually no effect versus just not enough power?
 
 > I understand that you shouldn't go back and retrospectively predict power after collecting data, but what if you weren't the one to design the experiment, but were given a dataset and want to know what your limitations are in analyzing and making conclusions?
 
+> In general, I am a visual learner. I like the histograms to understand type 1 and type 2 errors, but are there any other schematics to illustrate this? I also understand the inverse relationship between Power and Type 2 error but I am having a hard time visualizing it and distinguishing Power from type 1 error.
 
-## Experimental design
+
+## Type I and II Error and Power
+
+```{r}
+#| panel: sidebar
+#| width: 280px
+
+sliderInput(
+  "delta",
+  "Effect size (d)",
+  min = 0.2,
+  max = 3.5,
+  value = 1.5,
+  step = 0.05
+)
+
+sliderInput(
+  "alpha",
+  "Significance level (α)",
+  min = 0.01,
+  max = 0.20,
+  value = 0.05,
+  step = 0.01
+)
+
+sliderInput(
+  "sigma",
+  "Std dev (σ)",
+  min = 0.5,
+  max = 2.5,
+  value = 1.0,
+  step = 0.05
+)
+
+hr()
+
+uiOutput("stats_ui")
+```
+
+```{r}
+#| panel: fill
+
+plotOutput("distPlot", height = "520px")
+```
+
+```{r}
+#| context: server
+
+compute <- reactive({
+  delta <- input$delta
+  alpha <- input$alpha
+  sigma <- input$sigma
+  mu0 <- 0
+  mu1 <- delta
+
+  crit <- mu0 + qnorm(1 - alpha) * sigma
+  beta <- pnorm(crit, mean = mu1, sd = sigma)
+  power <- 1 - beta
+  d <- delta / sigma
+
+  list(
+    mu0 = mu0,
+    mu1 = mu1,
+    sigma = sigma,
+    alpha = alpha,
+    beta = beta,
+    power = power,
+    crit = crit,
+    d = d
+  )
+})
+
+output$stats_ui <- renderUI({
+  p <- compute()
+  tagList(
+    tags$table(
+      style = "width:100%; font-size:13px; border-collapse:collapse;",
+      tags$tr(
+        tags$td(style = "padding:4px 0; color:#666;", "α (Type I)"),
+        tags$td(
+          style = "padding:4px 0; text-align:right; font-weight:600;
+                         color:#c04040;",
+          sprintf("%.3f", p$alpha)
+        )
+      ),
+      tags$tr(
+        tags$td(style = "padding:4px 0; color:#666;", "β (Type II)"),
+        tags$td(
+          style = "padding:4px 0; text-align:right; font-weight:600;
+                         color:#3c5ab0;",
+          sprintf("%.3f", p$beta)
+        )
+      ),
+      tags$tr(
+        tags$td(style = "padding:4px 0; color:#666;", "Power (1−β)"),
+        tags$td(
+          style = "padding:4px 0; text-align:right; font-weight:600;
+                         color:#28885a;",
+          sprintf("%.3f", p$power)
+        )
+      ),
+      tags$tr(
+        tags$td(style = "padding:4px 0; color:#666;", "Cohen's d"),
+        tags$td(
+          style = "padding:4px 0; text-align:right; font-weight:600;",
+          sprintf("%.2f", p$d)
+        )
+      ),
+      tags$tr(
+        tags$td(style = "padding:4px 0; color:#666;", "Critical value"),
+        tags$td(
+          style = "padding:4px 0; text-align:right; font-weight:600;",
+          sprintf("%.2f", p$crit)
+        )
+      )
+    )
+  )
+})
+
+output$distPlot <- renderPlot(
+  {
+    p <- compute()
+
+    x_min <- p$mu0 - 4 * p$sigma
+    x_max <- p$mu1 + 4 * p$sigma
+    xs <- seq(x_min, x_max, length.out = 600)
+
+    df_h0 <- data.frame(x = xs, y = dnorm(xs, p$mu0, p$sigma), dist = "H0")
+    df_h1 <- data.frame(x = xs, y = dnorm(xs, p$mu1, p$sigma), dist = "H1")
+
+    # Shaded region data frames — build as plain x/y to avoid rbind column mismatch
+    make_poly <- function(xs_in, ys_in) {
+      data.frame(
+        x = c(xs_in[1], xs_in, xs_in[length(xs_in)]),
+        y = c(0, ys_in, 0)
+      )
+    }
+
+    # α: tail of H0 beyond crit
+    idx_a <- xs >= p$crit
+    alpha_df <- make_poly(xs[idx_a], dnorm(xs[idx_a], p$mu0, p$sigma))
+
+    # β: body of H1 below crit
+    idx_b <- xs <= p$crit
+    beta_df <- make_poly(xs[idx_b], dnorm(xs[idx_b], p$mu1, p$sigma))
+
+    # Power: tail of H1 beyond crit
+    idx_p <- xs >= p$crit
+    power_df <- make_poly(xs[idx_p], dnorm(xs[idx_p], p$mu1, p$sigma))
+
+    # Label positions
+    peak_h0 <- dnorm(p$mu0, p$mu0, p$sigma)
+    peak_h1 <- dnorm(p$mu1, p$mu1, p$sigma)
+    label_df <- data.frame(
+      x = c(p$mu0, p$mu1),
+      y = c(peak_h0, peak_h1) + 0.01,
+      label = c("H\u2080", "H\u2090"),
+      dist = c("H0", "H1")
+    )
+
+    ggplot() +
+      # Filled regions
+      geom_polygon(
+        data = alpha_df,
+        aes(x, y),
+        fill = "#c04040",
+        alpha = 0.70
+      ) +
+      geom_polygon(
+        data = beta_df,
+        aes(x, y),
+        fill = "#3c5ab0",
+        alpha = 0.55
+      ) +
+      geom_polygon(
+        data = power_df,
+        aes(x, y),
+        fill = "#28885a",
+        alpha = 0.65
+      ) +
+      # Distribution curves
+      geom_line(
+        data = df_h0,
+        aes(x, y),
+        linewidth = 1.0,
+        linetype = "dashed",
+        color = "#555555"
+      ) +
+      geom_line(
+        data = df_h1,
+        aes(x, y),
+        linewidth = 1.2,
+        color = "#111111"
+      ) +
+      # Critical value line
+      geom_vline(
+        xintercept = p$crit,
+        linetype = "dotted",
+        linewidth = 0.8,
+        color = "#444444"
+      ) +
+      annotate(
+        "text",
+        x = p$crit + 0.05 * (x_max - x_min) / 8,
+        y = peak_h0 * 0.85,
+        label = sprintf("crit = %.2f", p$crit),
+        hjust = 0,
+        size = 3.5,
+        color = "#444444"
+      ) +
+      # H0 / Ha labels
+      geom_text(
+        data = label_df,
+        aes(x, y, label = label),
+        size = 5,
+        fontface = "bold"
+      ) +
+      # Inline region labels
+      annotate(
+        "text",
+        x = p$crit + (x_max - p$crit) * 0.35,
+        y = dnorm(p$crit + (x_max - p$crit) * 0.20, p$mu0, p$sigma) *
+          0.5,
+        label = sprintf("\u03b1 = %.3f", p$alpha),
+        color = "#7a1f1f",
+        size = 4,
+        fontface = "bold"
+      ) +
+      annotate(
+        "text",
+        x = p$crit - (p$crit - x_min) * 0.28,
+        y = dnorm(p$mu1, p$mu1, p$sigma) * 0.30,
+        label = sprintf("\u03b2 = %.3f", p$beta),
+        color = "#1a2e70",
+        size = 4,
+        fontface = "bold"
+      ) +
+      annotate(
+        "text",
+        x = p$crit + (x_max - p$crit) * 0.35,
+        y = dnorm(p$crit + (x_max - p$crit) * 0.20, p$mu1, p$sigma) *
+          0.5,
+        label = sprintf("Power = %.3f", p$power),
+        color = "#145233",
+        size = 4,
+        fontface = "bold"
+      ) +
+      scale_x_continuous(
+        name = "Test statistic value",
+        breaks = scales::pretty_breaks(8)
+      ) +
+      scale_y_continuous(
+        name = "Density",
+        expand = expansion(mult = c(0, 0.08))
+      ) +
+      theme_minimal(base_size = 14) +
+      theme(
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_line(color = "grey92"),
+        axis.title = element_text(size = 13),
+        plot.background = element_rect(fill = "white", color = NA),
+        panel.background = element_rect(fill = "white", color = NA)
+      )
+  },
+  bg = "white"
+)
+```
+
+
+## Experimental design {.smaller}
 
 > In lecture 11.3, when trying to find a sample size with high power, typically you get a larger number. For example, the sample size was 63. A comment was made that this is a large sample size, especially for vertebrates/mammals. Is there a way to account for this or determine the best sample size for vertebrate animals that isn't too large but has good power, especially since factors like money come into effect in real-life situations?
 
+> Is there a way to understand how I should adjust my experimental design (like sample size or replication) if I want to reduce Type II error without inflating Type I error?
 
-## Causative inference
+> I'd like to go over power analyses more, specifically for a linear model instead of a t-test
 
-> If I see a phenotype after a protein depletion, how should I think more carefully about causation and confounding? I mean depletion itself may also cause other stress in the cell (and it does so!), so I am not sure how to tell if the phenotype is a direct effect of that gene or an indirect downstream effect. Also, if two proteins look functionally connected because loss of one gives similar phenotype as loss of the other, what kind of experiment would help us say this is more likely causation and not just correlation?
-
-
-## Multiple Comparisons
-
-
-## A menu of MCPs {.smaller}
-
-1. <s>Do nothing</s>
-    - Not an option
-2. Methods to control the Family-Wise Error Rate (FWER):
-    - MCs within a single linear model (e.g. Tukey, etc.; see 08-2)
-    - Bonferroni correction
-      - Not recommended - overly conservative
-    - Sequential Bonferroni procedure
-    - Randomization procedures to empirically control FWER
-6. Methods to control the False Discovery Rate (FDR)
-    - False Discovery Rate Methods
-    - _Positive_ False Discovery Rate Methods
-
-
-## False discovery rate
-
-Proposed by Benjamini and Hochberg [-@Benjamini1995-cw].
-
-- Also see Curran-Everett [-@Curran-Everett2000-qv].
-
-Controls FDR (i.e., rate of Type I errors), rather than FWER
-
-$$\mbox{FDR} = \frac{\mbox{n False Positives}}{\mbox{n All Positives}}$$
-
-e.g., I'm OK with 5% false positives *among the tests I judge as significant*.
-
-Note: False Positive Rate = $\frac{\mbox{n False Positives}}{\mbox{n All Tests}}$
-
-## FDR & FPR
-
-You do 100 correlations. You find 22 are statistically significant at an $\alpha$ = 0.05. Let's say 5 are false positives.
-
-1. What is the FPR?
-2. What is the FDR?
-
-$$\mbox{FPR} = \frac{\mbox{n False Positives}}{\mbox{n All Tests}}$$
-$$\mbox{FDR} = \frac{\mbox{n False Positives}}{\mbox{n All Positives}}$$
-
-
-## FDR & FPR
-
-$$FPR = \frac{5}{100} = 0.05$$
-
-$$FDR = \frac{5}{22} = 0.227$$
 
 ## Power analysis by Simulation
 
@@ -166,7 +387,7 @@ $$FDR = \frac{5}{22} = 0.227$$
 - Use your knowledge of the biology you are studying
 
 
-## Power by Simulation: Bivariate model
+## Power by Simulation: OLS model
 
 ```{r}
 #| echo: true
@@ -524,6 +745,20 @@ bind_rows(
   scale_color_aaas() +
   labs(x = "Between-group Differences", y = "Power for Overall Effect")
 ```
+
+
+## Quiz 11.4
+
+> I may have missed this in the lecture, but when looking at questions 2 and 3 on 11-4 quiz, how can you determine if there are false positives in a histogram or datasets when not knowing the FDR?
+
+
+## Multiple Comparisons {.smaller}
+
+> If my experiment involves a large number of measurements and I analyze the data using ANOVA, does that mean I need a much smaller p-value to claim that my results are statistically significant, or should I use FDR adjusted p-values?
+
+> What are some examples where sequential Bonferroni might be especially important to utilize? Is it worth just going ahead and doing it when doing multiple testing error rate tests?
+
+> To make sure I am understanding the q-value correctly for FDR, the q value helps control for the "additive" nature of multiple testing p-values? It is the acceptance that at least a certain percent of positive results will be false positives but way less than if you just did a bunch of t-tests at alpha = 0.05?
 
 
 ## References
