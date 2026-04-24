@@ -23,96 +23,98 @@ csl: evolution.csl
 
 library(tidyverse)
 library(cowplot)
+library(tidyverse)
+library(ggsci)
+library(furrr)
 
-theme_set(theme_cowplot())
+plan(multisession, workers = 4)
+
+theme_set(theme_cowplot(font_size = 18))
 ```
-
-Fix quizzes 12 - see notes
-Edit ps 12 - more help in heart transplant
 
 
 ## Course Evaluations
 
-- Available now until May 10th
+- Available now until May 7th
 - Course
 - Faculty
     - King
     - Middleton
 - [https://evaluation.missouri.edu/](https://evaluation.missouri.edu/)
 
+## Quizzes
+
+- 11-3
+- 11-4
+
+
+## Random Effects Syntax
+
+> This might be a step backwards, but I'm still not confident in random effects in models from last week:
+
+```
+lme1 <- lme(WaterTemp ~ AirTempPredicted, data = streams,
+            random = (~ 1 | Stream_Name/Site),
+            method = "ML")`
+```
+
+> Is the above lme formula still a change in the intercept? Is anything actually being divided in Stream_Name/Site to account for nesting, or is this just R syntax?
+
+[Michael Clark's model syntax reference](https://m-clark.github.io/mixed-models-with-R/random_intercepts.html)
+
+
+## General R model syntax
+
+- `~` = "is modeled by"
+- `+` = "and"
+- `:` = "by" or "interaction"
+- `*` = "main effects and interaction"
+- `/` = "nested in"
+- `(x | group)` = "separate slope of x per group"
+- `I()` = "treat this as a math expression"
+
+Wilkinson, G. N. and C. E. Rogers. 1973. Symbolic description of factorial models for analysis of variance. *Appl. Stat.* 392–399.
+
 
 ## Pseudoreplication
-
-- I understand that experiments should be designed to attempt to avoid pseudoreplication as much as possible, but there are definitely going to be some experiments, such as those working with specimens from the fossil record, where pseudoreplication is unlikely if not impossible to be avoided due to the inability to assume complete independence of the analyses conducted. Therefore, if pseudoreplication seems to be almost inevitable for analyses based on these sorts of data, would we then be forced to account for the impacts of pseudoreplication in these studies, or are there other methods of experimental design we could use to try to reduce those impacts?
-
-
-## Pseudoreplication
-
-- I'm interested to know how we can distinguish between pseudoreplication and true replication in behavioral and ecological research. I know it might depend on the question that we are willing to answer, but in those kind of studies where there are no experimental settings I find it a bit difficult to distinguish.
-- How are pseudoreplication, random, and nested terms related and/or different? Does adding the random and nested terms to the model help avoid pseudoreplication?
-- There are experiments that are difficult to have a replicate usually by limited sample size or resources. How can we take advantage of the information gathered considering that there are no replicates? Would it make the study less robust?
 
 
 ## Repeatability
 
-- Is it correct to interpret ICC as power?
+
+## Power Analysis
+
+> I'd like to know more about when a power analysis should not be done or isn't ideal for a certain project, for instance if all or some data has already been gathered or if sample size ever plays a role in using or not using power analysis?
+
+> I'd like to go over power analyses more, specifically for a linear model instead of a t test
+
+> Can we go a bit more over when you have to do this analysis and what the consequences are for not doing so? this is not to try and not do anything but to know when this step is ignored in the literature.
+
+> I understand that you shouldn't go back and retrospectively predict power after collecting data, but what if you weren't the one to design the experiment, but were given a dataset and want to know what your limitations are in analyzing and making conclusions?
 
 
-## Power
+## Experimental design
 
-- Effect size in power test is what is the minimum difference that I would like to detect?
-- Could we go over what all factors will affect statistical power?
-- Can you run power analyses for mixed models? 
-
-
-## Power
-
-- I have a question about how to figure out what our sample sizes need to be for our experiments, but I'm not sure I'm thinking about it correctly. When determining what our sample size should be for a given experiment, how do we know what difference in the data we want to be able to detect? Can we think "I want to detect a significant difference", so I need to have a certain amount of power, so I need a certain sample size?
-
-
-## Power {.smaller} 
-
-- I'm really confused on how to estimate certain variables when determining power/sample size/ alpha. For example, if I want to find the sample size I need for 0.8 power and alpha of 0.05, how can I estimate effect size? Specifically if I'm looking at many different outcome variables and not just using one model and statistical test, AND if I have no idea what the actual outcome will be compared to what is expected (example, I know what is normal biologically, and I hypothesize that the change in outcome will be lower than normal, but how do I pick a d that accurately reflects the amount of effect GIVEN my idea is just a hypothesis and I have no distinct idea of the amount of variation?)
-
-
-## Power
-
-- I understand we need to calculate the power in order to estimate the chances of false positives and false negatives and estimate the best sample size, but when and why do we need to look at the distribution of p values, particularly the sequential Benferroni distribution?
-
-
-## Best practices
-
-- I have a broad question. Are there any "good practices" or "standards" for reporting power and repeatability? These seem like important steps during the formulation and analysis of an experiment. Still, outside of the Type I and Type II errors and power, I have not heard of these topics and have never seen them reported in academic journals/studies. 
-
-
-## Multiple Comparisons {.smaller} 
-
-- Do we have to correct and adjust p values for any type of analyses? Or is it focused on datasets such as DNA, SNPs analyses where there are multiple tests run at once?
-- Can you perform MCP (like FDR) on p values from different types of tests? For example, I'm confused if I perform this on the p values I get from every ANOVA, t-test, etc. from my entire data set when using different outcome variables. Like is this done on everything at the end or within explorations into one answer?
-- What is the difference between doing Bonferroni as a correction before post hoc tests and doing it as a MCP?
-- I also am really confused on if you're supposed to run multiple models for one hypothesis (like additive, random predictors, etc) and then just use this on the results from those models? 
+> In lecture 11.3, when trying to find a sample size with high power, typically you get a larger number. For example, the sample size was 63. A comment was made that this is a large sample size, especially for vertebrates/mammals. Is there a way to account for this or determine the best sample size for vertebrate animals that isn't too large but has good power, especially since factors like money come into effect in real-life situations?
 
 
 ## Multiple Comparisons
-
-- I thought I understood false discovery and false positive rate, but my quiz answers say otherwise. Could we discuss the difference?
-- Quiz 11-4
 
 
 ## A menu of MCPs {.smaller}
 
 1. <s>Do nothing</s>
-    - Not an option 
+    - Not an option
 2. Methods to control the Family-Wise Error Rate (FWER):
     - MCs within a single linear model (e.g. Tukey, etc.; see 08-2)
     - Bonferroni correction
       - Not recommended - overly conservative
     - Sequential Bonferroni procedure
-    - Randomization procedures to empirically control FWER 
+    - Randomization procedures to empirically control FWER
 6. Methods to control the False Discovery Rate (FDR)
     - False Discovery Rate Methods
     - _Positive_ False Discovery Rate Methods
-    
+
 
 ## False discovery rate
 
@@ -145,9 +147,371 @@ $$FPR = \frac{5}{100} = 0.05$$
 
 $$FDR = \frac{5}{22} = 0.227$$
 
-## What next? {.smaller}
+## Power analysis by Simulation
 
-When going over things in lecture, I feel like I understand and can apply it to the given problems. However, I'm having a lot of issues trying to extrapolate the information from this class to my own data analysis, specifically for more complex data with extra variables and possible nested predictors. I feel like I generally understand things conceptually, but I can't describe it in my own words or apply it to complex problems outside of the course which makes me think I don't actually understand what I'm doing. Do you have any recommendations for better conceptualization and understanding of the math / actions behind what we are doing if we need more examples and explanations than from lecture videos, rather than just resources explaining how to do it? (The lectures, which generally come from a place of teaching what we are doing, not just how to do it, are great; but I feel like I need to hear it again or in a different way for some topics. I'm having a hard time finding resources that explain the concepts and not just how to do them)
+- `pwr` is useful, but only to a certain extent
+- Simulate data following the model you will fit.
+- Use your knowledge of the biology you are studying
+
+
+## Power by Simulation: Bivariate model
+
+```{r}
+#| echo: true
+#| cache: true
+#| label: sim_ols
+
+nrep <- 1000
+sample_sizes <- c(5, 10, 20, 30)
+sds <- c(0.1, 0.5, 1, 2)
+slopes <- c(0, 0.25, 0.5, 1, 2, 4)
+
+power_bv <- crossing(n = sample_sizes, sd = sds, slope = slopes) |>
+  mutate(
+    power = future_pmap_dbl(
+      list(n, sd, slope),
+      function(n, sd, slope) {
+        p_values <- map_dbl(
+          .x = 1:nrep,
+          .f = function(ii) {
+            x <- runif(n, min = 0, max = 1)
+            y <- 1 + slope * x + rnorm(n, mean = 0, sd = sd)
+            fm <- lm(y ~ x)
+            anova(fm)["x", "Pr(>F)"]
+          }
+        )
+        mean(p_values < 0.05)
+      },
+      .options = furrr_options(seed = TRUE)
+    )
+  )
+```
+
+
+## Power by Simulation: Bivariate model
+
+```{r}
+ggplot(
+  power_bv,
+  aes(x = factor(n), y = power, color = factor(sd), group = factor(sd))
+) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 0.8, linetype = "dashed") +
+  geom_hline(yintercept = 0.05, linetype = "dotted") +
+  scale_color_d3(name = "sd") +
+  facet_wrap(~slope, labeller = label_both) +
+  labs(x = "Sample Size", y = "Power")
+```
+
+
+## What do multilevel models do?
+
+```{r}
+ZP <- read_csv("../data/Zooplankton.csv", col_types = "cdd") |>
+  mutate(Treatment = factor(Treatment), Block = factor(Block))
+
+ggplot(data = ZP, aes(x = Block, y = Zooplankton, color = Treatment)) +
+  geom_point(size = 5) +
+  scale_color_bmj()
+```
+
+
+## Two models
+
+"Pooled" model with `lm()` (no Block effect):
+
+```{r}
+#| echo: true
+
+fm1 <- lm(Zooplankton ~ Treatment, data = ZP)
+```
+
+Multilevel model with `lme()`:
+
+```{r}
+#| echo: true
+#| message: false
+
+library(nlme)
+fm2 <- lme(Zooplankton ~ Treatment, random = ~ 1 | Block, data = ZP)
+```
+
+
+## Model 1
+
+```{r}
+#| echo: true
+
+summary(fm1)
+```
+
+
+## Model 1
+
+```{r}
+#| echo: true
+
+car::Anova(fm1, type = "III")
+```
+
+
+## What is model 1 really doing?
+
+```{r}
+ggplot(ZP, aes(x = Treatment, y = Zooplankton, color = Treatment)) +
+  geom_point(
+    size = 5,
+    position = position_jitter(width = 0.15, seed = 34667)
+  ) +
+  scale_color_bmj()
+```
+
+
+## Model 2
+
+```{r}
+#| echo: true
+
+summary(fm2)
+```
+
+
+## Model 2
+
+```{r}
+#| echo: true
+
+car::Anova(fm2, type = "III")
+```
+
+
+## Predictions
+
+```{r}
+#| echo: true
+
+grid <- crossing(
+  Treatment = levels(ZP$Treatment),
+  Block = levels(ZP$Block)
+)
+
+fm1_pred <- grid |>
+  mutate(Pred_Zoo = predict(fm1, newdata = grid), Model = "lm Model")
+
+fm2_pred <- grid |>
+  mutate(Pred_Zoo = predict(fm2, newdata = grid), Model = "lme Model")
+
+Preds <- bind_rows(fm1_pred, fm2_pred)
+```
+
+
+## Predictions
+
+```{r}
+ggplot() +
+  geom_point(
+    data = ZP,
+    aes(x = Block, y = Zooplankton, color = Treatment),
+    size = 2.5,
+    alpha = 0.5
+  ) +
+  geom_point(
+    data = Preds,
+    aes(x = Block, y = Pred_Zoo, color = Treatment, shape = Model),
+    size = 5
+  ) +
+  scale_color_bmj() +
+  scale_shape_manual(values = c(2, 3))
+```
+
+
+## Power Model 1:
+
+```{r}
+#| echo: true
+#| cache: true
+#| label: sim_lm
+
+grand_mean <- mean(ZP$Zooplankton)
+sigma <- sigma(fm1)
+
+nrep <- 1000
+n_per_group <- 5
+deltas <- seq(0, 1.5, by = 0.1)
+
+power_sim <- future_map_dfr(
+  deltas,
+  function(delta) {
+    group_means <- c(grand_mean, grand_mean - delta, grand_mean - 2 * delta)
+    p_values <- map_dbl(
+      .x = 1:nrep,
+      .f = function(ii) {
+        sim_data <- tibble(
+          Treatment = factor(rep(
+            c("control", "low", "high"),
+            each = n_per_group
+          )),
+          Zooplankton = rnorm(
+            n_per_group * 3,
+            mean = rep(group_means, each = n_per_group),
+            sd = sigma
+          )
+        )
+        fm_sim <- lm(Zooplankton ~ Treatment, data = sim_data)
+        anova(fm_sim)["Treatment", "Pr(>F)"]
+      }
+    )
+    tibble(delta = delta, power = mean(p_values < 0.05))
+  },
+  .options = furrr_options(seed = TRUE)
+)
+```
+
+
+## One simulation dataset
+
+```{r}
+# Save one example simulated dataset for plotting
+example_delta <- 0.5
+example_means <- c(
+  grand_mean,
+  grand_mean - example_delta,
+  grand_mean - 2 * example_delta
+)
+sim_example <- tibble(
+  Treatment = factor(rep(c("control", "low", "high"), each = n_per_group)),
+  Zooplankton = rnorm(
+    n_per_group * 3,
+    mean = rep(example_means, each = n_per_group),
+    sd = sigma
+  )
+)
+
+ggplot(sim_example, aes(x = Treatment, y = Zooplankton, color = Treatment)) +
+  geom_point(
+    size = 5,
+    position = position_jitter(width = 0.15, seed = 34667)
+  ) +
+  scale_color_bmj()
+```
+
+
+## Power Model 1:
+
+```{r}
+ggplot(power_sim, aes(x = delta, y = power)) +
+  geom_line(color = "firebrick4") +
+  geom_point(color = "firebrick4") +
+  geom_hline(yintercept = 0.8, linetype = "dashed") +
+  geom_hline(yintercept = 0.05, linetype = "dotted") +
+  labs(x = "Between-group Differences", y = "Power for Overall Effect")
+```
+
+
+## Power Model 2:
+
+```{r}
+#| echo: true
+#| cache: true
+#| label: sim_lme
+
+sigma_block <- as.numeric(VarCorr(fm2)["(Intercept)", "StdDev"])
+sigma_resid <- sigma(fm2)
+n_blocks <- 5
+
+power_sim2 <- future_map_dfr(
+  deltas,
+  function(delta) {
+    group_means <- c(grand_mean, grand_mean - delta, grand_mean - 2 * delta)
+    p_values <- map_dbl(
+      1:nrep,
+      function(ii) {
+        block_int <- rnorm(n_blocks, mean = 0, sd = sigma_block)
+        sim_data <- crossing(
+          Treatment = factor(c("control", "low", "high")),
+          Block = factor(1:n_blocks)
+        ) |>
+          mutate(
+            mu = group_means[as.numeric(Treatment)],
+            Zooplankton = mu +
+              block_int[as.numeric(Block)] +
+              rnorm(n(), mean = 0, sd = sigma_resid)
+          )
+        fm_sim <- lme(
+          Zooplankton ~ Treatment,
+          random = ~ 1 | Block,
+          data = sim_data
+        )
+        anova(fm_sim)["Treatment", "p-value"]
+      }
+    )
+    tibble(delta = delta, power = mean(p_values < 0.05))
+  },
+  .options = furrr_options(seed = TRUE)
+)
+```
+
+
+## One simulation dataset
+
+```{r}
+# Save one example simulated dataset for plotting
+example_delta <- 0.5
+example_means <- c(
+  grand_mean,
+  grand_mean - example_delta,
+  grand_mean - 2 * example_delta
+)
+block_int_example <- rnorm(n_blocks, mean = 0, sd = sigma_block)
+sim_example2 <- crossing(
+  Treatment = factor(c("control", "low", "high")),
+  Block = factor(1:n_blocks)
+) |>
+  mutate(
+    mu = example_means[as.numeric(Treatment)],
+    Zooplankton = mu +
+      block_int_example[as.numeric(Block)] +
+      rnorm(n(), mean = 0, sd = sigma_resid)
+  )
+
+ggplot(sim_example2, aes(x = Treatment, y = Zooplankton, color = Treatment)) +
+  geom_point(
+    size = 5,
+    position = position_jitter(width = 0.15, seed = 34667)
+  ) +
+  scale_color_bmj()
+
+```
+
+
+## Power Model 2:
+
+```{r}
+ggplot(power_sim2, aes(x = delta, y = power)) +
+  geom_line(color = "firebrick4") +
+  geom_point(color = "firebrick4") +
+  geom_hline(yintercept = 0.8, linetype = "dashed") +
+  geom_hline(yintercept = 0.05, linetype = "dotted") +
+  labs(x = "Between-group Differences", y = "Power for Overall Effect")
+```
+
+
+## Comparison
+
+```{r}
+bind_rows(
+  power_sim |> mutate(Model = "lm"),
+  power_sim2 |> mutate(Model = "lme")
+) |>
+  ggplot(aes(x = delta, y = power, color = Model)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 0.8) +
+  geom_hline(yintercept = 0.05) +
+  scale_color_aaas() +
+  labs(x = "Between-group Differences", y = "Power for Overall Effect")
+```
 
 
 ## References
