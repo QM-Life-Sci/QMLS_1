@@ -47,6 +47,8 @@ theme_set(theme_cowplot(font_size = 18))
 - 11-3
 - 11-4
 
+> I may have missed this in the lecture, but when looking at questions 2 and 3 on 11-4 quiz, how can you determine if there are false positives in a histogram or datasets when not knowing the FDR?
+
 
 ## Random Effects Syntax
 
@@ -90,12 +92,22 @@ Wilkinson, G. N. and C. E. Rogers. 1973. Symbolic description of factorial model
 
 > Can we go a bit more over when you have to do this analysis and what the consequences are for not doing so? this is not to try and not do anything but to know when this step is ignored in the literature.
 
+
+## Power
+
+> In a low powered study, how are we supposed to interpret non significant results? How do we know if there’s actually no effect versus just not enough power?
+
 > I understand that you shouldn't go back and retrospectively predict power after collecting data, but what if you weren't the one to design the experiment, but were given a dataset and want to know what your limitations are in analyzing and making conclusions?
 
 
 ## Experimental design
 
 > In lecture 11.3, when trying to find a sample size with high power, typically you get a larger number. For example, the sample size was 63. A comment was made that this is a large sample size, especially for vertebrates/mammals. Is there a way to account for this or determine the best sample size for vertebrate animals that isn't too large but has good power, especially since factors like money come into effect in real-life situations?
+
+
+## Causative inference
+
+> If I see a phenotype after a protein depletion, how should I think more carefully about causation and confounding? I mean depletion itself may also cause other stress in the cell (and it does so!), so I am not sure how to tell if the phenotype is a direct effect of that gene or an indirect downstream effect. Also, if two proteins look functionally connected because loss of one gives similar phenotype as loss of the other, what kind of experiment would help us say this is more likely causation and not just correlation?
 
 
 ## Multiple Comparisons
