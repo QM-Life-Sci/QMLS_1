@@ -86,6 +86,7 @@ if (install_all_packages) {
 
 # Lectures
 qmds <- list.files(
+  # pattern = "^11-[1-6].*qmd$",
   pattern = "^[0-9]*-[1-6].*qmd$",
   path = "Lectures/",
   full.names = TRUE
