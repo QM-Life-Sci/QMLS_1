@@ -21,7 +21,6 @@ server: shiny
 #| label: setup
 #| message: false
 #| warning: false
-
 library(tidyverse)
 library(cowplot)
 library(tidyverse)
@@ -108,7 +107,6 @@ Wilkinson, G. N. and C. E. Rogers. 1973. Symbolic description of factorial model
 ```{r}
 #| panel: sidebar
 #| width: 280px
-
 sliderInput(
   "delta",
   "Effect size (d)",
@@ -143,13 +141,11 @@ uiOutput("stats_ui")
 
 ```{r}
 #| panel: fill
-
 plotOutput("distPlot", height = "520px")
 ```
 
 ```{r}
 #| context: server
-
 compute <- reactive({
   delta <- input$delta
   alpha <- input$alpha
@@ -393,7 +389,6 @@ output$distPlot <- renderPlot(
 #| echo: true
 #| cache: true
 #| label: sim_ols
-
 nrep <- 1000
 sample_sizes <- c(5, 10, 20, 30)
 sds <- c(0.1, 0.5, 1, 2)
@@ -456,7 +451,6 @@ ggplot(data = ZP, aes(x = Block, y = Zooplankton, color = Treatment)) +
 
 ```{r}
 #| echo: true
-
 fm1 <- lm(Zooplankton ~ Treatment, data = ZP)
 ```
 
@@ -465,7 +459,6 @@ Multilevel model with `lme()`:
 ```{r}
 #| echo: true
 #| message: false
-
 library(nlme)
 fm2 <- lme(Zooplankton ~ Treatment, random = ~ 1 | Block, data = ZP)
 ```
@@ -475,7 +468,6 @@ fm2 <- lme(Zooplankton ~ Treatment, random = ~ 1 | Block, data = ZP)
 
 ```{r}
 #| echo: true
-
 summary(fm1)
 ```
 
@@ -484,7 +476,6 @@ summary(fm1)
 
 ```{r}
 #| echo: true
-
 car::Anova(fm1, type = "III")
 ```
 
@@ -505,7 +496,6 @@ ggplot(ZP, aes(x = Treatment, y = Zooplankton, color = Treatment)) +
 
 ```{r}
 #| echo: true
-
 summary(fm2)
 ```
 
@@ -514,7 +504,6 @@ summary(fm2)
 
 ```{r}
 #| echo: true
-
 car::Anova(fm2, type = "III")
 ```
 
@@ -523,7 +512,6 @@ car::Anova(fm2, type = "III")
 
 ```{r}
 #| echo: true
-
 grid <- crossing(
   Treatment = levels(ZP$Treatment),
   Block = levels(ZP$Block)
@@ -565,7 +553,6 @@ ggplot() +
 #| echo: true
 #| cache: true
 #| label: sim_lm
-
 grand_mean <- mean(ZP$Zooplankton)
 sigma <- sigma(fm1)
 
@@ -648,7 +635,6 @@ ggplot(power_sim, aes(x = delta, y = power)) +
 #| echo: true
 #| cache: true
 #| label: sim_lme
-
 sigma_block <- as.numeric(VarCorr(fm2)["(Intercept)", "StdDev"])
 sigma_resid <- sigma(fm2)
 n_blocks <- 5
@@ -714,7 +700,6 @@ ggplot(sim_example2, aes(x = Treatment, y = Zooplankton, color = Treatment)) +
     position = position_jitter(width = 0.15, seed = 34667)
   ) +
   scale_color_bmj()
-
 ```
 
 
