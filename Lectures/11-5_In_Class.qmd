@@ -23,7 +23,6 @@ server: shiny
 #| warning: false
 library(tidyverse)
 library(cowplot)
-library(tidyverse)
 library(ggsci)
 library(furrr)
 
