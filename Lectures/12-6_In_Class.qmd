@@ -21,7 +21,7 @@ csl: evolution.csl
 
 - Instructor specific (so there are 2 - sorry!)
 - Already have an email
-- Open until May 10th
+- Open until May 7th
 - Can't find email? 
     - Go to [evaluations.missouri.edu](https://evaluation.missouri.edu/)
 
@@ -29,11 +29,46 @@ csl: evolution.csl
 ## Progress Check 3
 
 - Available Monday
-- Due on May 16th
-- Review and Q & A: Friday May 9 10-11:50
+- Review Questions due Wednesday
+- Due on May 15th
+- Review and Q & A: Friday May 8 10-11:50
     - Optional
     - Recorded
 
+## GLMs
+
+> Would it be incorrect to use data prior to log transformation here?  I am assuming interpretation wouldn't change? (image)
+
+> In the salinity example from lecture 12.2, what is one unit for the salinity increase when it is a continuous variable? How is one unit defined for a continuous variable predicting a binomial variable? I understand in the summary how the +/- works, but I don't understand the magnitude.
+
+> Do you have any tips for using the logistic.display function for categorical predictors? I used it on a model, and it converted it over to continous (I assume 0/1). Do I need to just calculate the odds ratio by hand, or is this interpretation ok?
+
+## PCA
+
+- Several requests to go over PCA more
+
+> Is multi-collinearity relatively "accounted-for" in PCA? I've been told that it's important to test for multi-collinearity when doing a PCA, because two variables might over skew the PC loadings or pull from groupings. For example organic carbon and total nitrogen in soil (R2 = 0.95) may overly separate groups within the plot (agriculture vs prairie). 
+
+> Also, I've seen PCA with RNAseq but having a hard time conceptualizing what is actually happening and if it is appropriate to use in a setting where I have different variables that are related to a disease outcome (all numeric) to see if there is a trend within the variables themselves. 
+
+> Can we go over quiz 12-3 question 4? The interpretation of the composite variable. 
+
+## Dimensionality reduction
+
+> A good [dimensionality reduction analysis] "makes sense"; a bad one does not.
+
+<div class="ref">
+Tabachnick and Fidell (2019)
+</div>
+
+
+## Non-independence
+
+> Given that phylogenetic trees are a hypothesized hierarchy themselves, what advice do y'all have for running phylogenetic models with 1. previously published trees and 2. trees you estimate? 
+
+
+
+## Last year
 
 ## PS 11 Stretch Question
 
