@@ -53,7 +53,6 @@ Study the code below, and make sure that you understand what each line does.
 
 ```{r}
 #| label: stalkies1
-
 # Use the tictoc package to time how long the code takes.
 library(tictoc)
 
@@ -125,7 +124,6 @@ The following chunk will not run during knitting.
 ```{r}
 #| label: stalkies2
 #| eval: false
-
 # Load packages
 library(furrr)
 
@@ -190,7 +188,12 @@ We get a speed-up of about 5 times. There is some overhead in the parallelizatio
 
 For the data on survivorship after heart transplant, we had to transform the data due to unequal variances. That is not necessary when we use randomization. Reanalyze these data without transformation, testing the same hypothesis as you did in PS 08.
 
-Refer to the key for PS 08 to refresh yourself with the question and adapt the code from the example above (either sequential or parallel). Otherwise we will leave this exercise undirected.
+Refer to the key for PS 08 to refresh yourself with the question and adapt the code from the example above (either sequential or parallel).
+
+- You will have to use `lm()` to fit the ANOVA
+- You will need to use the overall `F`-value for the model (instead of the `t`-statistic).
+
+Otherwise we will leave this exercise undirected.
 
 ```{r}
 
@@ -199,6 +202,7 @@ Refer to the key for PS 08 to refresh yourself with the question and adapt the c
 Based on this randomization analysis, is there a significant difference in survival time? How does these results compare to the analysis you did on the transformed data in PS 08?
 
 >
+
 
 ## Return of the Sole
 
@@ -246,7 +250,6 @@ The code below plots the outcome. Change `eval: false` to `eval: true` to run th
 
 ```{r}
 #| eval: false
-
 # Plotting the outcome.
 
 Sole$PC1 <- z$x[, 1]
