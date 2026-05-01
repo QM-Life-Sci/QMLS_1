@@ -36,7 +36,9 @@ csl: evolution.csl
     - Optional
     - Recorded
 
+
 ## PS 11 Stretch Question
+
 
 ## GLMs 
 
@@ -44,17 +46,86 @@ csl: evolution.csl
 
 > In the salinity example from lecture 12.2, what is one unit for the salinity increase when it is a continuous variable? How is one unit defined for a continuous variable predicting a binomial variable? I understand in the summary how the +/- works, but I don't understand the magnitude.
 
+
 ## GLMs {.smaller}
+
+> I got confused when we went over the logit transformation in video 12-2. I also got confused when you were mentioning how odds ratios are reported. I think the example you gave was that if an odds ratio was a high number like 2, it gets reported as something being 200% more likely. Can you explain this a little more?
 
 > Do you have any tips for using the logistic.display function for categorical predictors? I used it on a model, and it converted it over to continous (I assume 0/1). Do I need to just calculate the odds ratio by hand, or is this interpretation ok?
 
-> I got confused when we went over the logit transformation in video 12-2. I also got confused when you were mentioning how odds ratios are reported. I think the example you gave was that if an odds ratio was a high number like 2, it gets reported as something being 200% more likely. Can you explain this a little more?
+
+## Logistic regression with categorical variables
+
+```{r}
+library(tidyverse)
+library(epiDisplay)
+
+AC <- read_csv("https://raw.githubusercontent.com/Middleton-Lab/abd/refs/heads/main/inst/extdata/datasets/09/09e2AspirinCancer.csv") |> as.data.frame()
+AC
+```
+
+Reformatted: 
+
+```{r}
+AC_wide <- reshape(AC, idvar = "treatment", timevar = "cancer",
+                   direction = "wide")
+names(AC_wide) <- c("treatment", "yes", "no")
+AC_wide <- AC_wide |> 
+  mutate(treatment = factor(treatment, levels = c("Placebo", "Aspirin")))
+AC_wide
+```
+
+
+## Visualizing counts
+
+```{r}
+ggplot(AC, aes(x = treatment, y = count, fill = cancer)) +
+  geom_col(position = "fill") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  scale_fill_manual(values = c(yes = "#c0392b", no = "#7f8c8d")) +
+  labs(title = "Cancer rate by treatment",
+       y = "Percent", x = "Treatment") +
+  theme_minimal()
+```
+
+
+## Logistic regression with categorical variables
+
+```{r}
+#| echo: true
+
+fm <- glm(cbind(yes, no) ~ treatment, family = binomial, data = AC_wide)
+summary(fm)
+```
+
+
+## Logistic regression with categorical variables
+
+```{r}
+#| echo: true
+
+logistic.display(fm)
+```
+
+
+## Or as a $\chi^2$ test
+
+```{r}
+#| echo: true
+
+tab <- xtabs(count ~ treatment + cancer, data = AC)
+tab
+
+chisq.test(tab, correct = FALSE)
+```
+
 
 ## PCA
 
 - Several requests to go over PCA & visualizations more
 
 > Can we go over quiz 12-3 question 4? The interpretation of the composite variable. 
+
 
 ## PCA {.smaller}
 
