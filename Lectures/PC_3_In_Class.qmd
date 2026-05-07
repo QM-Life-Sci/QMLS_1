@@ -20,7 +20,6 @@ csl: evolution.csl
 library(tidyverse)
 library(cowplot)
 theme_set(theme_cowplot())
-
 ```
 
 ## Course Evaluations
@@ -28,7 +27,7 @@ theme_set(theme_cowplot())
 - Instructor specific (so there are 2 - sorry!)
 - Open until May 10th
 - Already have an email
-- Can't find email? 
+- Can't find email?
     - Go to [evaluation.missouri.edu](https://evaluation.missouri.edu/)
 
 
@@ -39,7 +38,7 @@ theme_set(theme_cowplot())
     - Including posting questions or replies
 - If you are unable to complete your missing assignments, set up a time to talk to us about an incomplete
 
-    
+
 ## Course Materials
 
 - [Github](https://github.com/QM-Life-Sci/QMLS_1)
@@ -70,7 +69,7 @@ theme_set(theme_cowplot())
 ## Problem set 12
 
 - Could we go over interpreting the results of the analysis for the Heart Transplant Survivorship section in PS 12?
-- I had a question about the parallelization randomization in PS12. What does the function 'future_map_dbl' do? My group for this problem all structured the looping differently and we got slightly different p-values. I would like to walk through this problem again to be sure I am understanding how to set up the structure and flow of randomization. 
+- I had a question about the parallelization randomization in PS12. What does the function 'future_map_dbl' do? My group for this problem all structured the looping differently and we got slightly different p-values. I would like to walk through this problem again to be sure I am understanding how to set up the structure and flow of randomization.
 - In PS 12 I didn't understand the point of fitting a linear model with the PC1, and how to interpret those results.
 
 
@@ -82,7 +81,7 @@ theme_set(theme_cowplot())
 
 ## lm / lme / etc.
 
-- What are the differences between lm() and glm()? When can you use lm() and when can you use glm()?  how do you interpret when you get the same output from both functions? 
+- What are the differences between lm() and glm()? When can you use lm() and when can you use glm()?  how do you interpret when you get the same output from both functions?
 - While selecting a model, how would you choose between lm() and lme() for a new dataset with grouped structure and what criteria (AIC, LRT) could help decide whether to include a random effect?
 
 
@@ -96,13 +95,13 @@ theme_set(theme_cowplot())
 - OLS regression
 - *t*-tests
 - ANOVA
-- Multiple regression 
+- Multiple regression
 :::
 
 ::: {.column width="60%"}
 `lme()`, `lme4()`, `glmmTMB()`
 
-- Multilevel linear models 
+- Multilevel linear models
 
 ---
 
@@ -124,7 +123,7 @@ theme_set(theme_cowplot())
 
 ## Model Comparison
 
-- I'd be interested in reviewing how to determine the predictive strength of a particular linear model through likelihood ratio, AICc, and cross-validation, particularly when comparing the results of each of these tests on a particular model to one another, and what information each of these tests can provide about the linear model itself in addition to an indication of predictive strength. 
+- I'd be interested in reviewing how to determine the predictive strength of a particular linear model through likelihood ratio, AICc, and cross-validation, particularly when comparing the results of each of these tests on a particular model to one another, and what information each of these tests can provide about the linear model itself in addition to an indication of predictive strength.
 
 
 ## Model comparison: When to use what method
@@ -151,7 +150,7 @@ All will generally agree.
 ## PCA
 
 - In some studies, PCA is used to discriminate or differentiate groups. Is it a correct approach as they don't use anything else like fitting a model or any posterior analysis to validate.
-- My question stems from a conversation I saw somewhere where some people argued that PCA should only be used for modelling linear relationships and not in non-linear relationships cases. Essentially, does PCA suffice for most data as per linear vs non-linear? 
+- My question stems from a conversation I saw somewhere where some people argued that PCA should only be used for modelling linear relationships and not in non-linear relationships cases. Essentially, does PCA suffice for most data as per linear vs non-linear?
 
 
 ## Progress Check 3
