@@ -19,6 +19,9 @@ csl: evolution.csl
 ```{r}
 library(tidyverse)
 library(cowplot)
+library(gt)
+library(factoextra)
+
 theme_set(theme_cowplot())
 ```
 
@@ -66,6 +69,98 @@ theme_set(theme_cowplot())
 > Can we go over interpreting relationships between variables with PCA? Especially where it comes to making sense of loadings of variables in multiple PCs.
 
 > How do we decide which PCs to keep and which to ignore?
+
+
+## Leaf Shape
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+![](https://environmentalcomputing.net/graphics/multivariate-vis/pca/PCA_image.png){fig-alt="Photograph of a leaf" fig-pos="center"}
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+leaf <- read_csv("../data/Leafshape.csv", show_col_types = FALSE)
+
+leaf |> gt()
+```
+
+:::
+
+::::
+
+
+## Leaf Shape
+
+```{r}
+#| echo: true
+z <- prcomp(~., data = leaf[, -1], center = TRUE, scale. = TRUE)
+```
+
+Proportion of variance (eigenvalues)
+
+```{r}
+#| echo: true
+summary(z)
+```
+
+- PC1 explains 55% of the variance in the data.
+- PC2 explains 29% of the variance in the data.
+
+
+## Loadings (eigenvectors)
+
+Correlations of scaled variables with composite variables
+
+```{r}
+#| echo: true
+print(z, digits = 2)
+```
+
+
+## Scree plot
+
+```{r}
+#| echo: true
+fviz_eig(z, addlabels = TRUE)
+```
+
+
+## Biplot
+
+```{r message=FALSE}
+#| echo: true
+fviz_pca_var(z)
+```
+
+
+## Extracting PCs
+
+```{r}
+#| echo: true
+#| output-location: slide
+leaf <- leaf |>
+  mutate(PC1 = z$x[, 1], PC2 = z$x[, 2])
+
+ggplot(leaf, aes(x = PC1, y = PC2, color = Species)) +
+  geom_point(size = 4) +
+  paletteer::scale_color_paletteer_d("khroma::highcontrast")
+```
+
+
+## Predicting with PCs
+
+```{r}
+#| echo: true
+fm <- lm(PC1 ~ Species, data = leaf)
+summary(fm)
+```
+
 
 ## Empirical P-values and Randomization
 
