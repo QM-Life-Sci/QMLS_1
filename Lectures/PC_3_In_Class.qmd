@@ -166,6 +166,11 @@ summary(fm)
 
 > Can we go over empirical P-values from randomization again, especially how to explain what the histogram is showing?
 
+> How do we interpret results that are technically rare in a simulation but don’t look that different overall?
+
+
+## Empirical P-values and Randomization
+
 > I would appreciate some review of model simulation. I think I am lacking a framework of when it would be useful in real life applications. e.g. when do simulate null data vs when do I use my observations to simulate how often I would get these results by chance.
 
 > Also, can you point me to maybe some more resources on this since I am struggling to wrap my head around it still.
